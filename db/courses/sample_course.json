@@ -1,0 +1,65 @@
+{
+	"id": "5d2e37c5-4f9c-4bfc-a0ea-4b879f7b6231",
+	"language": "JavaScript",
+	"title": "Learn JavaScript quickly!",
+	"name": "javascript",
+	"author": "70111114-0165-4343-9a8b-012188e543e6",
+	"description": "With this course you can master JavaScript in less than 2 months!",
+	"chapters": [
+		{
+			"sections": [
+				{
+					"text": "CHAPTER 1\nSECTION 1\nIntroduction to JavaScript\nJavsScript is...",
+					"quiz": [
+						{
+							"question": "Which of the following is the proper way to define a function in JS?",
+							"answers": [
+								"function() foo { ... }",
+								"function{} foo ( ... )",
+								"function foo() { ... }",
+								"function foo{} ( ... )"
+							],
+							"correctAnswer": 2
+						},
+						// More quiz questions here
+					]
+				}
+				// More sections here
+			],
+			"test": [
+				// Insert test questions here
+			]
+		}
+		// More chapters here
+	],
+	"finalExam": [
+		// Insert final exam questions here
+	],
+	"reviews": [
+		{
+			"rating": 5,
+			"text": "Great course!",
+			"id": "5c0e2459-b196-43f0-81a4-f0ce152369ad",
+			"date": "2023-02-28",
+			"author": "70111114-0165-4343-9a8b-012188e543e6"
+		},
+		// More reviews here
+	],
+	"comments": [
+		{
+			"comment": "I can't get past the second chapter test!",
+			"author": "70111114-0165-4343-9a8b-012188e543e6",
+			"id": "a3a99c41-2fae-4e3c-934b-4ba9af7bddd",
+			"date": "2023-02-28",
+			"replies": [
+				{
+					"comment": "Have you tried being smarter?",
+					"author": "70111114-0165-4343-9a8b-012188e543e6",
+					"id": "21923c2b-36ea-4ac0-9eb4-6201cec1f105",
+					"date": "2023-02-28",
+					"replies": []
+				}
+			]
+		}
+	]
+}
