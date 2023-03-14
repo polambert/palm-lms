@@ -12,6 +12,16 @@ public class CourseProgress
     private Date dateCompleted;
     private String certificateId;
 
+
+    // getters and setters
+
+
+
+
+
+
+
+
     public CourseProgress(Course course, int chaptersCompleted, int sectionsCompleted){
 
     }
