@@ -1,16 +1,15 @@
-package lms;
 
 import java.util.ArrayList;
 
 /**
- * This class will be used for each Assesment in a chapter or section
- * and can add questions to a certain Assesment
+ * This class will be used for each Assessment in a chapter or section
+ * and can add questions to a certain Assessment
  */
 
-public class Assesment {
+public class Assessment {
     private ArrayList<Question> questions;
     
-    public Assesment(ArrayList<Question> questions){
+    public Assessment(ArrayList<Question> questions){
         this.questions = new ArrayList<Question>();
     }
 
