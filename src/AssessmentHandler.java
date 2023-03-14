@@ -1,3 +1,6 @@
+
+package lms;
+
 public class AssessmentHandler
 {
     private Assessment assessment;

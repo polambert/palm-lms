@@ -1,4 +1,5 @@
-package 247.palm-lms.src;
+
+package lms;
 
 import java.util.ArrayList;
 import java.util.UUID;
