@@ -12,44 +12,34 @@ public class CourseProgress
     private Date dateCompleted;
     private String certificateId;
 
-    public CourseProgress(Course course, int chaptersCompleted, int sectionsCompleted)
-    {
+    public CourseProgress(Course course, int chaptersCompleted, int sectionsCompleted){
 
     }
-    public CourseProgress(Course course)
-    {
+    public CourseProgress(Course course){
 
     }
-    public int getChapterProgress()
-    {
+    public int getChapterProgress(){
 
     }
-    public int getSectionProgress()
-    {
+    public int getSectionProgress(){
 
     }
-    public void setChapterProgress(int)
-    {
+    public void setChapterProgress(int){
 
     }
-    public void setSectionProgress(int)
-    {
+    public void setSectionProgress(int){
 
     }
-    public int incChapterProgress()
-    {
+    public int incChapterProgress(){
 
     }
-    public int incSectionProgress()
-    {
+    public int incSectionProgress(){
 
     }
-    public double getProgressPercent()
-    {
+    public double getProgressPercent(){
 
     }
-    public String generateCertificate()
-    {
+    public String generateCertificate(){
 
     }
 

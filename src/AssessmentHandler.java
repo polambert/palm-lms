@@ -6,16 +6,13 @@ public class AssessmentHandler
     private Question currentQuestion;
     private int currentQuestionNumber;
 
-    public AssessmentHandler()
-    {
+    public AssessmentHandler(){
 
     }
-    public void startAssessment(Assessment assessment)
-    {
+    public void startAssessment(Assessment assessment){
 
     }
-    public double calculateScore()
-    {
+    public double calculateScore(){
 
     }
 

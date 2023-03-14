@@ -12,16 +12,14 @@ public class User
     private ArrayList<CourseProgress> courseProgresses = new ArrayList<>();
 
 
-    public User(String name, String email, Date dateOfBirth, ArrayList<CourseProgress> courseProgresses)
-    {
+
+    public User(String name, String email, Date dateOfBirth, ArrayList<CourseProgress> courseProgresses){
 
     }
-    public void setCanCreateCourses(boolean canCreateCourses)
-    {
+    public void setCanCreateCourses(boolean canCreateCourses) {
 
     }
-    public ArrayList<Course> getEnrolledCourses()
-    {
+    public ArrayList<Course> getEnrolledCourses() {
 
     }
 

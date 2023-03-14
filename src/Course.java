@@ -1,4 +1,4 @@
-package 247.palm-lms.src;
+package lms;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -17,25 +17,21 @@ public class Course
     private ArrayList<Comment> comments = new ArrayList<>();
 
     //create
-    public Course(int id, String title)
-    {
-        this.id = UUID.randomUUID();
-        this.title = title;
+    public Course(int id, String title){
+        //this.id = UUID.randomUUID();
+        //this.title = title;
     }
 
 
-    public Review addReview(int rating, String text, User author)
-    {
+    public Review addReview(int rating, String text, User author){
         return review;
     }
 
-    public int getChapterCount()
-    {
+    public int getChapterCount(){
         return int;
     }
     
-    public Assessment getFinalExam()
-    {
+    public Assessment getFinalExam(){
         return assessment;
     }
 
