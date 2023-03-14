@@ -1,6 +1,4 @@
 
-package lms;
-
 import java.util.UUID;
 import java.util.Date;
 

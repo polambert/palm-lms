@@ -1,8 +1,13 @@
 
-package lms;
-
 import java.util.ArrayList;
 import java.util.UUID;
+
+import java.io.File;
+import java.io.FileReader;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 /**
  * CourseDBManager
@@ -10,6 +15,11 @@ import java.util.UUID;
  * @author Parker Lambert
  */
 public class CourseDBManager {
+	private final String COURSE_FOLDER = "./json/courses/";
+	private final String COURSE_FILE_EXTENSION = "json";
+
+	private final String COURSE_OBJ_ID = "id";
+
 	/**
 	 * Constructs a CourseDBManager
 	 */
@@ -22,7 +32,32 @@ public class CourseDBManager {
 	 * @return All courses in the database
 	 */
 	public ArrayList<Course> readCoursesFromDB() {
+		File courseFolder = new File(COURSE_FOLDER);
+		File[] courseFiles = courseFolder.listFiles();
 
+		for (File file : courseFiles) {
+			String[] fileSplit = file.getName().split(".");
+
+			if (file.isFile() && 
+			fileSplit[fileSplit.length - 1] == COURSE_FILE_EXTENSION) {
+				// it is a json file
+				// read it
+				try {
+					FileReader reader = new FileReader(COURSE_FOLDER + file.getName());
+					JSONParser parser = new JSONParser();
+					JSONObject courseObj = (JSONObject) parser.parse(reader);
+
+					// JSON object is loaded, now extract data
+					UUID id = UUID.fromString((String) courseObj.get(COURSE_OBJ_ID));
+
+					System.out.println(id);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return null;
 	}
 
 	/**

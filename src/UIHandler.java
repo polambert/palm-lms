@@ -1,19 +1,20 @@
 
-package lms;
-
 import java.util.Date;
 
-public class UIHandler {
-	private ProgramState state;
-	private AssessmentHandler assessmentHandler;
-	private CourseManager courseManager;
-	private UserManager UserManager;
+public static class UIHandler {
+	private static ProgramState state;
+	private static AssessmentHandler assessmentHandler;
+	private static CourseManager courseManager;
+	private static UserManager userManager;
 
-	public void main(String args[]) {
+	public static void main(String args[]) {
+		courseManager = CourseManager.getInstance();
+		userManager = UserManager.getInstance();
 
+		courseManager.loadAllCourses();
 	}
 
-	public boolean login(String email, char[] password) {
+	public static boolean login(String email, char[] password) {
 		return true;
 	}
 

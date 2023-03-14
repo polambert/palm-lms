@@ -1,7 +1,6 @@
 
-package lms;
-
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * UserManager
@@ -27,9 +26,9 @@ public class UserManager {
 	public static UserManager getInstance() {
 		if (UserManager.userManager == null) {
 			UserManager.userManager = new UserManager();
-		} else {
-			return UserManager.userManager;
 		}
+
+		return UserManager.userManager;
 	}
 
 	/**

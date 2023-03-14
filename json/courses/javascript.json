@@ -22,20 +22,18 @@
 								"function foo{} ( ... )"
 							],
 							"correctAnswer": 2
-						},
-						// More quiz questions here
+						}
 					]
 				}
-				// More sections here
 			],
 			"test": [
-				// Insert test questions here, following same format as quiz
+				
 			]
 		}
-		// More chapters here
+		
 	],
 	"finalExam": [
-		// Insert final exam questions here
+		
 	],
 	"reviews": [
 		{
@@ -44,8 +42,7 @@
 			"id": "5c0e2459-b196-43f0-81a4-f0ce152369ad",
 			"date": "2023-02-28",
 			"author": "70111114-0165-4343-9a8b-012188e543e6"
-		},
-		// More reviews here
+		}
 	],
 	"comments": [
 		{

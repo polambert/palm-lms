@@ -1,6 +1,4 @@
 
-package lms;
-
 import java.util.ArrayList;
 
 /**
@@ -17,7 +15,7 @@ public class CourseManager {
 	 * Private constructor for singleton CourseManager
 	 */
 	private CourseManager() {
-
+		this.dbManager = new CourseDBManager();
 	}
 
 	/**
@@ -27,9 +25,15 @@ public class CourseManager {
 	public static CourseManager getInstance() {
 		if (CourseManager.courseManager == null) {
 			CourseManager.courseManager = new CourseManager();
-		} else {
-			return CourseManager.courseManager;
 		}
+		
+		return CourseManager.courseManager;
+	}
+
+	public boolean loadAllCourses() {
+		courses = dbManager.readCoursesFromDB();
+
+		return false;
 	}
 
 	// getter and setter...

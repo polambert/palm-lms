@@ -1,8 +1,7 @@
 
-package lms;
-
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.Date;
 
 public class CourseProgress 
 {
@@ -10,7 +9,7 @@ public class CourseProgress
     private User user;
     private int chaptersCompleted;
     private int sectionsCompleted;
-    private ArrayList<ArrayList<double>> chapters = new ArrayList<>();
+    private ArrayList<ArrayList<Double>> chapters = new ArrayList<>();
     private double grade;
     private Date dateCompleted;
     private String certificateId;
