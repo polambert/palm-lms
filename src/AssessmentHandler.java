@@ -52,10 +52,10 @@ public class AssessmentHandler
 
     }
     public void startAssessment(Assessment assessment){
-
+        
     }
     public double calculateScore(){
-
+        return 0;
     }
 
 

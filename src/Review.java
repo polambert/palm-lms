@@ -34,7 +34,7 @@ public class Review {
         return rating;
     }
     public Course getCourse() {
-        return course;
+        return null;
     }
     public User getAuthor() {
         return author;

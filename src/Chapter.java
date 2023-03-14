@@ -1,4 +1,3 @@
-package lms;
 
 import java.util.ArrayList;
 
@@ -7,13 +6,13 @@ import java.util.ArrayList;
  */
 public class Chapter {   
     private ArrayList<Section> sections;
-    private Assesment test;
+    private Assessment test;
 
     public Chapter(ArrayList<Section> sections){
         this.sections = new ArrayList<>();
     }
 
-    public Chapter(ArrayList<Section> sections, Assesment test){
+    public Chapter(ArrayList<Section> sections, Assessment test){
         this.sections = new ArrayList<Section>();
         this.test = test;
     }
@@ -30,11 +29,11 @@ public class Chapter {
         this.sections = sections;
     }
 
-    public Assesment getTest(){
+    public Assessment getTest(){
         return test;
     }
 
-    public void setTest(Assesment test){
+    public void setTest(Assessment test){
         this.test = test;
     }
 

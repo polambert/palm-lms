@@ -99,15 +99,15 @@ public class Course {
 
 
     public Review addReview(int rating, String text, User author) {
-        return review;
+        return null;
     }
 
     public int getChapterCount() {
-        return int ;
+        return 0;
     }
 
     public Assessment getFinalExam() {
-        return assessment;
+        return null;
     }
 
 

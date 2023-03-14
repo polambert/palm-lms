@@ -1,7 +1,7 @@
 
 import java.util.Date;
 
-public static class UIHandler {
+public class UIHandler {
 	private static ProgramState state;
 	private static AssessmentHandler assessmentHandler;
 	private static CourseManager courseManager;

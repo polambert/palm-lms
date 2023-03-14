@@ -17,8 +17,13 @@ import org.json.simple.parser.JSONParser;
 public class CourseDBManager {
 	private final String COURSE_FOLDER = "./json/courses/";
 	private final String COURSE_FILE_EXTENSION = "json";
+	private final String COURSE_FILE_IGNORE = "sample_course";
 
 	private final String COURSE_OBJ_ID = "id";
+	private final String COURSE_OBJ_LANGUAGE = "language";
+	private final String COURSE_OBJ_TITLE = "title";
+	private final String COURSE_OBJ_NAME = "name";
+	private final String COURSE_OBJ_AUTHOR = "author";
 
 	/**
 	 * Constructs a CourseDBManager
@@ -36,10 +41,15 @@ public class CourseDBManager {
 		File[] courseFiles = courseFolder.listFiles();
 
 		for (File file : courseFiles) {
-			String[] fileSplit = file.getName().split(".");
+			String[] fileSplit = file.getName().split("\\.");
+
+			System.out.println(file.getName());
+
+			System.out.println(fileSplit[fileSplit.length - 1]);
 
 			if (file.isFile() && 
-			fileSplit[fileSplit.length - 1] == COURSE_FILE_EXTENSION) {
+			fileSplit[fileSplit.length - 1].equals(COURSE_FILE_EXTENSION) &&
+			!fileSplit[0].equals(COURSE_FILE_IGNORE)) {
 				// it is a json file
 				// read it
 				try {
@@ -49,8 +59,12 @@ public class CourseDBManager {
 
 					// JSON object is loaded, now extract data
 					UUID id = UUID.fromString((String) courseObj.get(COURSE_OBJ_ID));
+					String language = (String) courseObj.get(COURSE_OBJ_LANGUAGE);
+					String title = (String) courseObj.get(COURSE_OBJ_TITLE);
+					String name = (String) courseObj.get(COURSE_OBJ_NAME);
+					UUID authorId = UUID.fromString((String) courseObj.get(COURSE_OBJ_AUTHOR));
 
-					System.out.println(id);
+					System.out.println(title);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -75,7 +75,7 @@ public class User
 
     }
     public ArrayList<Course> getEnrolledCourses() {
-
+        return null;
     }
 
 

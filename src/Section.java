@@ -1,4 +1,3 @@
-package lms;
 
 /**
  * This class will provide the information for a Courses section
@@ -6,22 +5,22 @@ package lms;
  */
 public class Section {
     private String text;
-    private Assesment quiz;
+    private Assessment quiz;
 
     public Section(String text){
         this.text = text;
     }
 
-    public Section(String text, Assesment quiz){
+    public Section(String text, Assessment quiz){
         this.text = text;
         this.quiz = quiz; 
     }
 
-    public Assesment getQuiz(){
+    public Assessment getQuiz(){
         return quiz;
     }
 
-    public void setQuiz(Assesment quiz){
+    public void setQuiz(Assessment quiz){
         this.quiz = quiz;
     }
 
