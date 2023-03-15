@@ -14,6 +14,32 @@
 					"text": "JavaScript is...",
 					"quiz": [
 						{
+							"question": "Which of the following is the proper way to define a variable in JS?",
+							"answers": [
+								"let x = 10",
+								"x = 10;",
+								"let x == 10;",
+								"let x = 10;"
+							],
+							"correctAnswer": 3
+						},
+						// More quiz questions here
+					]
+				}
+				// More sections here
+			],
+			"test": [
+				// Insert test questions here, following same format as quiz
+			]
+		},
+		{
+			"name": "Something A Little More Advanced",
+			"sections": [
+				{
+					"name": "Introduction to Functions",
+					"text": "Functions in JavaScript are...",
+					"quiz": [
+						{
 							"question": "Which of the following is the proper way to define a function in JS?",
 							"answers": [
 								"function() foo { ... }",
