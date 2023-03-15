@@ -109,8 +109,8 @@ public class UIHandler {
 	private static void showSignInMenu() {
 		System.out.println("*****Welcome to PALM*****");
 		System.out.println("***************");
-		System.out.println("1. View Enrolled Classes");
-		System.out.println("2. Enroll In a Course");
+		System.out.println("1. Log In");
+		System.out.println("2. Quit");
 		System.out.println("***************");
 		System.out.println("What would you like to do?:");
 	}
@@ -170,6 +170,36 @@ public class UIHandler {
 		}
 	}
 
+	private void signInMenu() {
+		showSignInMenuMenu();
+		Scanner scan = new Scanner(System.in);
+		String command= scan.nextLine();
+		switch(command)
+		{
+			case "1":
+			{
+				System.out.println("What is your email?");
+				String email= scan.nextLine();
+				System.out.println("What is your password?");
+				char[] pass= scan.nextchar[]();
+				login(String email, char[] pass);
+				break;
+			}
+			case "2":
+			{
+				System.out.println("Thank you for using PALM");
+				return;
+			}
+			default :
+			{
+				System.err.println("Error! Invalid command entered. Please try again.");
+			}
+		}
+	}
+
+	private void courseMenu() {
+
+	}
 
 
 }
