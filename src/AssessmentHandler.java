@@ -1,3 +1,4 @@
+
 public class AssessmentHandler
 {
     private Assessment assessment;
@@ -51,10 +52,10 @@ public class AssessmentHandler
 
     }
     public void startAssessment(Assessment assessment){
-
+        
     }
     public double calculateScore(){
-
+        return 0;
     }
 
 

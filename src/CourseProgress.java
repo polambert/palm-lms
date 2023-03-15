@@ -1,5 +1,7 @@
+
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.Date;
 
 public class CourseProgress 
 {
@@ -7,7 +9,7 @@ public class CourseProgress
     private User user;
     private int chaptersCompleted;
     private int sectionsCompleted;
-    private ArrayList<ArrayList<double>> chapters = new ArrayList<>();
+    private ArrayList<ArrayList<Double>> chapters = new ArrayList<>();
     private double grade;
     private Date dateCompleted;
     private String certificateId;
@@ -46,11 +48,11 @@ public class CourseProgress
         this.sectionsCompleted = sectionsCompleted;
     }
 
-    public ArrayList<ArrayList<double>> getChapters() {
+    public ArrayList<ArrayList<Double>> getChapters() {
         return chapters;
     }
 
-    public void setChapters(ArrayList<ArrayList<double>> chapters) {
+    public void setChapters(ArrayList<ArrayList<Double>> chapters) {
         this.chapters = chapters;
     }
 
@@ -85,28 +87,28 @@ public class CourseProgress
 
     }
     public int getChapterProgress(){
-
+        return 0;
     }
     public int getSectionProgress(){
+        return 0;
+    }
+    public void setChapterProgress(int newChapterProgress) {
 
     }
-    public void setChapterProgress(int){
-
-    }
-    public void setSectionProgress(int){
+    public void setSectionProgress(int newSectionProgress) {
 
     }
     public int incChapterProgress(){
-
+        return 0;
     }
     public int incSectionProgress(){
-
+        return 0;
     }
     public double getProgressPercent(){
-
+        return 0.0;
     }
     public String generateCertificate(){
-
+        return "";
     }
 
 

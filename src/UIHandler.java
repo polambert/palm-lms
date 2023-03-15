@@ -2,10 +2,11 @@
 import java.util.Date;
 
 public class UIHandler {
-	private ProgramState state;
-	private AssessmentHandler assessmentHandler;
-	private CourseManager courseManager;
-	private UserManager UserManager;
+	private static ProgramState state;
+	private static AssessmentHandler assessmentHandler;
+	private static CourseManager courseManager;
+	private static UserManager userManager;
+
 
 	//getters and setters
 	public ProgramState getState() {
@@ -40,10 +41,16 @@ public class UIHandler {
 	}
 
 	public void main(String args[]) {
+=======
+	public static void main(String args[]) {
+		courseManager = CourseManager.getInstance();
+		userManager = UserManager.getInstance();
+>>>>>>> a8aa1220e7cd5385b1294bbea891c1f12ccb3325
 
+		courseManager.loadAllCourses();
 	}
 
-	public boolean login(String email, char[] password) {
+	public static boolean login(String email, char[] password) {
 		return true;
 	}
 

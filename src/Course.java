@@ -1,115 +1,130 @@
-package lms;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class Course {
-    private UUID id;
-    private String language;
-    private String title;
-    private String name;
-    private User author;
-    private String description;
-    private ArrayList<Chapter> chapters = new ArrayList<>();
-    private Assessment finalExam;
-    private ArrayList<Review> reviews = new ArrayList<>();
-    private ArrayList<Comment> comments = new ArrayList<>();
+	private UUID id;
+	private String language;
+	private String title;
+	private String name;
+	private User author;
+	private UUID authorId;
+	private String description;
+	private ArrayList<Chapter> chapters = new ArrayList<>();
+	private Assessment finalExam;
+	private ArrayList<Review> reviews = new ArrayList<>();
+	private ArrayList<Comment> comments = new ArrayList<>();
 
-    //getters and setters
-    public UUID getId() {
-        return id;
-    }
+	public Course(int id, String name, User author, ArrayList<Chapter> chapters,
+	Assessment finalExam, ArrayList<Review> reviews, ArrayList<Comment> comments) {
+		this.id = id;
+		this.name = name;
+		this.author = author;
+		this.chapters = chapters;
+		this.finalExam = finalExam;
+		this.reviews = reviews;
+		this.comments = comments;
+	}
+	
+	public Course(int id, String name, UUID authorId, ArrayList<Chapter> chapters,
+	Assessment finalExam, ArrayList<Review> reviews, ArrayList<Comment> comments) {
+		this.id = id;
+		this.name = name;
+		this.author = author;
+		this.chapters = chapters;
+		this.finalExam = finalExam;
+		this.reviews = reviews;
+		this.comments = comments;
+	}
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
+	//getters and setters
+	public UUID getId() {
+		return id;
+	}
 
-    public String getLanguage() {
-        return language;
-    }
+	public void setId(UUID id) {
+		this.id = id;
+	}
 
-    public void setLanguage(String language) {
-        this.language = language;
-    }
+	public String getLanguage() {
+		return language;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public void setLanguage(String language) {
+		this.language = language;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public User getAuthor() {
-        return author;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setAuthor(User author) {
-        this.author = author;
-    }
+	public User getAuthor() {
+		return author;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setAuthor(User author) {
+		this.author = author;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public ArrayList<Chapter> getChapters() {
-        return chapters;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void setChapters(ArrayList<Chapter> chapters) {
-        this.chapters = chapters;
-    }
+	public ArrayList<Chapter> getChapters() {
+		return chapters;
+	}
 
-    public void setFinalExam(Assessment finalExam) {
-        this.finalExam = finalExam;
-    }
+	public void setChapters(ArrayList<Chapter> chapters) {
+		this.chapters = chapters;
+	}
 
-    public ArrayList<Review> getReviews() {
-        return reviews;
-    }
+	public void setFinalExam(Assessment finalExam) {
+		this.finalExam = finalExam;
+	}
 
-    public void setReviews(ArrayList<Review> reviews) {
-        this.reviews = reviews;
-    }
+	public ArrayList<Review> getReviews() {
+		return reviews;
+	}
 
-    public ArrayList<Comment> getComments() {
-        return comments;
-    }
+	public void setReviews(ArrayList<Review> reviews) {
+		this.reviews = reviews;
+	}
 
-    public void setComments(ArrayList<Comment> comments) {
-        this.comments = comments;
-    }
+	public ArrayList<Comment> getComments() {
+		return comments;
+	}
 
-    //create
-    public Course(int id, String title) {
-        //this.id = UUID.randomUUID();
-        //this.title = title;
-    }
+	public void setComments(ArrayList<Comment> comments) {
+		this.comments = comments;
+	}
 
+	public Review addReview(int rating, String text, User author) {
+		return null;
+	}
 
-    public Review addReview(int rating, String text, User author) {
-        return review;
-    }
+	public int getChapterCount() {
+		return 0;
+	}
 
-    public int getChapterCount() {
-        return int ;
-    }
-
-    public Assessment getFinalExam() {
-        return assessment;
-    }
+	public Assessment getFinalExam() {
+		return null;
+	}
 
 
 
