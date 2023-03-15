@@ -4,32 +4,37 @@
  * and provide the description
  */
 public class Section {
-    private String text;
-    private Assessment quiz;
+	private String name;
+	private String text;
+	private Assessment quiz;
 
-    public Section(String text){
-        this.text = text;
-    }
+	public Section(String name, String text) {
+		this.name = name;
+		this.text = text;
+	}
 
-    public Section(String text, Assessment quiz){
-        this.text = text;
-        this.quiz = quiz; 
-    }
+	public Section(String name, String text, Assessment quiz){
+		this.name = name;
+		this.text = text;
+		this.quiz = quiz; 
+	}
 
-    public Assessment getQuiz(){
-        return quiz;
-    }
+	public String getName() { return name; }
+	public void setName(String newName) { this.name = newName; }
 
-    public void setQuiz(Assessment quiz){
-        this.quiz = quiz;
-    }
+	public Assessment getQuiz() {
+		return quiz;
+	}
 
-    public String getText(){
-        return text;
-    }
+	public void setQuiz(Assessment quiz) {
+		this.quiz = quiz;
+	}
 
-    public void setText(String text){
-        this.text = text;
-    }
+	public String getText() {
+		return text;
+	}
 
+	public void setText(String text) {
+		this.text = text;
+	}
 }

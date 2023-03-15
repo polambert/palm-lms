@@ -9,21 +9,21 @@ public class Question {
     private ArrayList<String> answers;
     private int correctAnswer;
 
-    public Question(String question, ArrayList<String> answers, int correctAnswers){
+    public Question(String question, ArrayList<String> answers, int correctAnswer) {
         this.question = question;
-        this.answers =new ArrayList<String>();
-        this.correctAnswer = correctAnswers;
+        this.answers = answers;
+        this.correctAnswer = correctAnswer;
     }
 
-    public ArrayList<String> getAnswers(){
+    public ArrayList<String> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(ArrayList<String> answers){
+    public void setAnswers(ArrayList<String> answers) {
         this.answers = answers;
     }
 
-    public String getQuestion(){
+    public String getQuestion() {
         return question;
     }
 

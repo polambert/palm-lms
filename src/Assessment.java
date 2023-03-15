@@ -10,7 +10,7 @@ public class Assessment {
     private ArrayList<Question> questions;
     
     public Assessment(ArrayList<Question> questions){
-        this.questions = new ArrayList<Question>();
+        this.questions = questions;
     }
 
     public void addQuestion(Question question){

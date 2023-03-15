@@ -4,16 +4,19 @@ import java.util.ArrayList;
 /**
  * This class will be the parent to Section and Assesment
  */
-public class Chapter {   
+public class Chapter {
+    private String name;
     private ArrayList<Section> sections;
     private Assessment test;
 
-    public Chapter(ArrayList<Section> sections){
-        this.sections = new ArrayList<>();
+    public Chapter(String name, ArrayList<Section> sections) {
+        this.name = name;
+        this.sections = sections;
     }
 
-    public Chapter(ArrayList<Section> sections, Assessment test){
-        this.sections = new ArrayList<Section>();
+    public Chapter(String name, ArrayList<Section> sections, Assessment test) {
+        this.name = name;
+        this.sections = sections;
         this.test = test;
     }
 
@@ -21,19 +24,19 @@ public class Chapter {
         return sections.size();
     }
 
-    public ArrayList<Section> getSections(){
+    public ArrayList<Section> getSections() {
         return sections;
     }
 
-    public void setSection(ArrayList<Section> sections){
+    public void setSection(ArrayList<Section> sections) {
         this.sections = sections;
     }
 
-    public Assessment getTest(){
+    public Assessment getTest() {
         return test;
     }
 
-    public void setTest(Assessment test){
+    public void setTest(Assessment test) {
         this.test = test;
     }
 
