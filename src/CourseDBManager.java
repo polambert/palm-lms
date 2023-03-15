@@ -3,7 +3,7 @@
 // CSCE 247
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 import java.io.File;
@@ -46,6 +46,18 @@ public class CourseDBManager {
 	private final String ASSESSMENT_OBJ_ANSWERS		= "answers";
 	private final String ASSESSMENT_OBJ_CORRECT		= "correctAnswer";
 
+	private final String REVIEW_OBJ_RATING			= "rating";
+	private final String REVIEW_OBJ_TEXT			= "text";
+	private final String REVIEW_OBJ_ID				= "id";
+	private final String REVIEW_OBJ_DATE			= "date";
+	private final String REVIEW_OBJ_AUTHOR			= "author";
+
+	private final String COMMENT_OBJ_COMMENT		= "rating";
+	private final String COMMENT_OBJ_AUTHOR			= "text";
+	private final String COMMENT_OBJ_ID				= "id";
+	private final String COMMENT_OBJ_DATE			= "date";
+	private final String COMMENT_OBJ_REPLIES		= "author";
+	
 	/**
 	 * Constructs a CourseDBManager
 	 */
@@ -53,29 +65,60 @@ public class CourseDBManager {
 
 	}
 
-	private Date dateStringToDate(String dateString) {
+	private LocalDate dateStringToDate(String dateString) {
 		// date strings are formatted YYYY-MM-DD
 		String[] split = dateString.split("-");
 
 		if (split.length != 3) {
-			throw new Exception("[CourseDBManager.dateStringToDate] dateString did not split into three, instead " + split.length);
+			return null;
 		}
 
 		String year = split[0];
 		String month = split[1];
 		String day = split[2];
 
-		if (year.length() != 4)
-			throw new Exception("[CourseDBManager.dateStringToDate] Year was " + year.length() + " digits, should be 4.");
-
-		if (month.length() != 2)
-			throw new Exception("[CourseDBManager.dateStringToDate] Month was " + month.length() + " digits, should be 2.");
-
-		if (day.length() != 2)
-			throw new Exception("[CourseDBManager.dateStringToDate] Day was " + day.length() + " digits, should be 2.");
+		if (year.length() != 4)		return null;
+		if (month.length() != 2)	return null;
+		if (day.length() != 2)		return null;
 		
 		// construct the Date
+		int y = Integer.parseInt(year);
+		int m = Integer.parseInt(month);
+		int d = Integer.parseInt(day);
 
+		LocalDate date = LocalDate.of(y, m, d);
+
+		return date;
+	}
+
+	/**
+	 * Recursive function that can load all Comments from a JSON array
+	 * @param commentsArr JSONArray containing comment data
+	 * @return ArrayList of Comments
+	 */
+	private ArrayList<Comment> loadComments(JSONArray commentsArr) {
+		ArrayList<Comment> comments = new ArrayList<>();
+
+		for (int i = 0; i < commentsArr.size(); i++) {
+			JSONObject commentObj = (JSONObject) commentsArr.get(i);
+
+			String comment = (String) commentObj.get(COMMENT_OBJ_COMMENT);
+			UUID authorId = UUID.fromString((String) commentObj.get(COMMENT_OBJ_AUTHOR));
+			UUID commentId = UUID.fromString((String) commentObj.get(COMMENT_OBJ_ID));
+			LocalDate date = dateStringToDate((String) commentObj.get(COMMENT_OBJ_DATE));
+
+			JSONArray repliesArr = (JSONArray) commentObj.get(COMMENT_OBJ_REPLIES);
+			ArrayList<Comment> replies = new ArrayList<>();
+
+			if (repliesArr.size() > 0) {
+				// recurse
+				replies = loadComments(repliesArr);
+			}
+			
+			comments.add(new Comment(commentId, comment, authorId, date, replies));
+		}
+
+		return comments;
 	}
 
 	/**
@@ -179,18 +222,24 @@ public class CourseDBManager {
 					Assessment finalExam = loadAssessment(finalExamArr);
 
 					// Unpack reviews
+					ArrayList<Review> reviews = new ArrayList<>();
+
 					for (int j = 0; j < reviewsArr.size(); j++) {
 						JSONObject reviewObj = (JSONObject) reviewsArr.get(j);
 
-						rating
-						text
-						id
-						date
-						author
+						int rating = (int) reviewObj.get(REVIEW_OBJ_RATING);
+						String text = (String) reviewObj.get(REVIEW_OBJ_TEXT);
+						UUID reviewId = UUID.fromString((String) reviewObj.get(REVIEW_OBJ_ID));
+						LocalDate date = dateStringToDate((String) reviewObj.get(REVIEW_OBJ_DATE));
+						UUID reviewAuthorId = UUID.fromString((String) reviewObj.get(REVIEW_OBJ_AUTHOR));
+
+						reviews.add(new Review(reviewId, rating, text, reviewAuthorId, date));
 					}
 					
 					// Unpack comments
+					ArrayList<Comment> comments = loadComments(commentsArr);
 
+					Course course = new Course()
 
 					System.out.println(title);
 				} catch (Exception e) {
