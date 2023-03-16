@@ -1,5 +1,6 @@
 
 import java.util.Date;
+import java.util.Scanner;
 import java.util.ArrayList;
 
 public class UIHandler {
@@ -107,13 +108,13 @@ public class UIHandler {
 	private static void showSignInMenu() {
 		System.out.println("*****Welcome to PALM*****");
 		System.out.println("***************");
-		System.out.println("1. View Enrolled Classes");
-		System.out.println("2. Enroll In a Course");
+		System.out.println("1. Log In");
+		System.out.println("2. Quit");
 		System.out.println("***************");
 		System.out.println("What would you like to do?:");
 	}
 
-	private static void showCourseMenue() {
+	private static void showCourseMenu() {
 		System.out.println("***************");
 		System.out.println("Course:");
 		System.out.println("Chapter:");
@@ -131,6 +132,73 @@ public class UIHandler {
 		System.out.println("What would you like to do?:");
 	}
 
+	private void homeMenu() {
+		showHomeMenu();
+		Scanner scan = new Scanner(System.in);
+		String command= scan.nextLine();
+		switch(command)
+		{
+			case "1":
+			{
+				//print all enrolled classes
+				break;
+			}
+			case "2":
+			{
+				System.out.println("What class would you like to enroll in");
+				String enrollClass= scan.nextLine();
+				enrollCourse(Course enrollClass);
+				break;
+			}
+			case "3":
+			{
+				makeCourse();
+				break;
+			}
+
+			case "4":
+			{
+				logout();
+				break;
+			}
+
+			default :
+			{
+				System.err.println("Error! Invalid command entered. Please try again.");
+			}
+		}
+	}
+
+	private void signInMenu() {
+		showSignInMenuMenu();
+		Scanner scan = new Scanner(System.in);
+		String command= scan.nextLine();
+		switch(command)
+		{
+			case "1":
+			{
+				System.out.println("What is your email?");
+				String email= scan.nextLine();
+				System.out.println("What is your password?");
+				char[] pass= scan.nextchar[]();
+				login(String email, char[] pass);
+				break;
+			}
+			case "2":
+			{
+				System.out.println("Thank you for using PALM");
+				return;
+			}
+			default :
+			{
+				System.err.println("Error! Invalid command entered. Please try again.");
+			}
+		}
+	}
+
+	private void courseMenu() {
+
+	}
 
 
 }
