@@ -52,11 +52,11 @@ public class CourseDBManager {
 	private final String REVIEW_OBJ_DATE			= "date";
 	private final String REVIEW_OBJ_AUTHOR			= "author";
 
-	private final String COMMENT_OBJ_COMMENT		= "rating";
-	private final String COMMENT_OBJ_AUTHOR			= "text";
+	private final String COMMENT_OBJ_COMMENT		= "comment";
+	private final String COMMENT_OBJ_AUTHOR			= "author";
 	private final String COMMENT_OBJ_ID				= "id";
 	private final String COMMENT_OBJ_DATE			= "date";
-	private final String COMMENT_OBJ_REPLIES		= "author";
+	private final String COMMENT_OBJ_REPLIES		= "replies";
 	
 	/**
 	 * Constructs a CourseDBManager
@@ -65,6 +65,11 @@ public class CourseDBManager {
 
 	}
 
+	/**
+	 * Converts a datestring (YYYY-MM-DD) into a LocalDate
+	 * @param dateString datestring in format of YYYY-MM-DD
+	 * @return LocalDate representing datestring given
+	 */
 	private LocalDate dateStringToDate(String dateString) {
 		// date strings are formatted YYYY-MM-DD
 		String[] split = dateString.split("-");
@@ -134,7 +139,7 @@ public class CourseDBManager {
 
 			String questionStr = (String) questionObj.get(ASSESSMENT_OBJ_QUESTION);
 			JSONArray answersArr = (JSONArray) questionObj.get(ASSESSMENT_OBJ_ANSWERS);
-			int correctAnswer = (int) questionObj.get(ASSESSMENT_OBJ_CORRECT);
+			int correctAnswer = ((Long) questionObj.get(ASSESSMENT_OBJ_CORRECT)).intValue();
 
 			// convert answers to arralist
 			ArrayList<String> answers = new ArrayList<>();
@@ -155,6 +160,8 @@ public class CourseDBManager {
 	public ArrayList<Course> readCoursesFromDB() {
 		File courseFolder = new File(COURSE_FOLDER);
 		File[] courseFiles = courseFolder.listFiles();
+
+		ArrayList<Course> courses = new ArrayList<>();
 
 		for (File file : courseFiles) {
 			String[] fileSplit = file.getName().split("\\.");
@@ -227,7 +234,7 @@ public class CourseDBManager {
 					for (int j = 0; j < reviewsArr.size(); j++) {
 						JSONObject reviewObj = (JSONObject) reviewsArr.get(j);
 
-						int rating = (int) reviewObj.get(REVIEW_OBJ_RATING);
+						int rating = ((Long) reviewObj.get(REVIEW_OBJ_RATING)).intValue();
 						String text = (String) reviewObj.get(REVIEW_OBJ_TEXT);
 						UUID reviewId = UUID.fromString((String) reviewObj.get(REVIEW_OBJ_ID));
 						LocalDate date = dateStringToDate((String) reviewObj.get(REVIEW_OBJ_DATE));
@@ -239,16 +246,19 @@ public class CourseDBManager {
 					// Unpack comments
 					ArrayList<Comment> comments = loadComments(commentsArr);
 
-					Course course = new Course()
+					Course course = new Course(id, name, authorId, chapters, finalExam, reviews, comments);
+					course.setTitle(title);
+					course.setLanguage(language);
+					course.setDescription(description);
 
-					System.out.println(title);
+					courses.add(course);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		}
 
-		return null;
+		return courses;
 	}
 
 	/**

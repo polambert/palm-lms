@@ -37,4 +37,7 @@ public class CourseManager {
 	}
 
 	// getter and setter...
+	public ArrayList<Course> getCourses() {
+		return this.courses;
+	}
 }

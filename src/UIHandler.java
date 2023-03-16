@@ -1,5 +1,6 @@
 
 import java.util.Date;
+import java.util.ArrayList;
 
 public class UIHandler {
 	private static ProgramState state;
@@ -33,21 +34,19 @@ public class UIHandler {
 	}
 
 	public UserManager getUserManager() {
-		return UserManager;
+		return userManager;
 	}
 
 	public void setUserManager(UserManager userManager) {
-		UserManager = userManager;
+		this.userManager = userManager;
 	}
 
-	public void main(String args[]) {
-=======
 	public static void main(String args[]) {
 		courseManager = CourseManager.getInstance();
 		userManager = UserManager.getInstance();
->>>>>>> a8aa1220e7cd5385b1294bbea891c1f12ccb3325
-
 		courseManager.loadAllCourses();
+		ArrayList<Course> courses = courseManager.getCourses();
+		System.out.println(courses.get(0));
 	}
 
 	public static boolean login(String email, char[] password) {
