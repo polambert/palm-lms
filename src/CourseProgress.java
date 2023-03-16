@@ -9,10 +9,19 @@ public class CourseProgress
     private User user;
     private int chaptersCompleted;
     private int sectionsCompleted;
-    private ArrayList<ArrayList<Double>> chapters = new ArrayList<>();
+    private ArrayList<ArrayList<Double>> grades = new ArrayList<>();
     private double grade;
     private Date dateCompleted;
     private String certificateId;
+
+
+    public CourseProgress(Course course, int chaptersCompleted, int sectionsCompleted) {
+
+    }
+
+    public CourseProgress(Course course) {
+
+    }
 
 
     // getters and setters
@@ -48,12 +57,12 @@ public class CourseProgress
         this.sectionsCompleted = sectionsCompleted;
     }
 
-    public ArrayList<ArrayList<Double>> getChapters() {
-        return chapters;
+    public ArrayList<ArrayList<Double>> getGrades() {
+        return grades;
     }
 
-    public void setChapters(ArrayList<ArrayList<Double>> chapters) {
-        this.chapters = chapters;
+    public void setgrades(ArrayList<ArrayList<Double>> grades) {
+        this.grades = grades;
     }
 
     public double getGrade() {
@@ -80,12 +89,6 @@ public class CourseProgress
         this.certificateId = certificateId;
     }
 
-    public CourseProgress(Course course, int chaptersCompleted, int sectionsCompleted){
-
-    }
-    public CourseProgress(Course course){
-
-    }
     public int getChapterProgress(){
         return chaptersCompleted;
     }
