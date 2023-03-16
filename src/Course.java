@@ -1,4 +1,5 @@
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -15,7 +16,7 @@ public class Course {
 	private ArrayList<Review> reviews = new ArrayList<>();
 	private ArrayList<Comment> comments = new ArrayList<>();
 
-	public Course(UUID id, String name, User author, ArrayList<Chapter> chapters,
+	public Course(int id, String name, User author, ArrayList<Chapter> chapters,
 	Assessment finalExam, ArrayList<Review> reviews, ArrayList<Comment> comments) {
 		this.id = id;
 		this.name = name;
@@ -26,11 +27,11 @@ public class Course {
 		this.comments = comments;
 	}
 	
-	public Course(UUID id, String name, UUID authorId, ArrayList<Chapter> chapters,
+	public Course(int id, String name, UUID authorId, ArrayList<Chapter> chapters,
 	Assessment finalExam, ArrayList<Review> reviews, ArrayList<Comment> comments) {
 		this.id = id;
 		this.name = name;
-		this.authorId = authorId;
+		this.author = author;
 		this.chapters = chapters;
 		this.finalExam = finalExam;
 		this.reviews = reviews;
@@ -115,11 +116,11 @@ public class Course {
 	}
 
 	public Review addReview(int rating, String text, User author) {
-		return null;
+		return new Review(id, rating, text, author, LocalDate.now());
 	}
 
 	public int getChapterCount() {
-		return 0;
+		return chapters.size();
 	}
 
 	public Assessment getFinalExam() {
