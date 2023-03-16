@@ -16,7 +16,7 @@ public class UserManager {
 	 * Private constructor for singleton UserManager
 	 */
 	private UserManager() {
-
+		this.dbManager = new UserDBManager();
 	}
 
 	/**
@@ -31,6 +31,13 @@ public class UserManager {
 		return UserManager.userManager;
 	}
 
+	public boolean loadAllUsers() {
+		users = dbManager.readUsersFromDB();
+
+		return false;
+	}
+
+
 	/**
 	 * Attempts a login with provided email and password
 	 * @param email Email to log in to
@@ -38,6 +45,11 @@ public class UserManager {
 	 * @return True if success, false if fail
 	 */
 	public boolean attemptLogin(String email, char[] password) {
+		String convertedPasswrod = String.valueOf(password);
+		for(User user : users) {
+			if(email.equals(user.getEmail()) && convertedPassword.equals(user.getPassword()))
+				return true;
+		}
 		return false;
 	}
 
@@ -52,6 +64,11 @@ public class UserManager {
 	 */
 	public boolean attemptSignup(String email, char[] password,
 			String firstName, String lastName, Date dateOfBirth) {
+		String convertedPassword = String.valueOf(password);
+		if(email.equals(user.getEmail()) && convertedPasswrod.equals(user.getPasswrod()) && 
+			firstName.equals(user.getFirstName()) && lastName.equals(user.getLastName()) && 
+			dateOfBirth.compateTo(user.getDate()))
+			return true;
 		return false;
 	}
 
