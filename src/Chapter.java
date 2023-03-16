@@ -1,42 +1,48 @@
+package lms;
 
 import java.util.ArrayList;
 
 /**
- * This class will be the parent to Section and Assesment
+ * This class sets all parameters for a Chapter
  */
-public class Chapter {
-    private String name;
+public class Chapter {   
     private ArrayList<Section> sections;
     private Assessment test;
 
-    public Chapter(String name, ArrayList<Section> sections) {
-        this.name = name;
-        this.sections = sections;
+    /**
+     * Creates a Chapter with sections
+     * @param sections ArrayList of Section types
+     */
+    public Chapter(ArrayList<Section> sections){
+        this.sections = new ArrayList<>();
     }
-
-    public Chapter(String name, ArrayList<Section> sections, Assessment test) {
-        this.name = name;
-        this.sections = sections;
+    /**
+     * Creates a chapter with sections and a test for the chapter
+     * @param sections ArrayList of Section types
+     * @param test type Assessment
+     */
+    public Chapter(ArrayList<Section> sections, Assessment test){
+        this.sections = new ArrayList<Section>();
         this.test = test;
     }
-
+ 
     public int getSectionCount() {
         return sections.size();
     }
 
-    public ArrayList<Section> getSections() {
+    public ArrayList<Section> getSections(){
         return sections;
     }
 
-    public void setSection(ArrayList<Section> sections) {
+    public void setSection(ArrayList<Section> sections){
         this.sections = sections;
     }
 
-    public Assessment getTest() {
+    public Assessment getTest(){
         return test;
     }
 
-    public void setTest(Assessment test) {
+    public void setTest(Assessment test){
         this.test = test;
     }
 

@@ -8,7 +8,10 @@ import java.util.ArrayList;
 
 public class Assessment {
     private ArrayList<Question> questions;
-    
+    /**
+     * Creates a new Assessment with an ArrayList of questions
+     * @param questions ArrayList of Question types
+     */
     public Assessment(ArrayList<Question> questions){
         this.questions = questions;
     }
