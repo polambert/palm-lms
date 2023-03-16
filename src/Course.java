@@ -15,7 +15,7 @@ public class Course {
 	private ArrayList<Review> reviews = new ArrayList<>();
 	private ArrayList<Comment> comments = new ArrayList<>();
 
-	public Course(int id, String name, User author, ArrayList<Chapter> chapters,
+	public Course(UUID id, String name, User author, ArrayList<Chapter> chapters,
 	Assessment finalExam, ArrayList<Review> reviews, ArrayList<Comment> comments) {
 		this.id = id;
 		this.name = name;
@@ -26,11 +26,11 @@ public class Course {
 		this.comments = comments;
 	}
 	
-	public Course(int id, String name, UUID authorId, ArrayList<Chapter> chapters,
+	public Course(UUID id, String name, UUID authorId, ArrayList<Chapter> chapters,
 	Assessment finalExam, ArrayList<Review> reviews, ArrayList<Comment> comments) {
 		this.id = id;
 		this.name = name;
-		this.author = author;
+		this.authorId = authorId;
 		this.chapters = chapters;
 		this.finalExam = finalExam;
 		this.reviews = reviews;
@@ -126,7 +126,26 @@ public class Course {
 		return null;
 	}
 
+	public String toString() {
+		String s = "[Course] id: " + id + "\n";
+		s += "\tname: " + name + "\n";
+		s += "\tlanguage: " + language + "\n";
+		s += "\ttitle: " + title + "\n";
+		s += "\tauthorId: " + authorId + "\n";
+		s += "\tdescription: " + description + "\n";
 
+		s += "\treviews: \n";
+		for (int i = 0; i < reviews.size(); i++) {
+			s += "\t" + reviews.get(i).toString().replace("\n", "\n\t");
+		}
+
+		s += "\tcomments: \n";
+		for (int i = 0; i < comments.size(); i++) {
+			s += "\t" + comments.get(i).toString().replace("\n", "\n\t");
+		}
+
+		return s;
+	}
 
 
 

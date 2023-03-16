@@ -8,7 +8,12 @@ public class Question {
     private String question;
     private ArrayList<String> answers;
     private int correctAnswer;
-
+    /**
+     * Creates a new question
+     * @param question String; The actual question
+     * @param answers ArrayList of Strings for possible answers
+     * @param correctAnswer int for Correct answer in ArrayList answers
+     */
     public Question(String question, ArrayList<String> answers, int correctAnswer) {
         this.question = question;
         this.answers = answers;

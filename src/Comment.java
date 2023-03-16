@@ -28,13 +28,27 @@ public class Comment {
 		this.replies = replies;
 	}
 
+	public String toString() {
+		String s = "[Comment] id: " + id + "\n";
+		s += "\tauthorId: " + authorId + "\n";
+		s += "\tcomment: " + comment + "\n";
+		s += "\tdate: " + date + "\n";
+		s += "\treplies: " + date + "\n";
+
+		for (int i = 0; i < replies.size(); i++) {
+			s += "\t" + replies.get(i).toString().replace("\n", "\n\t");
+		}
+
+		return s;
+	}
+
 	public String getComment() {
 		return comment;
 	}
 	public User getAuthor() {
 		return author;
 	}
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 	public UUID getUUID() {
@@ -49,7 +63,7 @@ public class Comment {
 	public void setAuthor(User author) {
 
 	}
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 
 	}
 	public void setUUID(UUID id) {
