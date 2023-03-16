@@ -87,10 +87,10 @@ public class CourseProgress
 
     }
     public int getChapterProgress(){
-        return 0;
+        return chaptersCompleted;
     }
     public int getSectionProgress(){
-        return 0;
+        return sectionsCompleted;
     }
     public void setChapterProgress(int newChapterProgress) {
 
@@ -98,14 +98,14 @@ public class CourseProgress
     public void setSectionProgress(int newSectionProgress) {
 
     }
-    public int incChapterProgress(){
-        return 0;
+    public int incChapterProgress(){   
+        return chaptersCompleted+1;
     }
     public int incSectionProgress(){
-        return 0;
+        return sectionsCompleted+1;
     }
     public double getProgressPercent(){
-        return 0.0;
+        return chaptersCompleted/course.getChapterCount();
     }
     public String generateCertificate(){
         return "";
