@@ -43,13 +43,9 @@ public class UIHandler
 		this.userManager = userManager;
 	}
 
-<<<<<<< HEAD
-	public void main(String args[]) {
-=======
 		public static void main (String args[]){
 			courseManager = CourseManager.getInstance();
 			userManager = UserManager.getInstance();
->>>>>>>a8aa1220e7cd5385b1294bbea891c1f12ccb3325
 
 			courseManager.loadAllCourses();
 		}
