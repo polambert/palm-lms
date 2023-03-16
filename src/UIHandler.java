@@ -170,7 +170,7 @@ public class UIHandler {
 	}
 
 	private void signInMenu() {
-		showSignInMenuMenu();
+		showSignInMenu();
 		Scanner scan = new Scanner(System.in);
 		String command= scan.nextLine();
 		switch(command)
