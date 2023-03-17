@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import java.time.LocalDate;
 
@@ -10,7 +11,7 @@ public class CourseProgress {
 	private ArrayList<ArrayList<Double>> grades = new ArrayList<>();
 	private double grade;
 	private LocalDate dateCompleted;
-	private String certificateId;
+	private UUID certificateId;
 
 
 	public CourseProgress(Course course, int chaptersCompleted, int sectionsCompleted, ArrayList<ArrayList<Double>> grades) {
@@ -22,6 +23,41 @@ public class CourseProgress {
 
 	public CourseProgress(Course course) {
 		this.course = course;
+	}
+	
+	public String toString() {
+		String s = "[CourseProgress] courseId: " + course.getId() + "\n";
+		s += "\tcourseName: " + course.getName() + "\n";
+		s += "\tchaptersCompleted: " + chaptersCompleted + "\n";
+		s += "\tsectionsCompleted: " + sectionsCompleted + "\n";
+		s += "\tdateCompleted: " + dateCompleted + "\n";
+		s += "\tcertificateId: " + certificateId + "\n";
+
+		s += "\tgrades:\n";
+		for (int i = 0; i < grades.size(); i++) {
+			if (i == grades.size() - 1) {
+				s += "\t\tFinal: ";
+			} else {
+				s += "\t\tChapter " + (i+1) + ": ";
+			}
+
+			for (int j = 0; j < grades.get(i).size(); j++) {
+				double grade = grades.get(i).get(j);
+
+				if (grade < 0.01) {
+					// grade is zero, don't show it, user hasn't taken assessment yet
+					s += "---";
+				} else {
+					s += grades.get(i).get(j);
+				}
+				
+
+				if (j != grades.get(i).size() - 1) s += ", ";
+			}
+
+			s += "\n";
+		}
+		return s;
 	}
 
 
@@ -74,11 +110,11 @@ public class CourseProgress {
 		this.dateCompleted = dateCompleted;
 	}
 
-	public String getCertificateId() {
+	public UUID getCertificateId() {
 		return certificateId;
 	}
 
-	public void setCertificateId(String certificateId) {
+	public void setCertificateId(UUID certificateId) {
 		this.certificateId = certificateId;
 	}
 

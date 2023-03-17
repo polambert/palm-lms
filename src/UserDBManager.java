@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -106,6 +107,8 @@ public class UserDBManager {
 	}
 
 	private User readUserFile(File file) {
+		User user = null;
+
 		try {
 			FileReader reader = new FileReader(USER_FOLDER + file.getName());
 			JSONParser parser = new JSONParser();
@@ -148,12 +151,37 @@ public class UserDBManager {
 				}
 
 				JSONObject certificateObj = (JSONObject) courseProgressObj.get(COURSEPROGRESS_OBJ_CERTIFICATE);
-				LocalDate certificateDate = dateStringToDate((String) certificateObj.get(CERTIFICATE_OBJ_DATECOMPLETED));
-				UUID certificateId = UUID.fromString((String) certificateObj.get(CERTIFICATE_OBJ_CERTIFICATEID));
+
+				String dateString = (String) certificateObj.get(CERTIFICATE_OBJ_DATECOMPLETED);
+				LocalDate certificateDate = null;
+				if (!dateString.equals("0000-00-00")) {
+					certificateDate = dateStringToDate(dateString);
+				}
+
+				String idString = (String) certificateObj.get(CERTIFICATE_OBJ_CERTIFICATEID);
+				UUID certificateId = null;
+				if (!idString.equals("")) {
+					UUID.fromString(idString);
+				}
+
+				Course course = CourseManager.getInstance().getCourseById(courseId);
+				System.out.println(course);
+				CourseProgress courseProgress = new CourseProgress(course, chaptersCompleted, sectionsCompleted, grades);
+
+				courseProgress.setDateCompleted(certificateDate);
+				courseProgress.setCertificateId(certificateId);
+
+				courseProgresses.add(courseProgress);
 			}
+
+			user = new User(id, firstName, lastName, email, dob, courseProgresses);
+			user.setCanCreateCourses(canCreateCourses);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		return user;
 	}
 
 	/**
@@ -179,5 +207,51 @@ public class UserDBManager {
 	 */
 	public void writeUserToDB(String email) {
 
+	}
+
+	/**
+	 * Writes a user to DB from a JSONObject
+	 * This is only really meant for private use but there is no risk in making it public
+	 * @param userObj JSONObject of User with hashed password
+	 */
+	public boolean writeUserToDB(JSONObject userObj) {
+		UUID id = UUID.fromString((String) userObj.get(USER_OBJ_ID));
+
+		try {
+			FileWriter writer = new FileWriter(USER_FOLDER + id + ".json");
+
+			writer.write(userObj.toJSONString());
+			writer.flush();
+			writer.close();
+
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			return false;
+		}
+	}
+
+	/**
+	 * Creates a new user
+	 * @param user user to write
+	 * @param hashedPassword the user's password, hashed in SHA-512
+	 * @return true if success
+	 */
+	public boolean createNewUser(User user, String hashedPassword) {
+		// create the object
+		JSONObject userObj = new JSONObject();
+
+		userObj.put(USER_OBJ_ID, user.getId().toString());
+		userObj.put(USER_OBJ_FIRSTNAME, user.getFirstName());
+		userObj.put(USER_OBJ_LASTNAME, user.getLastName());
+		userObj.put(USER_OBJ_EMAIL, user.getEmail());
+		userObj.put(USER_OBJ_DATEOFBIRTH, user.getDateOfBirth());
+		userObj.put(USER_OBJ_PASSWORD, hashedPassword);
+
+		// no grades or courses yet -- this is a brand new user
+
+		// write to file
+		return writeUserToDB(userObj);
 	}
 }
