@@ -115,10 +115,11 @@ public class UserDBManager {
 			reader.close();
 
 			// JSON object is loaded, now extract data
-			UUID id = UUID.fromString((String) userObj.get(USER_OBJ_ID))
+			UUID id = UUID.fromString((String) userObj.get(USER_OBJ_ID));
 			String firstName = (String) userObj.get(USER_OBJ_FIRSTNAME);
 			String lastName = (String) userObj.get(USER_OBJ_LASTNAME);
 			String email = (String) userObj.get(USER_OBJ_EMAIL);
+			LocalDate dob = dateStringToDate((String) userObj.get(USER_OBJ_DATEOFBIRTH));
 			// don't load password
 			boolean canCreateCourses = (boolean) userObj.get(USER_OBJ_CANCREATECOURSES);
 			JSONArray courseProgressArr = (JSONArray) userObj.get(USER_OBJ_COURSEPROGRESSES);
