@@ -11,34 +11,17 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.math.BigInteger;
+
+import java.security.MessageDigest;
+
 /**
  * UserDBManager
  * Provides methods for accessing User database
  * @author Parker Lambert
  */
-public class UserDBManager {
-	private final String USER_FOLDER 							= "./json/users/";
-	private final String USER_FILE_EXTENSION 					= "json";
-	private final String USER_FILE_IGNORE 						= "sample_user";
-
-	private final String USER_OBJ_ID 							= "id";
-	private final String USER_OBJ_FIRSTNAME 					= "firstName";
-	private final String USER_OBJ_LASTNAME 						= "lastName";
-	private final String USER_OBJ_EMAIL 						= "email";
-	private final String USER_OBJ_DATEOFBIRTH 					= "dateOfBirth";
-	private final String USER_OBJ_PASSWORD 						= "password";
-	private final String USER_OBJ_CANCREATECOURSES 				= "canCreateCourses";
-
-	private final String USER_OBJ_COURSEPROGRESSES 				= "courseProgresses";
-
-	private final String COURSEPROGRESS_OBJ_COURSEID 			= "courseId";
-	private final String COURSEPROGRESS_OBJ_CHAPTERSCOMPLETED 	= "chaptersCompleted";
-	private final String COURSEPROGRESS_OBJ_SECTIONSCOMPLETED 	= "sectionsCompleted";
-	private final String COURSEPROGRESS_OBJ_GRADES 				= "grades";
-	private final String COURSEPROGRESS_OBJ_CERTIFICATE 		= "certificate";
-
-	private final String CERTIFICATE_OBJ_DATECOMPLETED 			= "dateCompleted";
-	private final String CERTIFICATE_OBJ_CERTIFICATEID 			= "certificateId";
+public class UserDBManager extends DataConstants {
+	private final String HASH_ALGORITHM = "SHA-512";
 
 	/**
 	 * Constructor for UserDBManager
@@ -190,7 +173,11 @@ public class UserDBManager {
 	 * @return User
 	 */
 	public User readUserFromDB(String email) {
-		return null;
+		// get their id
+		String id = getIdFromEmail(email).toString();
+		File file = new File(USER_FOLDER + id + ".json");
+
+		return readUserFile(file);
 	}
 
 	/**
@@ -253,5 +240,97 @@ public class UserDBManager {
 
 		// write to file
 		return writeUserToDB(userObj);
+	}
+
+	public UUID getIdFromEmail(String email) {
+		try {
+			FileReader reader = new FileReader(new File(USER_LOGIN_LOOKUP));
+			JSONParser parser = new JSONParser();
+			JSONObject lookupObj = (JSONObject) parser.parse(reader);
+
+			reader.close();
+
+			String id = (String) lookupObj.get(email);
+
+			if (id != null) {
+				return UUID.fromString(id);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	public void updateLoginLookup(ArrayList<User> users) {
+		JSONObject lookupObj = new JSONObject();
+
+		for (int i = 0; i < users.size(); i++) {
+			UUID id = users.get(i).getId();
+			String email = users.get(i).getEmail();
+
+			lookupObj.put(email, id.toString());
+		}
+
+		// write to file
+		try {
+			FileWriter writer = new FileWriter(new File(USER_LOGIN_LOOKUP));
+			writer.write(lookupObj.toJSONString());
+			writer.flush();
+			writer.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public User attemptLogin(String email, char[] password) {
+		UUID id = getIdFromEmail(email);
+
+		try {
+			File file = new File(USER_FOLDER + id.toString() + ".json");
+			FileReader reader = new FileReader(file);
+			JSONParser parser = new JSONParser();
+			JSONObject userObj = (JSONObject) parser.parse(reader);
+
+			reader.close();
+			
+			// get password from userObj
+			String storedPW = (String) userObj.get(USER_OBJ_PASSWORD);
+
+			// hash given password
+			String hashedPW = hashPassword(password);
+
+			if (hashedPW.equals(storedPW)) {
+				// passwords match
+				// load and return the user
+				return readUserFromDB(email);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	public String hashPassword(char[] password) {
+		MessageDigest md = null;
+
+		try {
+			// hash the password
+			md = MessageDigest.getInstance(HASH_ALGORITHM);
+			
+			// a String is constructed with the password, but it should be
+			//   immediately garbage collected since ownership isn't passed.
+			byte[] messageDigest = md.digest(new String(password).getBytes());
+
+			// convert into hex
+			BigInteger number = new BigInteger(1, messageDigest);
+
+			return number.toString(16);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

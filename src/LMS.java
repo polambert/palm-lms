@@ -26,8 +26,8 @@ public class LMS  {
             case "2":
             {
                 System.out.println("What class would you like to enroll in");
-                String enrollClass= scan.nextLine();
-                enrollCourse(Course enrollClass);
+                String enrollClass = scan.nextLine();
+                enrollCourse(enrollClass);
                 break;
             }
             case "3":

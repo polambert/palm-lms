@@ -18,45 +18,7 @@ import org.json.simple.parser.JSONParser;
  * Manages reading and writing courses directly to database
  * @author Parker Lambert
  */
-public class CourseDBManager {
-	private final String COURSE_FOLDER 				= "./json/courses/";
-	private final String COURSE_FILE_EXTENSION 		= "json";
-	private final String COURSE_FILE_IGNORE 		= "sample_course";
-
-	private final String COURSE_OBJ_ID 				= "id";
-	private final String COURSE_OBJ_LANGUAGE 		= "language";
-	private final String COURSE_OBJ_TITLE 			= "title";
-	private final String COURSE_OBJ_NAME 			= "name";
-	private final String COURSE_OBJ_AUTHOR 			= "author";
-	private final String COURSE_OBJ_DESCRIPTION 	= "description";
-	private final String COURSE_OBJ_CHAPTERS 		= "chapters";
-	private final String COURSE_OBJ_FINAL 			= "finalExam";
-	private final String COURSE_OBJ_REVIEWS 		= "reviews";
-	private final String COURSE_OBJ_COMMENTS 		= "comments";
-
-	private final String CHAPTER_OBJ_NAME 			= "name";
-	private final String CHAPTER_OBJ_SECTIONS 		= "sections";
-	private final String CHAPTER_OBJ_TEST			= "test";
-
-	private final String SECTION_OBJ_NAME 			= "name";
-	private final String SECTION_OBJ_TEXT			= "text";
-	private final String SECTION_OBJ_QUIZ			= "quiz";
-
-	private final String ASSESSMENT_OBJ_QUESTION	= "question";
-	private final String ASSESSMENT_OBJ_ANSWERS		= "answers";
-	private final String ASSESSMENT_OBJ_CORRECT		= "correctAnswer";
-
-	private final String REVIEW_OBJ_RATING			= "rating";
-	private final String REVIEW_OBJ_TEXT			= "text";
-	private final String REVIEW_OBJ_ID				= "id";
-	private final String REVIEW_OBJ_DATE			= "date";
-	private final String REVIEW_OBJ_AUTHOR			= "author";
-
-	private final String COMMENT_OBJ_COMMENT		= "comment";
-	private final String COMMENT_OBJ_AUTHOR			= "author";
-	private final String COMMENT_OBJ_ID				= "id";
-	private final String COMMENT_OBJ_DATE			= "date";
-	private final String COMMENT_OBJ_REPLIES		= "replies";
+public class CourseDBManager extends DataConstants {
 	
 	/**
 	 * Constructs a CourseDBManager

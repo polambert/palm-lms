@@ -4,17 +4,13 @@ import java.util.UUID;
 
 import java.time.LocalDate;
 
-import java.math.BigInteger;
-
-import java.security.MessageDigest;
-
 /**
  * UserManager
  * Manages Users and User storage in the database
  * @author Parker Lambert
  */
 public class UserManager {
-	private final String HASH_ALGORITHM = "SHA-512";
+	private User loggedInUser;
 
 	private ArrayList<User> users;
 	private static UserManager userManager;
@@ -51,11 +47,8 @@ public class UserManager {
 
 		System.out.println(UserManager.getInstance().getUsers().get(0));
 
-		// create a new user
-		System.out.println("Creating a new user");
-		char[] password = { 'p', 'a', 's', 's' };
-		boolean success = UserManager.getInstance().attemptSignup("parker@test.com", password, "Parker", "Lambert", LocalDate.now());
-		System.out.println(success);
+		// try to log in
+		System.out.println(UserManager.getInstance().attemptLogin("parker@test.com", { 'p', 'a', 's', 's' }));
 	}
 
 
@@ -66,7 +59,16 @@ public class UserManager {
 	 * @return True if success, false if fail
 	 */
 	public boolean attemptLogin(String email, char[] password) {
-		return false;
+		// get their id
+		User loginUser = dbManager.attemptLogin(email, password);
+
+		if (loginUser != null) {
+			this.loggedInUser = loginUser;
+
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -83,25 +85,31 @@ public class UserManager {
 		// create an id
 		UUID id = UUID.randomUUID();
 
-		String hashedPassword = null;
+		String hashedPassword = dbManager.hashPassword(password);
 
-		try {
-			// hash the password
-			MessageDigest md = MessageDigest.getInstance(HASH_ALGORITHM);
+		boolean success = dbManager.createNewUser(new User(id, firstName, lastName, email, dateOfBirth, null), hashedPassword);
 
-			// a String is constructed with the password, but it should be
-			//   immediately garbage collected since ownership isn't passed.
-			byte[] messageDigest = md.digest(new String(password).getBytes());
+		updateLoginLookup();
 
-			// convert into hex
-			BigInteger number = new BigInteger(1, messageDigest);
-			hashedPassword = number.toString(16);
+		return success;
+	}
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public UUID getIdFromEmail(String email) {
+		return dbManager.getIdFromEmail(email);
+	}
 
-		return dbManager.createNewUser(new User(id, firstName, lastName, email, dateOfBirth, null), hashedPassword);
+	private void updateLoginLookup() {
+		loadAllUsers();
+
+		dbManager.updateLoginLookup(users);
+	}
+
+	public User getLoggedInUser() {
+		return this.loggedInUser;
+	}
+
+	public void logout() {
+		this.loggedInUser = null;
 	}
 
 	// getters and setters
