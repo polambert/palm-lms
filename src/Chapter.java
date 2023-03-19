@@ -1,11 +1,12 @@
-package lms;
+
 
 import java.util.ArrayList;
 
 /**
  * This class sets all parameters for a Chapter
  */
-public class Chapter {   
+public class Chapter {
+    private String name;
     private ArrayList<Section> sections;
     private Assessment test;
 
@@ -13,19 +14,12 @@ public class Chapter {
      * Creates a Chapter with sections
      * @param sections ArrayList of Section types
      */
-    public Chapter(ArrayList<Section> sections){
-        this.sections = new ArrayList<>();
-    }
-    /**
-     * Creates a chapter with sections and a test for the chapter
-     * @param sections ArrayList of Section types
-     * @param test type Assessment
-     */
-    public Chapter(ArrayList<Section> sections, Assessment test){
-        this.sections = new ArrayList<Section>();
+    public Chapter(String name, ArrayList<Section> sections, Assessment test) {
+        this.name = name;
+        this.sections = sections;
         this.test = test;
     }
- 
+    
     public int getSectionCount() {
         return sections.size();
     }

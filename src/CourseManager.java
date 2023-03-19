@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * CourseManager
@@ -28,6 +29,16 @@ public class CourseManager {
 		}
 		
 		return CourseManager.courseManager;
+	}
+
+	public Course getCourseById(UUID id) {
+		for (int i = 0; i < courses.size(); i++) {
+			if (courses.get(i).getId().equals(id)) {
+				return courses.get(i);
+			}
+		}
+
+		return null;
 	}
 
 	public boolean loadAllCourses() {

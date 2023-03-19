@@ -1,0 +1,29 @@
+{
+	"id": "70111114-0165-4343-9a8b-012188e543e6",
+	"firstName": "John",
+	"lastName": "Doe",
+	"email": "john.doe@example.org",
+	"dateOfBirth": "1970-01-01",
+	"password": "b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86",
+	"canCreateCourses": true,
+	"courseProgresses": [
+		{
+			"courseId": "5d2e37c5-4f9c-4bfc-a0ea-4b879f7b6231",
+			"chaptersCompleted": 3,
+			"sectionsCompleted": 2,
+			"grades": [
+				[ 88.0, 82.0, 95.0 ],
+				[ 100.0, 80.0, 82.0 ],
+				[ 90.0, 80.0, 86.0 ],
+				[ 83.0, 99.0, 0.0 ],
+				[ 0.0, 0.0, 0.0 ],
+				[ 0.0, 0.0, 0.0 ],
+				[ 0.0 ]
+			],
+			"certificate": {
+				"dateCompleted": "0000-00-00",
+				"certificateId": ""
+			}
+		}
+	]
+}
