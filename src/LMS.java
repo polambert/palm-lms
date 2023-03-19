@@ -59,7 +59,8 @@ public class LMS  {
         System.out.println("*****Welcome to PALM*****");
         System.out.println("***************");
         System.out.println("1. Log In");
-        System.out.println("2. Quit");
+        System.out.println("2. New User");
+        System.out.println("3. Quit");
         System.out.println("***************");
         System.out.println("What would you like to do?:");
     }
@@ -68,24 +69,33 @@ public class LMS  {
         showSignInMenu();
         Scanner scan = new Scanner(System.in);
         String command= scan.nextLine();
-        switch(command)
-        {
-            case "1":
-            {
+        switch(command){
+            case "1": {
                 System.out.println("What is your email?");
                 String email= scan.nextLine();
                 System.out.println("What is your password?");
-                char[] pass= scan.nextchar[]();
-                login(String email, char[] pass);
+                readUserFromDB(email);
                 break;
             }
-            case "2":
-            {
+            case "2":{
+                System.out.println("What is your name?");
+                String name= scan.nextLine();
+                System.out.println("What is your email?");
+                String email= scan.nextLine();
+                System.out.println("What is your password?");
+                String pass= scan.nextLine();
+                char[] ch = new char[pass.length()];
+                for (int i = 0; i < pass.length(); i++) {
+                    ch[i] = pass.charAt(i);
+                }
+                signup(name, email, Date dateOfBirth, ch;
+                return;
+            }
+            case "3":{
                 System.out.println("Thank you for using PALM");
                 return;
             }
-            default :
-            {
+            default :{
                 System.err.println("Error! Invalid command entered. Please try again.");
             }
         }
@@ -149,19 +159,80 @@ public class LMS  {
 
 
     private static void showCommentMenu() {
-
+        System.out.println("*****Review Menu*****");
+        System.out.println("Course: ");
+        System.out.println("*************************");
+        //print out all the current Comments
+        System.out.println("*************************");
+        System.out.println("1. Leave a Comment");
+        System.out.println("2. Return to course");
+        System.out.println("*************************");
+        System.out.println("What would you like to do?:");
     }
 
-    private void commentMenu() {
-
+    private void commentMenu(Course course) {
+        showCommentMenu();
+        Scanner scan = new Scanner(System.in);
+        String command= scan.nextLine();
+        switch(command)
+        {
+            case "1":
+            {
+                System.out.println("What is your Comment?");
+                String comment= scan.nextLine();
+                //add comment to the array list of comments
+                break;
+            }
+            case "2":
+            {
+                courseMenu(course);
+                return;
+            }
+            default :
+            {
+                
+                System.err.println("Error! Invalid command entered. Please try again.");
+            }
+        }
     }
 
     private static void showReviewMenu() {
-
+        System.out.println("*****Review Menu*****");
+        System.out.println("Course: ");
+        System.out.println("Rating: ");
+        System.out.println("*************************");
+        //print out all the current Review
+        System.out.println("*************************");
+        System.out.println("1. Leave a Review");
+        System.out.println("2. Return to course");
+        System.out.println("*************************");
+        System.out.println("What would you like to do?:");
     }
 
-    private void reviewMenu() {
-
+    private void reviewMenu(Course course) {
+        showReviewMenu();
+        Scanner scan = new Scanner(System.in);
+        String command= scan.nextLine();
+        switch(command)
+        {
+            case "1":
+            {
+                System.out.println("What is your Review?");
+                String comment= scan.nextLine();
+                //add review to the array list of reviews
+                break;
+            }
+            case "2":
+            {
+                courseMenu(course);
+                return;
+            }
+            default :
+            {
+                
+                System.err.println("Error! Invalid command entered. Please try again.");
+            }
+        }
     }
 
 
