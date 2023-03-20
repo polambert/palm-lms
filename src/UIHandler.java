@@ -42,14 +42,15 @@ public class UIHandler
 	public void setUserManager(UserManager userManager) {
 		this.userManager = userManager;
 	}
-
+/* 
 		public static void main (String args[]){
 			courseManager = CourseManager.getInstance();
 			userManager = UserManager.getInstance();
 
 			courseManager.loadAllCourses();
 		}
-=======
+*/
+//=======
 	public static void main(String args[]) {
 		courseManager = CourseManager.getInstance();
 		userManager = UserManager.getInstance();
@@ -77,28 +78,8 @@ public class UIHandler
 	public boolean enrollCourse(Course course) {
 		return true;
 	}
->>>>>>> 5c5c6f818b5e6cccdc86d643c472e0d14d5592c1
 
-		public static boolean login(String email,char[] password){
-			return true;
-		}
-
-		public boolean logout() {
-			return true;
-		}
-
-		public boolean signup(String name, String email, Date dateOfBirth,char[] password){
-			return true;
-		}
-
-		public void startAssessment(CourseProgress courseProgress){
-
-		}
-
-		public boolean enrollCourse(Course course){
-			return true;
-		}
-
+	//>>>>>>> 5c5c6f818b5e6cccdc86d643c472e0d14d5592c1
 		public boolean dropCourse(Course course){
 			return true;
 		}

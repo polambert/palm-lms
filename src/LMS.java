@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class LMS  {
+public class LMS {
     private static void showHomeMenu() {
         System.out.println("*****Home Menu*****");
         System.out.println("1. View Enrolled Classes");
@@ -27,12 +27,12 @@ public class LMS  {
             {
                 System.out.println("What class would you like to enroll in");
                 String enrollClass = scan.nextLine();
-                enrollCourse(enrollClass);
+                //enrollCourse(enrollClass);
                 break;
             }
             case "3":
             {
-                makeCourse();
+                //makeCourse();
                 break;
             }
             case "4":
@@ -40,12 +40,12 @@ public class LMS  {
                 System.out.println("What class would you like to enroll in");
                 String course= scan.nextLine();
                 //convert string to course
-                courseMenu(course);
+                //courseMenu(course);
                 break;
             }
             case "5":
             {
-                logout();
+                //logout();
                 break;
             }
             default :
@@ -74,7 +74,12 @@ public class LMS  {
                 System.out.println("What is your email?");
                 String email= scan.nextLine();
                 System.out.println("What is your password?");
-                readUserFromDB(email);
+                String pass= scan.nextLine();
+                char[] password = new char[pass.length()];
+                for (int i = 0; i < pass.length(); i++) {
+                    password[i] = pass.charAt(i);
+                }
+                attemptLogin(email, password);
                 break;
             }
             case "2":{
@@ -88,7 +93,7 @@ public class LMS  {
                 for (int i = 0; i < pass.length(); i++) {
                     ch[i] = pass.charAt(i);
                 }
-                signup(name, email, Date dateOfBirth, ch;
+                //signup(name, email, Date dateOfBirth, ch;
                 return;
             }
             case "3":{
@@ -119,7 +124,7 @@ public class LMS  {
 
     private void courseMenu(Course course) {
         //add course and section to show course below
-        showCourseMenu();
+        //showCourseMenu();
         Scanner scan = new Scanner(System.in);
         String command= scan.nextLine();
         switch(command)
@@ -130,7 +135,7 @@ public class LMS  {
                 break;
             }
             case "2": {
-                startAssessment(CourseProgress courseProgress);
+                //startAssessment(CourseProgress courseProgress);
                 break;
             }
             case "3": {
@@ -142,10 +147,10 @@ public class LMS  {
                 break;
             }
             case "5": {
-                dropCourse(Course course) {
+                //dropCourse(Course course) {
                     break;
                 }
-            }
+            
             case "6": {
                 homeMenu();
                 break;
