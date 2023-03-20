@@ -55,7 +55,7 @@ public class LMS {
         }
     }
 
-    private static void showSignInMenu() {
+    public void showSignInMenu() {
         System.out.println("*****Welcome to PALM*****");
         System.out.println("***************");
         System.out.println("1. Log In");
@@ -65,7 +65,7 @@ public class LMS {
         System.out.println("What would you like to do?:");
     }
 
-    private void signInMenu() {
+    public void signInMenu() {
         showSignInMenu();
         Scanner scan = new Scanner(System.in);
         String command= scan.nextLine();
@@ -241,4 +241,7 @@ public class LMS {
     }
 
 
+
+
+    
 }
