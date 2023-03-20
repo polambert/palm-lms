@@ -28,27 +28,13 @@ public class Comment {
 		this.replies = replies;
 	}
 
-	public String toString() {
-		String s = "[Comment] id: " + id + "\n";
-		s += "\tauthorId: " + authorId + "\n";
-		s += "\tcomment: " + comment + "\n";
-		s += "\tdate: " + date + "\n";
-		s += "\treplies: " + date + "\n";
-
-		for (int i = 0; i < replies.size(); i++) {
-			s += "\t" + replies.get(i).toString().replace("\n", "\n\t");
-		}
-
-		return s;
-	}
-
 	public String getComment() {
 		return comment;
 	}
 	public User getAuthor() {
 		return author;
 	}
-	public LocalDate getDate() {
+	public Date getDate() {
 		return date;
 	}
 	public UUID getUUID() {
@@ -58,18 +44,29 @@ public class Comment {
 		return replies;
 	}
 	public void setComment(String comment) {
-
+		this.comment = comment;
 	}
 	public void setAuthor(User author) {
-
+		this.author = author;
 	}
-	public void setDate(LocalDate date) {
-
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	public void setUUID(UUID id) {
-
+		this.id = id;
 	}
 	public void setReplies(ArrayList<Comment> replies) {
-		
+		this.replies = replies;
+	}
+	public String toString() {
+		String s = "[Comment] comment: " + comment + "\n";
+		s += "\tauthor: " + author + "\n";
+		s += "\tid: " + id + "\n";
+		s += "\tdate: " + date + "\n";
+		s += "\treplies: \n";
+		for (int i = 0; i < replies.size(); i++) {
+			s += "\t" + replies.get(i).toString().replace("\n", "\n\t");
+		}
+		return s;
 	}
 }

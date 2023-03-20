@@ -43,15 +43,6 @@ public class Review {
 		this.date = date;
 	}
 
-	public String toString() {
-		String s = "[Review] id: " + id + "\n";
-		s += "\trating: " + rating + "\n";
-		s += "\ttext: " + text + "\n";
-		s += "\tdate: " + date + "\n";
-		s += "\tauthorId: " + authorId;
-		return s;
-	}
-
 	public int getRating() {
 		return rating;
 	}
@@ -64,23 +55,32 @@ public class Review {
 	public String getText() {
 		return text;
 	}
-	public LocalDate getDate() {
+	public Date getDate() {
 		return date;
 	}
 	public void setRating(int rating) {
-
+		this.rating = rating;
 	}
 	public void setCoures(Course course) {
-
+		this.course = course;
 	}
 	public void setAuthor(User author) {
-
+		this.author = author;
 	}
 	public void setText(String text) {
-
+		this.text = text;
 	}
-	public void setDate(LocalDate date) {
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	public String toString() {
+		String s = "[Review] rating: " + rating + "\n";
+		s += "\ttext: " + text + "\n";
+		s += "\tid: " + id + "\n";
+		s += "\tdate: " + date + "\n";
+		s += "\tauthor: " + author + "\n";
 		
+		return s;
 	}
 
 }
