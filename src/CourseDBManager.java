@@ -229,7 +229,101 @@ public class CourseDBManager extends DataConstants {
 	 * @return The Course in question
 	 */
 	public Course readCourseFromDB(UUID id) {
-		return null;
+		File courseFolder = new File(COURSE_FOLDER);
+		File[] courseFiles = courseFolder.listFiles();
+		Course course = null;
+
+		for (File file : courseFiles) {
+			String[] fileSplit = file.getName().split("\\.");
+
+			if (file.isFile() && 
+			fileSplit[fileSplit.length - 1].equals(COURSE_FILE_EXTENSION) &&
+			!fileSplit[0].equals(COURSE_FILE_IGNORE)) {
+				// it is a json file
+				// read it
+				try {
+					FileReader reader = new FileReader(COURSE_FOLDER + file.getName());
+					JSONParser parser = new JSONParser();
+					JSONObject courseObj = (JSONObject) parser.parse(reader);
+
+					// close the reader as soon as we no longer need it
+					reader.close();
+
+					UUID courseId = UUID.fromString((String) courseObj.get(COURSE_OBJ_ID));
+
+					if (id.equals(courseId)) {
+						// JSON object is loaded, now extract data
+						String language = (String) courseObj.get(COURSE_OBJ_LANGUAGE);
+						String title = (String) courseObj.get(COURSE_OBJ_TITLE);
+						String name = (String) courseObj.get(COURSE_OBJ_NAME);
+						UUID authorId = UUID.fromString((String) courseObj.get(COURSE_OBJ_AUTHOR));
+						String description = (String) courseObj.get(COURSE_OBJ_DESCRIPTION);
+
+						JSONArray chaptersArr = (JSONArray) courseObj.get(COURSE_OBJ_CHAPTERS);
+						JSONArray finalExamArr = (JSONArray) courseObj.get(COURSE_OBJ_FINAL);
+						JSONArray reviewsArr = (JSONArray) courseObj.get(COURSE_OBJ_REVIEWS);
+						JSONArray commentsArr = (JSONArray) courseObj.get(COURSE_OBJ_COMMENTS);
+
+						// Unpack chapters
+						ArrayList<Chapter> chapters = new ArrayList<>();
+
+						for (int i = 0; i < chaptersArr.size(); i++) {
+							JSONObject chapterObj = (JSONObject) chaptersArr.get(i);
+
+							String chapterName = (String) chapterObj.get(CHAPTER_OBJ_NAME);
+							JSONArray sectionsArr = (JSONArray) chapterObj.get(CHAPTER_OBJ_SECTIONS);
+							JSONArray testArr = (JSONArray) chapterObj.get(CHAPTER_OBJ_TEST);
+
+							Assessment test = loadAssessment(testArr);
+
+							ArrayList<Section> sections = new ArrayList<>();
+
+							for (int j = 0; j < sectionsArr.size(); j++) {
+								JSONObject sectionObj = (JSONObject) sectionsArr.get(j);
+
+								String sectionName = (String) sectionObj.get(SECTION_OBJ_NAME);
+								String sectionText = (String) sectionObj.get(SECTION_OBJ_TEXT);
+								JSONArray quizArray = (JSONArray) sectionObj.get(SECTION_OBJ_QUIZ);
+
+								Assessment quiz = loadAssessment(quizArray);
+
+								sections.add(new Section(sectionName, sectionText, quiz));
+							}
+
+							chapters.add(new Chapter(chapterName, sections, test));
+						}
+
+						// Unpack final exam
+						Assessment finalExam = loadAssessment(finalExamArr);
+
+						// Unpack reviews
+						ArrayList<Review> reviews = new ArrayList<>();
+
+						for (int j = 0; j < reviewsArr.size(); j++) {
+							JSONObject reviewObj = (JSONObject) reviewsArr.get(j);
+
+							int rating = ((Long) reviewObj.get(REVIEW_OBJ_RATING)).intValue();
+							String text = (String) reviewObj.get(REVIEW_OBJ_TEXT);
+							UUID reviewId = UUID.fromString((String) reviewObj.get(REVIEW_OBJ_ID));
+							LocalDate date = dateStringToDate((String) reviewObj.get(REVIEW_OBJ_DATE));
+							UUID reviewAuthorId = UUID.fromString((String) reviewObj.get(REVIEW_OBJ_AUTHOR));
+
+							reviews.add(new Review(reviewId, rating, text, reviewAuthorId));
+						}
+						ArrayList<Comment> comments = loadComments(commentsArr);
+
+						course = new Course(id, name, authorId, chapters, finalExam, reviews, comments);
+						course.setTitle(title);
+						course.setLanguage(language);
+						course.setDescription(description);
+						break;
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+			return course;
 	}
 
 	/**
