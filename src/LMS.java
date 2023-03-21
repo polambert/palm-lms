@@ -66,7 +66,7 @@ public class LMS {
                 //courseMenu(course);
                 break;
             }
-            case "5":
+            case "Log Out":
             {
                 //logout();
                 break;
