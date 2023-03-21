@@ -359,28 +359,30 @@ public class CourseDBManager extends DataConstants {
 					sectionObj.put(SECTION_OBJ_NAME, section.getName());
 					sectionObj.put(SECTION_OBJ_TEXT, section.getText());
 
-					// Quiz object
-					if (section.getQuiz() != null) {
-						JSONObject quizObj = new JSONObject();
-						quizObj.put(ASSESSMENT_OBJ_QUESTION, section.getQuiz().getQuestion());
-						quizObj.put(ASSESSMENT_OBJ_ANSWERS, new JSONArray(section.getQuiz().getAnswers()));
-						quizObj.put(ASSESSMENT_OBJ_CORRECT, section.getQuiz().getCorrectAnswer());
-						sectionObj.put(SECTION_OBJ_QUIZ, quizObj);
+					// Quiz Array
+					JSONArray quizzesArray = new JSONArray();
+					for(Question quiz : section.getQuiz().getQuestions()) {
+						JSONObject quizObj= new JSONObject();
+						quizObj.put(ASSESSMENT_OBJ_QUESTION, quiz.getQuestion());
+						quizObj.put(ASSESSMENT_OBJ_ANSWERS, quiz.getAnswers());
+						quizObj.put(ASSESSMENT_OBJ_CORRECT, quiz.getCorrectAnswer());
+						quizzesArray.add(quizObj);
 					}
-
+					sectionObj.put(SECTION_OBJ_QUIZ, quizzesArray);
 					sectionsArray.add(sectionObj);
 				}
 				chapterObj.put(CHAPTER_OBJ_SECTIONS, sectionsArray);
 
 				// Test object
-				if (chapter.getTest() != null) {
+				JSONArray testArray = new JSONArray();
+				for(Question test : chapter.getTest().getQuestions()) {
 					JSONObject testObj = new JSONObject();
-					testObj.put(ASSESSMENT_OBJ_QUESTION, chapter.getTest().getQuestion());
-					testObj.put(ASSESSMENT_OBJ_ANSWERS, new JSONArray(chapter.getTest().getAnswers()));
-					testObj.put(ASSESSMENT_OBJ_CORRECT, chapter.getTest().getCorrectAnswer());
-					chapterObj.put(CHAPTER_OBJ_TEST, testObj);
+					testObj.put(ASSESSMENT_OBJ_QUESTION, test.getQuestion());
+					testObj.put(ASSESSMENT_OBJ_ANSWERS, test.getAnswers());
+					testObj.put(ASSESSMENT_OBJ_CORRECT, test.getCorrectAnswer());
+					testArray.add(testObj);
 				}
-
+				chapterObj.put(CHAPTER_OBJ_TEST, testArray);
 				chaptersArray.add(chapterObj);
 			}
 			courseObj.put(COURSE_OBJ_CHAPTERS, chaptersArray);
