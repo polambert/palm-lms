@@ -102,7 +102,7 @@ public class LMS {
                 for (int i = 0; i < pass.length(); i++) {
                     password[i] = pass.charAt(i);
                 }
-                attemptLogin(email, password);
+                UserManager.getInstance().attemptLogin(email, password);
                 break;
             }
             case "New User":{
@@ -144,7 +144,7 @@ public class LMS {
     private void courseMenu(Course course) {
         //add course and section to show course below
 
-        showCourseMenu(course, UserManager.getInstance().getLoggedInUser().getCourseProgressesIn(course).getChaptersCompleted);
+        showCourseMenu(course, course.getChapters().get(UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course).getChaptersCompleted()));
 
         //Left unfinished - LukeLane
         Scanner scan = new Scanner(System.in);
