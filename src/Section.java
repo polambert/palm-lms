@@ -18,6 +18,14 @@ public class Section {
         this.quiz = quiz;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Assessment getQuiz(){
         return quiz;
     }

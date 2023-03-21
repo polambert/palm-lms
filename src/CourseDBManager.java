@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -308,7 +309,7 @@ public class CourseDBManager extends DataConstants {
 							LocalDate date = dateStringToDate((String) reviewObj.get(REVIEW_OBJ_DATE));
 							UUID reviewAuthorId = UUID.fromString((String) reviewObj.get(REVIEW_OBJ_AUTHOR));
 
-							reviews.add(new Review(reviewId, rating, text, reviewAuthorId));
+							reviews.add(new Review(reviewId, rating, text, reviewAuthorId, date));
 						}
 						ArrayList<Comment> comments = loadComments(commentsArr);
 
@@ -316,10 +317,9 @@ public class CourseDBManager extends DataConstants {
 						course.setTitle(title);
 						course.setLanguage(language);
 						course.setDescription(description);
-						break;
-					} catch (Exception e) {
-						e.printStackTrace();
 					}
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		}
@@ -428,10 +428,10 @@ public class CourseDBManager extends DataConstants {
 					replyObject.put(COMMENT_OBJ_COMMENT, reply.getComment());
 					replyObject.put(COMMENT_OBJ_AUTHOR, reply.getAuthor().getId().toString());
 					replyObject.put(COMMENT_OBJ_DATE, reply.getDate().toString());
-					repliesArray.put(replyObject);
+					repliesArray.add(replyObject);
 				}
 				commentObject.put(COMMENT_OBJ_REPLIES, repliesArray);
-				commentsArray.put(commentObject);
+				commentsArray.add(commentObject);
 			}
 			courseObject.put(COURSE_OBJ_COMMENTS, commentsArray);
 

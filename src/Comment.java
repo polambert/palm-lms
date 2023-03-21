@@ -28,13 +28,19 @@ public class Comment {
 		this.replies = replies;
 	}
 
+	public UUID getId() {
+		return this.id;
+	}
+	public void setId(UUID id) {
+		this.id = id;
+	}
 	public String getComment() {
 		return comment;
 	}
 	public User getAuthor() {
 		return author;
 	}
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 	public UUID getUUID() {
@@ -49,7 +55,7 @@ public class Comment {
 	public void setAuthor(User author) {
 		this.author = author;
 	}
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 	public void setUUID(UUID id) {

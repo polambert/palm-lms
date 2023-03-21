@@ -43,6 +43,12 @@ public class Review {
 		this.date = date;
 	}
 
+	public UUID getId() {
+		return this.id;
+	}
+	public void setId(UUID id) {
+		this.id = id;
+	}
 	public int getRating() {
 		return rating;
 	}
@@ -55,14 +61,11 @@ public class Review {
 	public String getText() {
 		return text;
 	}
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 	public void setRating(int rating) {
 		this.rating = rating;
-	}
-	public void setCoures(Course course) {
-		this.course = course;
 	}
 	public void setAuthor(User author) {
 		this.author = author;
@@ -70,7 +73,7 @@ public class Review {
 	public void setText(String text) {
 		this.text = text;
 	}
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 	public String toString() {

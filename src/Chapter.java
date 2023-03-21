@@ -19,6 +19,14 @@ public class Chapter {
         this.sections = sections;
         this.test = test;
     }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
     
     public int getSectionCount() {
         return sections.size();
