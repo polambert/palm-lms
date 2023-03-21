@@ -376,6 +376,8 @@ public class CourseDBManager extends DataConstants {
 			// Final Exam object
 			JSONArray finalExam = writeAssessment(course.getFinalExam());
 
+			courseObj.put(COURSE_OBJ_FINAL, finalExam);
+
 			// Reviews array
 			JSONArray reviewsArray = new JSONArray();
 			for (Review review : course.getReviews()) {
@@ -388,6 +390,7 @@ public class CourseDBManager extends DataConstants {
 				reviewsArray.add(reviewObj);
 			}
 			courseObj.put(COURSE_OBJ_REVIEWS, reviewsArray);
+			
 			// Comments array
 			JSONArray commentsArray = writeComments(course.getComments());
 			courseObj.put(COURSE_OBJ_COMMENTS, commentsArray);

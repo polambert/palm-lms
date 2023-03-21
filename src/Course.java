@@ -126,7 +126,7 @@ public class Course {
 	}
 
 	public Assessment getFinalExam() {
-		return null;
+		return finalExam;
 	}
 
 	public String toString() {
