@@ -406,31 +406,11 @@ public class CourseDBManager extends DataConstants {
 				reviewsArray.add(reviewObj);
 			}
 			courseObj.put(COURSE_OBJ_REVIEWS, reviewsArray);
-
 			// Comments array
-			JSONArray commentsArray = new JSONArray();
-			for (Comment comment : course.getComments()) {
-				JSONObject commentObject = new JSONObject();
-				commentObject.put(COMMENT_OBJ_ID, comment.getId().toString());
-				commentObject.put(COMMENT_OBJ_COMMENT, comment.getComment());
-				commentObject.put(COMMENT_OBJ_AUTHOR, comment.getAuthor().getId().toString());
-				commentObject.put(COMMENT_OBJ_DATE, comment.getDate().toString());
-				
-				// Replies array
-				JSONArray repliesArray = new JSONArray();
-				for (Comment reply : comment.getReplies()) {
-					JSONObject replyObject = new JSONObject();
-					replyObject.put(COMMENT_OBJ_ID, reply.getId().toString());
-					replyObject.put(COMMENT_OBJ_COMMENT, reply.getComment());
-					replyObject.put(COMMENT_OBJ_AUTHOR, reply.getAuthor().getId().toString());
-					replyObject.put(COMMENT_OBJ_DATE, reply.getDate().toString());
-					repliesArray.add(replyObject);
-				}
-				commentObject.put(COMMENT_OBJ_REPLIES, repliesArray);
-				commentsArray.add(commentObject);
-			}
+			JSONArray commentsArray = writeComments(course.getComments());
 			courseObj.put(COURSE_OBJ_COMMENTS, commentsArray);
 
+			
 			// Writing the JSON object to the file
 			fw.write(courseObj.toJSONString());
 			fw.flush();
@@ -439,4 +419,21 @@ public class CourseDBManager extends DataConstants {
 			e.printStackTrace();
 		}
 	}
+
+	private JSONArray writeComments(ArrayList<Comment> comments) {
+		JSONArray commentsArray = new JSONArray();
+		for(Comment comment : comments){
+			JSONObject commentObject = new JSONObject();
+			commentObject.put(COMMENT_OBJ_COMMENT, comment.getComment());
+			commentObject.put(COMMENT_OBJ_AUTHOR, comment.getAuthor());
+			commentObject.put(COMMENT_OBJ_ID, comment.getId().toString());
+			commentObject.put(COMMENT_OBJ_DATE, comment.getDate().toString());
+			JSONArray replyArray = writeComments(comment.getReplies());
+			commentObject.put(COMMENT_OBJ_REPLIES, replyArray);
+			commentsArray.add(commentObject);
+		}
+		return commentsArray; 
+	}
 }
+
+
