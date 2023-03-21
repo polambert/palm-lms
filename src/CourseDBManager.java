@@ -339,6 +339,108 @@ public class CourseDBManager extends DataConstants {
 	 * @param course Course to write
 	 */
 	public void writeCourseToDB(Course course) {
+		try {
+			File file = new File(COURSE_FOLDER + course.getId().toString() + "." + COURSE_FILE_EXTENSION);
+			FileWriter fw = new FileWriter(file);
+			JSONObject courseObj = new JSONObject();
+			courseObj.put(COURSE_OBJ_ID, course.getId().toString());
+			courseObj.put(COURSE_OBJ_LANGUAGE, course.getLanguage());
+			courseObj.put(COURSE_OBJ_TITLE, course.getTitle());
+			courseObj.put(COURSE_OBJ_NAME, course.getName());
+			courseObj.put(COURSE_OBJ_AUTHOR, course.getAuthor().getId().toString());
+			courseObj.put(COURSE_OBJ_DESCRIPTION, course.getDescription());
 
+			// Chapters array
+			JSONArray chaptersArray = new JSONArray();
+			for (Chapter chapter : course.getChapters()) {
+				JSONObject chapterObj = new JSONObject();
+				chapterObj.put(CHAPTER_OBJ_NAME, chapter.getName());
+
+				// Sections array
+				JSONArray sectionsArray = new JSONArray();
+				for (Section section : chapter.getSections()) {
+					JSONObject sectionObj = new JSONObject();
+					sectionObj.put(SECTION_OBJ_NAME, section.getName());
+					sectionObj.put(SECTION_OBJ_TEXT, section.getText());
+
+					// Quiz object
+					if (section.getQuiz() != null) {
+						JSONObject quizObj = new JSONObject();
+						quizObj.put(ASSESSMENT_OBJ_QUESTION, section.getQuiz().getQuestion());
+						quizObj.put(ASSESSMENT_OBJ_ANSWERS, new JSONArray(section.getQuiz().getAnswers()));
+						quizObj.put(ASSESSMENT_OBJ_CORRECT, section.getQuiz().getCorrectAnswer());
+						sectionObj.put(SECTION_OBJ_QUIZ, quizObj);
+					}
+
+					sectionsArray.put(sectionObj);
+				}
+				chapterObj.put(CHAPTER_OBJ_SECTIONS, sectionsArray);
+
+				// Test object
+				if (chapter.getTest() != null) {
+					JSONObject testObj = new JSONObject();
+					testObj.put(ASSESSMENT_OBJ_QUESTION, chapter.getTest().getQuestion());
+					testObj.put(ASSESSMENT_OBJ_ANSWERS, new JSONArray(chapter.getTest().getAnswers()));
+					testObj.put(ASSESSMENT_OBJ_CORRECT, chapter.getTest().getCorrectAnswer());
+					chapterObj.put(CHAPTER_OBJ_TEST, testObj);
+				}
+
+				chaptersArray.put(chapterObj);
+			}
+			courseObj.put(COURSE_OBJ_CHAPTERS, chaptersArray);
+
+			// Final Exam object
+			if (course.getFinalExam() != null) {
+				JSONObject finalExamObj = new JSONObject();
+				finalExamObj.put(ASSESSMENT_OBJ_QUESTION, course.getFinalExam().getQuestion());
+				finalExamObj.put(ASSESSMENT_OBJ_ANSWERS, new JSONArray(course.getFinalExam().getAnswers()));
+				finalExamObj.put(ASSESSMENT_OBJ_CORRECT, course.getFinalExam().getCorrectAnswer());
+				courseObj.put(COURSE_OBJ_FINAL, finalExamObj);
+			}
+
+			// Reviews array
+			JSONArray reviewsArray = new JSONArray();
+			for (Review review : course.getReviews()) {
+				JSONObject reviewObj = new JSONObject();
+				reviewObj.put(REVIEW_OBJ_RATING, review.getRating());
+				reviewObj.put(REVIEW_OBJ_TEXT, review.getText());
+				reviewObj.put(REVIEW_OBJ_ID, review.getId().toString());
+				reviewObj.put(REVIEW_OBJ_DATE, review.getDate().toString());
+				reviewObj.put(REVIEW_OBJ_AUTHOR, review.getAuthor().getId().toString());
+				reviewsArray.put(reviewObj);
+			}
+			courseObj.put(COURSE_OBJ_REVIEWS, reviewsArray);
+
+			// Comments array
+			JSONArray commentsArray = new JSONArray();
+			for (Comment comment : course.getComments()) {
+				JSONObject commentObject = new JSONObject();
+				commentObject.put(COMMENT_OBJ_ID, comment.getId().toString());
+				commentObject.put(COMMENT_OBJ_COMMENT, comment.getComment());
+				commentObject.put(COMMENT_OBJ_AUTHOR, comment.getAuthor().getId().toString());
+				commentObject.put(COMMENT_OBJ_DATE, comment.getDate().toString());
+				
+				// Replies array
+				JSONArray repliesArray = new JSONArray();
+				for (Comment reply : comment.getReplies()) {
+					JSONObject replyObject = new JSONObject();
+					replyObject.put(COMMENT_OBJ_ID, reply.getId().toString());
+					replyObject.put(COMMENT_OBJ_COMMENT, reply.getComment());
+					replyObject.put(COMMENT_OBJ_AUTHOR, reply.getAuthor().getId().toString());
+					replyObject.put(COMMENT_OBJ_DATE, reply.getDate().toString());
+					repliesArray.put(replyObject);
+				}
+				commentObject.put(COMMENT_OBJ_REPLIES, repliesArray);
+				commentsArray.put(commentObject);
+			}
+			courseObject.put(COURSE_OBJ_COMMENTS, commentsArray);
+
+			// Writing the JSON object to the file
+			fw.write(courseObj.toJSONString());
+			fw.flush();
+			fw.close();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	}
-}
