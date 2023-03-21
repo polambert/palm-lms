@@ -372,7 +372,7 @@ public class CourseDBManager extends DataConstants {
 						sectionObj.put(SECTION_OBJ_QUIZ, quizObj);
 					}
 
-					sectionsArray.put(sectionObj);
+					sectionsArray.add(sectionObj);
 				}
 				chapterObj.put(CHAPTER_OBJ_SECTIONS, sectionsArray);
 
@@ -439,8 +439,8 @@ public class CourseDBManager extends DataConstants {
 			fw.write(courseObj.toJSONString());
 			fw.flush();
 			fw.close();
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
+}
