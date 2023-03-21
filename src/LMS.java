@@ -2,34 +2,34 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class LMS {
-    private static final String[] courseMenu = {
+    private static final String[] COURSE_MENU = {
         "Study Section",
         "Take Quiz",
         "View/Leave Review",
         "View/Leave Comment",
         "Drop Class","Go Home"
     };
-    private static final String[] homeMenu = {"View Enrolled Classes",
+    private static final String[] HOME_MENU = {"View Enrolled Classes",
         "Enroll in a Course",
         "Create a Course",
         "Enter a Course",
         "Log Out"
     };
-    private static final String[] signInMenu = {"Log In",
+    private static final String[] SIGN_IN_MENU = {"Log In",
         "New User",
         "Quit"
     };
-    private static final String[] commentMenu = {"Leave Comment",
+    private static final String[] COMMENT_MENU = {"Leave Comment",
         "Return to Course"
     };
-    private static final String[] reviewMenu = {"Leave Review",
+    private static final String[] REVIEW_MENU = {"Leave Review",
         "Return to Course"
     };
 
     private static void showHomeMenu() {
         System.out.println("*****Home Menu*****");
-        for(int i=0;i<homeMenu.length;i++)
-            System.out.println((i+1)+". "+homeMenu[i]);
+        for(int i=0;i<HOME_MENU.length;i++)
+            System.out.println((i+1)+". "+HOME_MENU[i]);
         System.out.println("***************");
         System.out.println("What would you like to do?:");
     }
@@ -37,7 +37,8 @@ public class LMS {
     private void homeMenu() {
         showHomeMenu();
         Scanner scan = new Scanner(System.in);
-        String command= scan.nextLine();
+        int num = Integer.parseInt(scan.nextLine());
+        String command = HOME_MENU[num-1];
         switch(command)
         {
             case "View Enrolled Courses":
@@ -80,8 +81,8 @@ public class LMS {
     public void showSignInMenu() {
         System.out.println("*****Welcome to PALM*****");
         System.out.println("***************");
-        for(int i=0;i<signInMenu.length;i++)
-            System.out.println((i+1)+". "+signInMenu[i]);
+        for(int i=0;i<SIGN_IN_MENU.length;i++)
+            System.out.println((i+1)+". "+SIGN_IN_MENU[i]);
         System.out.println("***************");
         System.out.println("What would you like to do?:");
     }
@@ -90,7 +91,7 @@ public class LMS {
         showSignInMenu();
         Scanner scan = new Scanner(System.in);
         int num = Integer.parseInt(scan.nextLine());
-        String command = courseMenu[num-1];
+        String command = SIGN_IN_MENU[num-1];
         switch(command){
             case "Log In": {
                 System.out.println("What is your email?");
@@ -134,8 +135,8 @@ public class LMS {
         System.out.println("Chapter:" + chapter);
         System.out.println("Rating:");
         System.out.println("***************");
-        for(int i=0;i<=courseMenu.length;i++)
-            System.out.println((i+1)+". "+courseMenu[i]);
+        for(int i=0;i<=COURSE_MENU.length;i++)
+            System.out.println((i+1)+". "+COURSE_MENU[i]);
         System.out.println("***************");
         System.out.println("What would you like to do?:");
     }
@@ -148,7 +149,7 @@ public class LMS {
         //Left unfinished - LukeLane
         Scanner scan = new Scanner(System.in);
         int num = Integer.parseInt(scan.nextLine());
-        String command = courseMenu[num-1];
+        String command = COURSE_MENU[num-1];
 
         switch(command)
         {
@@ -192,8 +193,8 @@ public class LMS {
         System.out.println("*************************");
         //print out all the current Comments
         System.out.println("*************************");
-        for(int i=0;i<commentMenu.length;i++)
-            System.out.println((i+1)+". "+commentMenu[i]);
+        for(int i=0;i<COMMENT_MENU.length;i++)
+            System.out.println((i+1)+". "+COMMENT_MENU[i]);
         System.out.println("*************************");
         System.out.println("What would you like to do?:");
     }
@@ -201,7 +202,8 @@ public class LMS {
     private void commentMenu(Course course) {
         showCommentMenu();
         Scanner scan = new Scanner(System.in);
-        String command= scan.nextLine();
+        int num = Integer.parseInt(scan.nextLine());
+        String command = COMMENT_MENU[num-1];
         switch(command)
         {
             case "Leave Comment":
@@ -231,8 +233,8 @@ public class LMS {
         System.out.println("*************************");
         //print out all the current Review
         System.out.println("*************************");
-        for(int i=0;i<reviewMenu.length;i++)
-            System.out.println((i+1)+". "+reviewMenu[i]);
+        for(int i=0;i<REVIEW_MENU.length;i++)
+            System.out.println((i+1)+". "+REVIEW_MENU[i]);
         System.out.println("*************************");
         System.out.println("What would you like to do?:");
     }
@@ -240,7 +242,8 @@ public class LMS {
     private void reviewMenu(Course course) {
         showReviewMenu();
         Scanner scan = new Scanner(System.in);
-        String command= scan.nextLine();
+        int num = Integer.parseInt(scan.nextLine());
+        String command = REVIEW_MENU[num-1];
         switch(command)
         {
             case "Leave Review":
