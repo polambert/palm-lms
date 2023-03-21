@@ -360,41 +360,21 @@ public class CourseDBManager extends DataConstants {
 					sectionObj.put(SECTION_OBJ_TEXT, section.getText());
 
 					// Quiz Array
-					JSONArray quizzesArray = new JSONArray();
-					for(Question quiz : section.getQuiz().getQuestions()) {
-						JSONObject quizObj= new JSONObject();
-						quizObj.put(ASSESSMENT_OBJ_QUESTION, quiz.getQuestion());
-						quizObj.put(ASSESSMENT_OBJ_ANSWERS, quiz.getAnswers());
-						quizObj.put(ASSESSMENT_OBJ_CORRECT, quiz.getCorrectAnswer());
-						quizzesArray.add(quizObj);
-					}
+					JSONArray quizzesArray = writeAssessment(section.getQuiz());
 					sectionObj.put(SECTION_OBJ_QUIZ, quizzesArray);
 					sectionsArray.add(sectionObj);
 				}
 				chapterObj.put(CHAPTER_OBJ_SECTIONS, sectionsArray);
 
 				// Test object
-				JSONArray testArray = new JSONArray();
-				for(Question test : chapter.getTest().getQuestions()) {
-					JSONObject testObj = new JSONObject();
-					testObj.put(ASSESSMENT_OBJ_QUESTION, test.getQuestion());
-					testObj.put(ASSESSMENT_OBJ_ANSWERS, test.getAnswers());
-					testObj.put(ASSESSMENT_OBJ_CORRECT, test.getCorrectAnswer());
-					testArray.add(testObj);
-				}
+				JSONArray testArray = writeAssessment(chapter.getTest());
 				chapterObj.put(CHAPTER_OBJ_TEST, testArray);
 				chaptersArray.add(chapterObj);
 			}
 			courseObj.put(COURSE_OBJ_CHAPTERS, chaptersArray);
 
 			// Final Exam object
-			if (course.getFinalExam() != null) {
-				JSONObject finalExamObj = new JSONObject();
-				finalExamObj.put(ASSESSMENT_OBJ_QUESTION, course.getFinalExam().getQuestion());
-				finalExamObj.put(ASSESSMENT_OBJ_ANSWERS, new JSONArray(course.getFinalExam().getAnswers()));
-				finalExamObj.put(ASSESSMENT_OBJ_CORRECT, course.getFinalExam().getCorrectAnswer());
-				courseObj.put(COURSE_OBJ_FINAL, finalExamObj);
-			}
+			JSONArray finalExam = writeAssessment(course.getFinalExam());
 
 			// Reviews array
 			JSONArray reviewsArray = new JSONArray();
@@ -420,6 +400,31 @@ public class CourseDBManager extends DataConstants {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private JSONArray writeAssessment(Assessment assessment) {
+		ArrayList<Question> questions = assessment.getQuestions();
+		JSONArray questionsArr = new JSONArray();
+
+		for (int i = 0; i < questions.size(); i++) {
+			Question question = questions.get(i);
+			JSONObject questionObj = new JSONObject();
+
+			ArrayList<String> answers = question.getAnswers();
+			JSONArray answersArr = new JSONArray();
+
+			for (int j = 0; j < answers.size(); j++) {
+				answersArr.add(answers.get(j));
+			}
+
+			questionObj.put(ASSESSMENT_OBJ_QUESTION, question.getQuestion());
+			questionObj.put(ASSESSMENT_OBJ_ANSWERS, answersArr);
+			questionObj.put(ASSESSMENT_OBJ_CORRECT, question.getCorrectAnswer());
+
+			questionsArr.add(questionObj);
+		}
+
+		return questionsArr;
 	}
 
 	private JSONArray writeComments(ArrayList<Comment> comments) {
