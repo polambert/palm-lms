@@ -20,7 +20,7 @@ public class Assessment {
         questions.add(question);    
     }
     
-    public ArrayList<Question> getQuestions(){
+    public ArrayList<Question> getQuestions() {
         return questions;
     }
 

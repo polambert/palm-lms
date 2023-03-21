@@ -39,6 +39,8 @@ public class Course {
 	}
 
 	//getters and setters
+	public UUID getAuthorId() { return this.authorId; }
+	public void setAuthorId(UUID authorId) { this.authorId = authorId; }
 	public UUID getId() {
 		return id;
 	}

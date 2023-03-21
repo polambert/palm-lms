@@ -55,6 +55,9 @@ public class UIHandler
 		courseManager = CourseManager.getInstance();
 		userManager = UserManager.getInstance();
 		courseManager.loadAllCourses();
+		userManager.loadAllUsers();
+		courseManager.updateUsers();
+
 		ArrayList<Course> courses = courseManager.getCourses();
 		//System.out.println(courses.get(0));
 		signInMenu();

@@ -41,7 +41,7 @@ public class UserManager {
 		return true;
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		CourseManager.getInstance().loadAllCourses();
 		UserManager.getInstance().loadAllUsers();
 
@@ -49,7 +49,7 @@ public class UserManager {
 
 		// try to log in
 		System.out.println(UserManager.getInstance().attemptLogin("parker@test.com", { 'p', 'a', 's', 's' }));
-	}
+	}*/
 
 
 	/**
@@ -96,6 +96,15 @@ public class UserManager {
 
 	public UUID getIdFromEmail(String email) {
 		return dbManager.getIdFromEmail(email);
+	}
+
+	public User getUserFromId(UUID id) {
+		for (int i = 0; i < users.size(); i++) {
+			if (id.equals(users.get(i).getId())) {
+				return users.get(i);
+			}
+		}
+		return null;
 	}
 
 	private void updateLoginLookup() {

@@ -47,6 +47,43 @@ public class CourseManager {
 		return false;
 	}
 
+	public void updateComments(ArrayList<Comment> comments) {
+		for (int i = 0; i < comments.size(); i++) {
+			Comment comment = comments.get(i);
+			if (comment.getAuthor() == null && comment.getAuthorId() != null) {
+				comment.setAuthor(UserManager.getInstance().getUserFromId(comment.getAuthorId()));
+			}
+
+			// do their replies
+			ArrayList<Comment> replies = comment.getReplies();
+			updateComments(replies);
+		}
+	}
+
+	public void updateUsers() {
+		for (int i = 0; i < courses.size(); i++) {
+			Course course = courses.get(i);
+
+			// update course
+			if (course.getAuthor() == null && course.getAuthorId() != null) {
+				course.setAuthor(UserManager.getInstance().getUserFromId(course.getAuthorId()));
+			}
+
+			// update reviews
+			ArrayList<Review> reviews = course.getReviews();
+			for (int j = 0; j < reviews.size(); i++) {
+				Review review = reviews.get(i);
+				if (review.getAuthor() == null && review.getAuthorId() != null) {
+					review.setAuthor(UserManager.getInstance().getUserFromId(review.getAuthorId()));
+				}
+			}
+
+			// update comments
+			ArrayList<Comment> comments = course.getComments();
+			updateComments(comments);
+		}
+	}
+
 	// getter and setter...
 	public ArrayList<Course> getCourses() {
 		return this.courses;
