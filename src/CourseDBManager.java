@@ -327,7 +327,9 @@ public class CourseDBManager extends DataConstants {
 	 * @param courses Courses to write
 	 */
 	public void writeCoursesToDB(ArrayList<Course> courses) {
-
+		for (int i = 0; i < courses.size(); i++) {
+			writeCourseToDB(courses.get(i));
+		}
 	}
 
 	/**
@@ -390,7 +392,7 @@ public class CourseDBManager extends DataConstants {
 				reviewsArray.add(reviewObj);
 			}
 			courseObj.put(COURSE_OBJ_REVIEWS, reviewsArray);
-			
+
 			// Comments array
 			JSONArray commentsArray = writeComments(course.getComments());
 			courseObj.put(COURSE_OBJ_COMMENTS, commentsArray);
