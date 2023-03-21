@@ -203,13 +203,59 @@ public class UserDBManager extends DataConstants {
 		userObj.put(USER_OBJ_EMAIL, user.getEmail());
 		userObj.put(USER_OBJ_DATEOFBIRTH, user.getDateOfBirth());
 		userObj.put(USER_OBJ_CANCREATECOURSES, user.canCreateCourses());
-		// password can't be written here
+
+		// get their password
+		try {
+			File file = new File(USER_FOLDER + user.getId() + ".json");
+			FileReader reader = new FileReader(file);
+			JSONParser parser = new JSONParser();
+			JSONObject oldUserObj = (JSONObject) parser.parse(reader);
+			userObj.put(USER_OBJ_PASSWORD, oldUserObj.get(USER_OBJ_PASSWORD));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Unable to load password for user " + user.getId());
+			return;
+		}
 
 		JSONArray courseProgressArr = new JSONArray();
 		ArrayList<CourseProgress> courseProgresses = user.getCourseProgresses();
 
 		for (int i = 0; i < courseProgresses.size(); i++) {
+			CourseProgress courseProgress = courseProgresses.get(i);
+			JSONObject courseProgressObj = new JSONObject();
 
+			JSONArray gradesArr = new JSONArray();
+			ArrayList<ArrayList<Double>> grades = courseProgress.getGrades();
+
+			JSONObject certificateObj = new JSONObject();
+
+			for (int j = 0; j < grades.size(); j++) {
+				JSONArray gradesArrArr = new JSONArray();
+
+				for (int k = 0; k < grades.get(j).size(); k++) {
+					gradesArrArr.add(grades.get(j).get(k));
+				}
+
+				gradesArr.add(gradesArrArr);
+			}
+
+			if (courseProgress.getCertificateId() != null) {
+				certificateObj.put(CERTIFICATE_OBJ_CERTIFICATEID, courseProgress.getCertificateId().toString());
+			} else {
+				certificateObj.put(CERTIFICATE_OBJ_CERTIFICATEID, "");
+			}
+
+			if (courseProgress.getDateCompleted() != null) {
+				certificateObj.put(CERTIFICATE_OBJ_DATECOMPLETED, courseProgress.getDateCompleted().toString());
+			} else {
+				certificateObj.put(CERTIFICATE_OBJ_DATECOMPLETED, "");
+			}
+
+			courseProgressObj.put(COURSEPROGRESS_OBJ_COURSEID, courseProgress.getCourse().getId());
+			courseProgressObj.put(COURSEPROGRESS_OBJ_CHAPTERSCOMPLETED, courseProgress.getChaptersCompleted());
+			courseProgressObj.put(COURSEPROGRESS_OBJ_SECTIONSCOMPLETED, courseProgress.getSectionsCompleted());
+			courseProgressObj.put(COURSEPROGRESS_OBJ_GRADES, gradesArr);
+			courseProgressObj.put(COURSEPROGRESS_OBJ_CERTIFICATE, certificateObj);
 		}
 
 		userObj.put(USER_OBJ_COURSEPROGRESSES, courseProgressArr);
