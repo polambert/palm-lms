@@ -40,6 +40,15 @@ public class User
 		return s;
 	}
 
+    public CourseProgress getCourseProgressIn(Course course) {
+        for (int i = 0; i < courseProgresses.size(); i++) {
+            if (course.getId().equals(courseProgresses.get(i).getCourse().getId())) {
+                return courseProgresses.get(i);
+            }
+        }
+        return null;
+    }
+
 
 	//getters and setters
 	public String getFirstName() {
@@ -82,7 +91,7 @@ public class User
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public boolean isCanCreateCourses() {
+	public boolean canCreateCourses() {
 		return canCreateCourses;
 	}
 
@@ -94,7 +103,7 @@ public class User
 		this.courseProgresses = courseProgresses;
 	}
 	public void setCanCreateCourses(boolean canCreateCourses) {
-
+        this.canCreateCourses = canCreateCourses;
 	}
 	public ArrayList<Course> getEnrolledCourses() {
 		return null;

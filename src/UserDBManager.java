@@ -185,15 +185,36 @@ public class UserDBManager extends DataConstants {
 	 * @param users Users to write to DB
 	 */
 	public void writeUsersToDB(ArrayList<User> users) {
-
+		for (int i = 0; i < users.size(); i++) {
+			writeUserToDB(users.get(i));
+		}
 	}
 
 	/**
 	 * Writes one user to DB
-	 * @param email Email of user to write to DB
+	 * @param user User to write
 	 */
-	public void writeUserToDB(String email) {
+	public void writeUserToDB(User user) {
+		JSONObject userObj = new JSONObject();
 
+		userObj.put(USER_OBJ_ID, user.getId().toString());
+		userObj.put(USER_OBJ_FIRSTNAME, user.getFirstName());
+		userObj.put(USER_OBJ_LASTNAME, user.getLastName());
+		userObj.put(USER_OBJ_EMAIL, user.getEmail());
+		userObj.put(USER_OBJ_DATEOFBIRTH, user.getDateOfBirth());
+		userObj.put(USER_OBJ_CANCREATECOURSES, user.canCreateCourses());
+		// password can't be written here
+
+		JSONArray courseProgressArr = new JSONArray();
+		ArrayList<CourseProgress> courseProgresses = user.getCourseProgresses();
+
+		for (int i = 0; i < courseProgresses.size(); i++) {
+
+		}
+
+		userObj.put(USER_OBJ_COURSEPROGRESSES, courseProgressArr);
+
+		writeUserToDB(userObj);
 	}
 
 	/**
@@ -235,6 +256,7 @@ public class UserDBManager extends DataConstants {
 		userObj.put(USER_OBJ_EMAIL, user.getEmail());
 		userObj.put(USER_OBJ_DATEOFBIRTH, user.getDateOfBirth());
 		userObj.put(USER_OBJ_PASSWORD, hashedPassword);
+		userObj.put(USER_OBJ_CANCREATECOURSES, false);
 
 		// no grades or courses yet -- this is a brand new user
 

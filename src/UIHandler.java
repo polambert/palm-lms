@@ -58,10 +58,7 @@ public class UIHandler
 		userManager.loadAllUsers();
 		courseManager.updateUsers();
 
-		ArrayList<Course> courses = courseManager.getCourses();
-		//System.out.println(courses.get(0));
 		signInMenu();
-		
 	}
 
 	public static boolean login(String email, char[] password) {
