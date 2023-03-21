@@ -372,7 +372,7 @@ public class CourseDBManager extends DataConstants {
 						sectionObj.put(SECTION_OBJ_QUIZ, quizObj);
 					}
 
-					sectionsArray.put(sectionObj);
+					sectionsArray.add(sectionObj);
 				}
 				chapterObj.put(CHAPTER_OBJ_SECTIONS, sectionsArray);
 
@@ -385,7 +385,7 @@ public class CourseDBManager extends DataConstants {
 					chapterObj.put(CHAPTER_OBJ_TEST, testObj);
 				}
 
-				chaptersArray.put(chapterObj);
+				chaptersArray.add(chapterObj);
 			}
 			courseObj.put(COURSE_OBJ_CHAPTERS, chaptersArray);
 
@@ -407,7 +407,7 @@ public class CourseDBManager extends DataConstants {
 				reviewObj.put(REVIEW_OBJ_ID, review.getId().toString());
 				reviewObj.put(REVIEW_OBJ_DATE, review.getDate().toString());
 				reviewObj.put(REVIEW_OBJ_AUTHOR, review.getAuthor().getId().toString());
-				reviewsArray.put(reviewObj);
+				reviewsArray.add(reviewObj);
 			}
 			courseObj.put(COURSE_OBJ_REVIEWS, reviewsArray);
 
@@ -433,14 +433,14 @@ public class CourseDBManager extends DataConstants {
 				commentObject.put(COMMENT_OBJ_REPLIES, repliesArray);
 				commentsArray.add(commentObject);
 			}
-			courseObject.put(COURSE_OBJ_COMMENTS, commentsArray);
+			courseObj.put(COURSE_OBJ_COMMENTS, commentsArray);
 
 			// Writing the JSON object to the file
 			fw.write(courseObj.toJSONString());
 			fw.flush();
 			fw.close();
 
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 	}
