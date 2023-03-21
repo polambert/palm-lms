@@ -93,6 +93,7 @@ public class UserDBManager extends DataConstants {
 		User user = null;
 
 		try {
+			//System.out.println(file.getName());
 			FileReader reader = new FileReader(USER_FOLDER + file.getName());
 			JSONParser parser = new JSONParser();
 			JSONObject userObj = (JSONObject) parser.parse(reader);
@@ -148,7 +149,7 @@ public class UserDBManager extends DataConstants {
 				}
 
 				Course course = CourseManager.getInstance().getCourseById(courseId);
-				System.out.println(course);
+				//System.out.println(course);
 				CourseProgress courseProgress = new CourseProgress(course, chaptersCompleted, sectionsCompleted, grades);
 
 				courseProgress.setDateCompleted(certificateDate);
@@ -184,10 +185,12 @@ public class UserDBManager extends DataConstants {
 	 * Writes all provided users to the database
 	 * @param users Users to write to DB
 	 */
-	public void writeUsersToDB(ArrayList<User> users) {
+	public boolean writeUsersToDB(ArrayList<User> users) {
 		for (int i = 0; i < users.size(); i++) {
 			writeUserToDB(users.get(i));
 		}
+
+		return true;
 	}
 
 	/**
@@ -201,7 +204,7 @@ public class UserDBManager extends DataConstants {
 		userObj.put(USER_OBJ_FIRSTNAME, user.getFirstName());
 		userObj.put(USER_OBJ_LASTNAME, user.getLastName());
 		userObj.put(USER_OBJ_EMAIL, user.getEmail());
-		userObj.put(USER_OBJ_DATEOFBIRTH, user.getDateOfBirth());
+		userObj.put(USER_OBJ_DATEOFBIRTH, user.getDateOfBirth().toString());
 		userObj.put(USER_OBJ_CANCREATECOURSES, user.canCreateCourses());
 
 		// get their password

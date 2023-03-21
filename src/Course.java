@@ -31,7 +31,7 @@ public class Course {
 	Assessment finalExam, ArrayList<Review> reviews, ArrayList<Comment> comments) {
 		this.id = id;
 		this.name = name;
-		this.author = author;
+		this.authorId = authorId;
 		this.chapters = chapters;
 		this.finalExam = finalExam;
 		this.reviews = reviews;
@@ -135,6 +135,8 @@ public class Course {
 		s += "\tlanguage: " + language + "\n";
 		s += "\ttitle: " + title + "\n";
 		s += "\tauthorId: " + authorId + "\n";
+		s += "\thas author: " + (author == null ? "no" : "yes") + "\n";
+		s += "\thas right author: " + (author.getId().equals(authorId) ? "yes" : "no") + "\n";
 		s += "\tdescription: " + description + "\n";
 
 		s += "\treviews: \n";

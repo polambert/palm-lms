@@ -84,7 +84,9 @@ public class Review {
 		s += "\ttext: " + text + "\n";
 		s += "\tid: " + id + "\n";
 		s += "\tdate: " + date + "\n";
-		s += "\tauthor: " + author + "\n";
+		s += "\tauthorId: " + authorId + "\n";
+		s += "\thas author: " + (author == null ? "no" : "yes") + "\n";
+		s += "\thas right author: " + (author.getId().equals(authorId) ? "yes" : "no") + "\n";
 		
 		return s;
 	}

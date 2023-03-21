@@ -41,15 +41,38 @@ public class UserManager {
 		return true;
 	}
 
-	/*public static void main(String[] args) {
+	public boolean writeAllUsers() {
+		return dbManager.writeUsersToDB(users);
+	}
+
+	/*
+	public static void main(String[] args) {
 		CourseManager.getInstance().loadAllCourses();
 		UserManager.getInstance().loadAllUsers();
+		CourseManager.getInstance().updateUsers();
 
-		System.out.println(UserManager.getInstance().getUsers().get(0));
+		// testing
+		System.out.println("USERMANAGER TESTING");
+
+		// test load user
+		System.out.println(" -- LOAD USER TEST");
+		User u = UserManager.getInstance().getUsers().get(0);
+		System.out.println(u);
+
+		// test write user
+		System.out.println(" -- WRITE USER TEST");
+		System.out.println(UserManager.getInstance().writeAllUsers());
+
+		// sign up
+		char[] pass = { 'p', 'a', 's', 's' };
+		// System.out.println(" -- SIGN UP TEST");
+		// System.out.println(UserManager.getInstance().attemptSignup("parker@test.com", pass, "Parker", "Lambert", LocalDate.now()));
 
 		// try to log in
-		System.out.println(UserManager.getInstance().attemptLogin("parker@test.com", { 'p', 'a', 's', 's' }));
-	}*/
+		System.out.println(" -- LOG IN TEST");
+		System.out.println(UserManager.getInstance().attemptLogin("parker@test.com", pass));
+	}
+	*/
 
 
 	/**

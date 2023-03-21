@@ -68,9 +68,11 @@ public class Comment {
 		this.replies = replies;
 	}
 	public String toString() {
-		String s = "[Comment] comment: " + comment + "\n";
-		s += "\tauthor: " + author + "\n";
-		s += "\tid: " + id + "\n";
+		String s = "[Comment] id: " + id + "\n";
+		s += "\tcomment: " + comment + "\n";
+		s += "\tauthorId: " + authorId + "\n";
+		s += "\thas author: " + (author == null ? "no" : "yes") + "\n";
+		s += "\thas right author: " + (author.getId().equals(authorId) ? "yes" : "no") + "\n";
 		s += "\tdate: " + date + "\n";
 		s += "\treplies: \n";
 		for (int i = 0; i < replies.size(); i++) {

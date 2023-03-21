@@ -44,7 +44,13 @@ public class CourseManager {
 	public boolean loadAllCourses() {
 		courses = dbManager.readCoursesFromDB();
 
-		return false;
+		return true;
+	}
+
+	public boolean writeAllCourses() {
+		dbManager.writeCoursesToDB(courses);
+
+		return true;
 	}
 
 	public void updateComments(ArrayList<Comment> comments) {
@@ -71,10 +77,11 @@ public class CourseManager {
 
 			// update reviews
 			ArrayList<Review> reviews = course.getReviews();
-			for (int j = 0; j < reviews.size(); i++) {
-				Review review = reviews.get(i);
+			for (int j = 0; j < reviews.size(); j++) {
+				Review review = reviews.get(j);
 				if (review.getAuthor() == null && review.getAuthorId() != null) {
 					review.setAuthor(UserManager.getInstance().getUserFromId(review.getAuthorId()));
+					System.out.println(UserManager.getInstance().getUserFromId(review.getAuthorId()));
 				}
 			}
 
@@ -83,6 +90,47 @@ public class CourseManager {
 			updateComments(comments);
 		}
 	}
+
+	public boolean createCourse(String name, String title, String language, String description) {
+		User author = UserManager.getInstance().getLoggedInUser();
+		if (author.canCreateCourses()) {
+			// create the course
+			Course course = new Course(UUID.randomUUID(), name, author, new ArrayList<Chapter>(), null, new ArrayList<Review>(), new ArrayList<Comment>());
+
+			course.setTitle(title);
+			course.setDescription(description);
+
+			courses.add(course);
+			writeAllCourses();
+
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/*
+	public static void main(String[] args) {
+		CourseManager.getInstance().loadAllCourses();
+		UserManager.getInstance().loadAllUsers();
+		CourseManager.getInstance().updateUsers();
+
+		// testing
+		System.out.println("COURSEMANAGER TESTING");
+
+		// test load course
+		System.out.println(" -- LOAD COURSE TEST");
+		Course c = CourseManager.getInstance().getCourses().get(0);
+		System.out.println(c);
+
+		// test write course
+		System.out.println(" -- WRITE COURSE TEST");
+		System.out.println(CourseManager.getInstance().writeAllCourses());
+
+		// test create course
+		//
+	}
+	*/
 
 	// getter and setter...
 	public ArrayList<Course> getCourses() {
