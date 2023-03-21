@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 public class LMS {
     private static final String[] courseMenu = {
         "Study Section",
@@ -205,14 +204,14 @@ public class LMS {
         String command= scan.nextLine();
         switch(command)
         {
-            case "1":
+            case "Leave Comment":
             {
                 System.out.println("What is your Comment?");
                 String comment= scan.nextLine();
                 //add comment to the array list of comments
                 break;
             }
-            case "2":
+            case "Return to Course":
             {
                 courseMenu(course);
                 return;
@@ -244,14 +243,14 @@ public class LMS {
         String command= scan.nextLine();
         switch(command)
         {
-            case "1":
+            case "Leave Review":
             {
                 System.out.println("What is your Review?");
                 String comment= scan.nextLine();
                 //add review to the array list of reviews
                 break;
             }
-            case "2":
+            case "Return to Course":
             {
                 courseMenu(course);
                 return;
