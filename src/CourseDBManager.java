@@ -129,10 +129,6 @@ public class CourseDBManager extends DataConstants {
 		for (File file : courseFiles) {
 			String[] fileSplit = file.getName().split("\\.");
 
-			System.out.println(file.getName());
-
-			System.out.println(fileSplit[fileSplit.length - 1]);
-
 			if (file.isFile() && 
 			fileSplit[fileSplit.length - 1].equals(COURSE_FILE_EXTENSION) &&
 			!fileSplit[0].equals(COURSE_FILE_IGNORE)) {

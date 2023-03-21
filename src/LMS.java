@@ -101,7 +101,7 @@ public class LMS {
 	public void signInMenu() {
 		showSignInMenu();
 		Scanner scan = new Scanner(System.in);
-		String command= scan.nextLine();
+		String command = scan.nextLine();
 		switch(command){
 			case "1": {
 				System.out.println("What is your email?");
