@@ -91,7 +91,7 @@ public class CourseManager {
 		}
 	}
 
-	public boolean createCourse(String name, String title, String language, String description) {
+	public Course createCourse(String name, String title, String language, String description) {
 		User author = UserManager.getInstance().getLoggedInUser();
 		if (author.canCreateCourses()) {
 			// create the course
@@ -103,9 +103,9 @@ public class CourseManager {
 			courses.add(course);
 			writeAllCourses();
 
-			return true;
+			return course;
 		} else {
-			return false;
+			return null;
 		}
 	}
 
