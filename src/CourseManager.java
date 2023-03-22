@@ -8,9 +8,9 @@ import java.util.UUID;
  * @author Parker Lambert
  */
 public class CourseManager {
-	private ArrayList<Course> courses;
+	private static ArrayList<Course> courses;
 	private static CourseManager courseManager;
-	private CourseDBManager dbManager;
+	private static CourseDBManager dbManager;
 
 	/**
 	 * Private constructor for singleton CourseManager
@@ -47,7 +47,7 @@ public class CourseManager {
 		return true;
 	}
 
-	public boolean writeAllCourses() {
+	public static boolean writeAllCourses() {
 		dbManager.writeCoursesToDB(courses);
 
 		return true;
@@ -91,7 +91,7 @@ public class CourseManager {
 		}
 	}
 
-	public boolean createCourse(String name, String title, String language, String description) {
+	public static boolean createCourse(String name, String title, String language, String description) {
 		User author = UserManager.getInstance().getLoggedInUser();
 		if (author.canCreateCourses()) {
 			// create the course
