@@ -78,7 +78,7 @@ public class LMS {
         }
     }
 
-    public void showSignInMenu() {
+    public static void showSignInMenu() {
         System.out.println("*****Welcome to PALM*****");
         System.out.println("***************");
         for(int i=0;i<SIGN_IN_MENU.length;i++)
@@ -87,7 +87,7 @@ public class LMS {
         System.out.println("What would you like to do?:");
     }
 
-    public void signInMenu() {
+    public static void signInMenu() {
         showSignInMenu();
         Scanner scan = new Scanner(System.in);
         int num = Integer.parseInt(scan.nextLine());
