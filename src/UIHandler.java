@@ -56,7 +56,8 @@ public class UIHandler extends LMS
 		userManager = UserManager.getInstance();
 		courseManager.loadAllCourses();
 		userManager.loadAllUsers();
-		//courseManager.updateUsers();
+		courseManager.updateUsers();
+		
 		signInMenu();
 	}
 

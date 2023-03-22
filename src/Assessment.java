@@ -16,7 +16,7 @@ public class Assessment {
         this.questions = questions;
     }
 
-    public void addQuestion(Question question){
+    public void addQuestion(Question question) {
         questions.add(question);    
     }
     

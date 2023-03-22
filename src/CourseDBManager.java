@@ -261,7 +261,10 @@ public class CourseDBManager extends DataConstants {
 			courseObj.put(COURSE_OBJ_LANGUAGE, course.getLanguage());
 			courseObj.put(COURSE_OBJ_TITLE, course.getTitle());
 			courseObj.put(COURSE_OBJ_NAME, course.getName());
-			courseObj.put(COURSE_OBJ_AUTHOR, course.getAuthor().getId().toString());
+			User author = course.getAuthor();
+			UUID id = author.getId();
+			String idStr = id.toString();
+			courseObj.put(COURSE_OBJ_AUTHOR, idStr);
 			courseObj.put(COURSE_OBJ_DESCRIPTION, course.getDescription());
 
 			// Chapters array
@@ -324,7 +327,16 @@ public class CourseDBManager extends DataConstants {
 	}
 
 	private JSONArray writeAssessment(Assessment assessment) {
+		if (assessment == null) {
+			return new JSONArray();
+		}
+
 		ArrayList<Question> questions = assessment.getQuestions();
+
+		if (questions == null) {
+			return new JSONArray();
+		}
+
 		JSONArray questionsArr = new JSONArray();
 
 		for (int i = 0; i < questions.size(); i++) {

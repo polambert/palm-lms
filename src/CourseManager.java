@@ -97,6 +97,8 @@ public class CourseManager {
 			// create the course
 			Course course = new Course(UUID.randomUUID(), name, author, new ArrayList<Chapter>(), null, new ArrayList<Review>(), new ArrayList<Comment>());
 
+			course.setAuthor(author);
+			course.setAuthorId(author.getId());
 			course.setTitle(title);
 			course.setDescription(description);
 
