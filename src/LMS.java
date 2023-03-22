@@ -64,7 +64,9 @@ public class LMS {
                 System.out.println("What is the description of the class");
                 String description = scan.nextLine();
                 CourseManager.createCourse(name, title, language, description);
+                CourseManager.getInstance().writeAllCourses();
                 System.out.println("Your course "+ name + " is created!");
+
                 break;
             }
             case "Enter a Course":
