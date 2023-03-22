@@ -34,7 +34,7 @@ public class LMS {
         System.out.println("What would you like to do?:");
     }
 
-    private void homeMenu() {
+    private static void homeMenu() {
         showHomeMenu();
         Scanner scan = new Scanner(System.in);
         int num = Integer.parseInt(scan.nextLine());
@@ -55,7 +55,18 @@ public class LMS {
             }
             case "Create a Course":
             {
-                //makeCourse();
+                System.out.println("What is the name of the class");
+                String name = scan.nextLine();
+                System.out.println("What is the title of the class");
+                String title = scan.nextLine();
+                System.out.println("What is the language of the class");
+                String language = scan.nextLine();
+                System.out.println("What is the description of the class");
+                String description = scan.nextLine();
+                CourseManager.createCourse(name, title, language, description);
+                CourseManager.getInstance().writeAllCourses();
+                System.out.println("Your course "+ name + " is created!");
+
                 break;
             }
             case "Enter a Course":
@@ -103,6 +114,7 @@ public class LMS {
                     password[i] = pass.charAt(i);
                 }
                 UserManager.getInstance().attemptLogin(email, password);
+                homeMenu();
                 break;
             }
             case "New User":{
