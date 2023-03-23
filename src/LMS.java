@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.time.LocalDate;
 import java.util.UUID;
 
 //Methods that contain arrays that are print later
@@ -27,6 +28,39 @@ public class LMS {
     private static final String[] REVIEW_MENU = {"Leave Review",
         "Return to Course"
     };
+
+
+	/**
+	 * Converts a datestring (YYYY-MM-DD) into a LocalDate
+	 * @param dateString datestring in format of YYYY-MM-DD
+	 * @return LocalDate representing datestring given
+	 */
+	private LocalDate dateStringToDate(String dateString) {
+		// date strings are formatted YYYY-MM-DD
+		String[] split = dateString.split("-");
+
+		if (split.length != 3) {
+			return null;
+		}
+
+		String year = split[0];
+		String month = split[1];
+		String day = split[2];
+
+		if (year.length() != 4)		return null;
+		if (month.length() != 2)	return null;
+		if (day.length() != 2)		return null;
+		
+		// construct the Date
+		int y = Integer.parseInt(year);
+		int m = Integer.parseInt(month);
+		int d = Integer.parseInt(day);
+
+		LocalDate date = LocalDate.of(y, m, d);
+
+		return date;
+	}
+
 
     //method that prints array
     private static void showHomeMenu() {
