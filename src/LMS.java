@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.UUID;
 
+//Methods that contain arrays that are print later
 public class LMS {
     private static final String[] COURSE_MENU = {
         "Study Section",
@@ -26,6 +28,7 @@ public class LMS {
         "Return to Course"
     };
 
+    //method that prints array
     private static void showHomeMenu() {
         System.out.println("*****Home Menu*****");
         for(int i=0;i<HOME_MENU.length;i++)
@@ -34,7 +37,9 @@ public class LMS {
         System.out.println("What would you like to do?:");
     }
 
-    private static void homeMenu() {
+
+    //switch statement method
+    private static void homeMenu(String email) {
         showHomeMenu();
         Scanner scan = new Scanner(System.in);
         int num = Integer.parseInt(scan.nextLine());
@@ -44,6 +49,8 @@ public class LMS {
             case "View Enrolled Courses":
             {
                 //print all enrolled classes
+                UUID userID = UserManager.getInstance().getIdFromEmail(email);
+                CourseManager.getInstance().getCourseById(userID);
                 break;
             }
             case "Enroll in a Course":
@@ -114,7 +121,7 @@ public class LMS {
                     password[i] = pass.charAt(i);
                 }
                 UserManager.getInstance().attemptLogin(email, password);
-                homeMenu();
+                homeMenu(email);
                 break;
             }
             case "New User":{
@@ -128,7 +135,9 @@ public class LMS {
                 for (int i = 0; i < pass.length(); i++) {
                     ch[i] = pass.charAt(i);
                 }
-                //signup(name, email, Date dateOfBirth, ch;
+                System.out.println("What is your date of birth?");
+                String birthday= scan.nextLine();
+                //signup(name, email, Date dateOfBirth, ch);
                 return;
             }
             case "Quit":{
@@ -188,7 +197,8 @@ public class LMS {
 				}
 			
 			case "Go Home": {
-				homeMenu();
+                //get user email
+				//homeMenu(email);
 				break;
 			}
 			default : {
