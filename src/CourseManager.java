@@ -134,6 +134,18 @@ public class CourseManager {
 	}
 	*/
 
+	public ArrayList<Course> getEnrolledCourses(User user) {
+		ArrayList<CourseProgress> courseProgresses = user.getCourseProgresses();
+		ArrayList<Course> enrolledCourses = new ArrayList<>();
+
+		for (int i = 0; i < courseProgresses.size(); i++) {
+			UUID courseId = courseProgresses.get(i).getCourse().getId();
+			enrolledCourses.add(getCourseById(courseId));
+		}
+
+		return enrolledCourses;
+	}
+
 	// getter and setter...
 	public ArrayList<Course> getCourses() {
 		return this.courses;
