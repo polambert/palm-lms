@@ -47,7 +47,7 @@ public class CourseManager {
 		return true;
 	}
 
-	public static boolean writeAllCourses() {
+	public boolean writeAllCourses() {
 		dbManager.writeCoursesToDB(courses);
 
 		return true;

@@ -83,22 +83,27 @@ public class LMS {
             case "View Enrolled Courses":
             {
                 //print all enrolled classes
-                UUID userID = UserManager.getInstance().getIdFromEmail(email);
-                CourseManager.getInstance().getCourseById(userID);
-                ArrayList<Course> enrolledCourse = CourseManager.getInstance().getEnrolledCourses(UserManager.getInstance().getLoggedInUser());
-                for(int i=0;i<enrolledCourse.size();i++) 
-                {
-                    System.out.println(enrolledCourse);
-                    
+                ArrayList<Course> courses = UserManager.getInstance().getLoggedInUser().getEnrolledCourses();
+                for(int i=0;i<courses.size();i++){
+                    System.out.println((i+1) + ". " + courses.get(i).getTitle());   
                 }
+                int enrollClass = Integer.parseInt(scan.nextLine());
+                Course enroll = courses.get(enrollClass - 1);
+                courseMenu(enroll);
             
                 break;
             }
             case "Enroll in a Course":
             {
-                System.out.println("What class would you like to enroll in");
-                String enrollClass = scan.nextLine();
-                //enrollCourse(enrollClass);
+                System.out.println("What class would you like to enroll in, return a number");
+                ArrayList<Course> courses = CourseManager.getInstance().getCourses();
+                for(int i=0;i<=courses.size();i++){
+                    System.out.println((i+1) + ". " + courses.get(i).getTitle());
+                }
+                int enrollClass = Integer.parseInt(scan.nextLine());
+                Course enroll = courses.get(enrollClass - 1);
+                UserManager.getInstance().getLoggedInUser().enrollIn(enroll);
+
                 break;
             }
             case "Create a Course":
@@ -116,9 +121,10 @@ public class LMS {
                 System.out.println("How many chapters is the course");
                 int chapters = Integer.parseInt(scan.nextLine());
 
-                for(i=0; i < chapters; i++)
+                for(int i = 0; i < chapters; i++)
                 {
-                    
+                    System.out.println("How many sections is chapter " + i);
+                    int sections = Integer.parseInt(scan.nextLine());
                 }
 
                 System.out.println("How many sections is the course");
@@ -225,7 +231,7 @@ public class LMS {
         System.out.println("What would you like to do?:");
     }
 
-	private void courseMenu(Course course) {
+	private static void courseMenu(Course course) {
 		//add course and section to show course below
 
 		showCourseMenu(course, course.getChapters().get(UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course).getChaptersCompleted()));
@@ -255,8 +261,16 @@ public class LMS {
 				break;
 			}
 			case "Drop Class": {
-				//dropCourse(Course course) {
-					break;
+				System.out.println("What class would you like to drop");
+                ArrayList<Course> courses = UserManager.getInstance().getLoggedInUser().getEnrolledCourses();  
+                for(int i=0;i<=courses.size();i++){
+                    System.out.println((i+1) + ". " + courses.get(i).getTitle());
+                }
+                int dropClass = Integer.parseInt(scan.nextLine());
+
+                Course drop = courses.get(dropClass - 1);
+                UserManager.getInstance().getLoggedInUser().drop(drop);
+				break;
 				}
 			
 			case "Go Home": {
@@ -273,7 +287,7 @@ public class LMS {
 
 
     private static void showCommentMenu() {
-        System.out.println("*****Review Menu*****");
+        System.out.println("*****Comment Menu*****");
         System.out.println("Course: ");
         System.out.println("*************************");
         //print out all the current Comments
@@ -294,8 +308,12 @@ public class LMS {
             case "Leave Comment":
             {
                 System.out.println("What is your Comment?");
-                String comment= scan.nextLine();
+                String userComment= scan.nextLine();
+                ArrayList<Comment> replies = new ArrayList<>();
+                Comment comment = new Comment(UUID.randomUUID(), userComment, UserManager.getInstance().getLoggedInUser(), LocalDate.now(), replies);
                 //add comment to the array list of comments
+				course.getComments().add(comment);
+				CourseManager.getInstance().writeAllCourses();
                 break;
             }
             case "Return to Course":
@@ -333,9 +351,18 @@ public class LMS {
         {
             case "Leave Review":
             {
-                System.out.println("What is your Review?");
+                System.out.print("What is your Review? ");
                 String comment= scan.nextLine();
-                //add review to the array list of reviews
+                System.out.print("What is your rating? (1-5) ");
+                int rating = Integer.parseInt(scan.nextLine());
+
+				if (rating >= 1 && rating <= 5) {
+					course.addReview(rating, comment, UserManager.getInstance().getLoggedInUser());
+					CourseManager.getInstance().writeAllCourses();
+				} else {
+					System.out.println("Unable to add review, please make sure rating is between 1-5.");
+				}
+
                 break;
             }
             case "Return to Course":
