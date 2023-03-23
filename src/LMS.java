@@ -10,9 +10,11 @@ public class LMS {
         "Take Quiz",
         "View/Leave Review",
         "View/Leave Comment",
-        "Drop Class","Go Home"
+        "Drop Class",
+        "Go Home"
     };
-    private static final String[] HOME_MENU = {"View Enrolled Classes",
+    private static final String[] HOME_MENU = {
+        "View Enrolled Courses",
         "Enroll in a Course",
         "Create a Course",
         "Enter a Course",
@@ -82,16 +84,26 @@ public class LMS {
         {
             case "View Enrolled Courses":
             {
-                //print all enrolled classes
-                UUID userID = UserManager.getInstance().getIdFromEmail(email);
-                CourseManager.getInstance().getCourseById(userID);
+                ArrayList<Course> courses = UserManager.getInstance().getLoggedInUser().getEnrolledCourses();
+                for(int i=0;i<courses.size();i++){
+                    System.out.println((i+1) + ". " + courses.get(i).getTitle());   
+                }
+                int enrollClass = Integer.parseInt(scan.nextLine());
+                Course enroll = courses.get(enrollClass - 1);
+                courseMenu(enroll);
                 break;
             }
             case "Enroll in a Course":
             {
-                System.out.println("What class would you like to enroll in");
-                String enrollClass = scan.nextLine();
-                //enrollCourse(enrollClass);
+                System.out.println("What class would you like to enroll in, return a number");
+                ArrayList<Course> courses = CourseManager.getInstance().getCourses();
+                for(int i=0;i<=courses.size();i++){
+                    System.out.println((i+1) + ". " + courses.get(i).getTitle());
+                }
+                int enrollClass = Integer.parseInt(scan.nextLine());
+                Course enroll = courses.get(enrollClass - 1);
+                UserManager.getInstance().getLoggedInUser().enrollIn(enroll);
+
                 break;
             }
             case "Create a Course":
@@ -196,7 +208,7 @@ public class LMS {
         System.out.println("What would you like to do?:");
     }
 
-	private void courseMenu(Course course) {
+	private static void courseMenu(Course course) {
 		//add course and section to show course below
 
 		showCourseMenu(course, course.getChapters().get(UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course).getChaptersCompleted()));
@@ -226,8 +238,16 @@ public class LMS {
 				break;
 			}
 			case "Drop Class": {
-				//dropCourse(Course course) {
-					break;
+				System.out.println("What class would you like to drop");
+                ArrayList<Course> courses = UserManager.getInstance().getLoggedInUser().getEnrolledCourses();  
+                for(int i=0;i<=courses.size();i++){
+                    System.out.println((i+1) + ". " + courses.get(i).getTitle());
+                }
+                int dropClass = Integer.parseInt(scan.nextLine());
+
+                Course drop = courses.get(dropClass - 1);
+                UserManager.getInstance().getLoggedInUser().drop(drop);
+				break;
 				}
 			
 			case "Go Home": {
