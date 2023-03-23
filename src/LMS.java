@@ -267,9 +267,10 @@ public class LMS {
                 System.out.println("What is your Comment?");
                 String userComment= scan.nextLine();
                 ArrayList<Comment> replies = new ArrayList<>();
-                Comment comment = new Comment(UUID.randomUUID(), comment, UserManager.getInstance().getLoggedInUser(), LocalDate.now(), replies);
+                Comment comment = new Comment(UUID.randomUUID(), userComment, UserManager.getInstance().getLoggedInUser(), LocalDate.now(), replies);
                 //add comment to the array list of comments
-                leaveComment(comment, course);
+				course.getComments().add(comment);
+				CourseManager.getInstance().writeAllCourses();
                 break;
             }
             case "Return to Course":
@@ -307,14 +308,18 @@ public class LMS {
         {
             case "Leave Review":
             {
-                System.out.println("What is your Review?");
+                System.out.print("What is your Review? ");
                 String comment= scan.nextLine();
-                System.out.println("What is your rating? (1-5)");
-                int rating = scan.nextInt();
-                scan.nextLine();
-                Review review = new Review(UUID.randomUUID(), rating, comment, UserManager.getInstance().getLoggedInUser(), LocalDate.now());
-                leaveReview(review, course);
-                //add review to the array list of reviews
+                System.out.print("What is your rating? (1-5) ");
+                int rating = Integer.parseInt(scan.nextLine());
+
+				if (rating >= 1 && rating <= 5) {
+					course.addReview(rating, comment, UserManager.getInstance().getLoggedInUser());
+					CourseManager.getInstance().writeAllCourses();
+				} else {
+					System.out.println("Unable to add review, please make sure rating is between 1-5.");
+				}
+
                 break;
             }
             case "Return to Course":

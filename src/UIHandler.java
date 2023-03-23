@@ -90,16 +90,6 @@ public class UIHandler extends LMS
 		return true;
 	}
 
-	public boolean leaveReview(Review review, Course course){
-		course.getReviews().add(review);
-		return courseManager.getInstance().writeAllCourses();
-	}
-
-	public boolean leaveComment(Comment comment, Course course){
-		course.getComments().add(comment);
-		return courseManager.getInstance().writeAllCourses();
-	}
-
 	public boolean deleteReview(Review review, Course course){
 		return true;
 	}
