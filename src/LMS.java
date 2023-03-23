@@ -111,9 +111,24 @@ public class LMS {
                 String language = scan.nextLine();
                 System.out.println("What is the description of the class");
                 String description = scan.nextLine();
-                CourseManager.getInstance().createCourse(name, title, language, description);
+                Course course = CourseManager.getInstance().createCourse(name, title, language, description);
+
+                System.out.println("How many chapters is the course");
+                int chapters = Integer.parseInt(scan.nextLine());
+
+                for(i=0; i < chapters; i++)
+                {
+                    
+                }
+
+                System.out.println("How many sections is the course");
+                int sections = Integer.parseInt(scan.nextLine());
+                
                 CourseManager.getInstance().writeAllCourses();
-                System.out.println("Your course "+ name + " is created!");
+                System.out.println("Your course "+ name + " is created! The course id is " + course.getId());
+                
+
+                
 
                 break;
             }
