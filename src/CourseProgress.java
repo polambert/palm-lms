@@ -23,6 +23,30 @@ public class CourseProgress {
 
 	public CourseProgress(Course course) {
 		this.course = course;
+		this.chaptersCompleted = 0;
+		this.sectionsCompleted = 0;
+		this.grades = new ArrayList<>();
+
+		ArrayList<Chapter> chapters = course.getChapters();
+		for (int i = 0; i < chapters.size(); i++) {
+			Chapter chapter = chapters.get(i);
+			
+			ArrayList<Double> sectionGrades = new ArrayList<Double>();
+
+			ArrayList<Section> sections = chapter.getSections();
+			for (int j = 0; j < sections.size(); j++) {
+				sectionGrades.add(0.00); // quiz
+			}
+
+			sectionGrades.add(0.00); // test
+
+			grades.add(sectionGrades);
+		}
+
+		ArrayList<Double> finalExam = new ArrayList<>();
+		finalExam.add(0.00);
+
+		grades.add(finalExam); // final exam
 	}
 	
 	public String toString() {

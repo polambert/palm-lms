@@ -24,6 +24,23 @@ public class User
 		this.courseProgresses = courseProgresses;
 	}
 
+    public boolean enrollIn(Course course) {
+        CourseProgress cp = new CourseProgress(course);
+        courseProgresses.add(cp);
+        return true;
+    }
+
+    public boolean drop(Course course) {
+        for (int i = 0; i < courseProgresses.size(); i++) {
+            if (courseProgresses.get(i).getCourse().getId().equals(course.getId())) {
+                courseProgresses.remove(i);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 	public String toString() {
 		String s = "[User] id: " + id + "\n";
 		s += "\tfirstName: " + firstName + "\n";

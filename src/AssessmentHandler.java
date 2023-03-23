@@ -1,62 +1,63 @@
 
+import java.util.ArrayList;
+
 public class AssessmentHandler
 {
-    private Assessment assessment;
-    private int numberCorrect;
-    private int numberIncorrect;
-    private Question currentQuestion;
-    private int currentQuestionNumber;
+	private int numberCorrect;
+	private int numberIncorrect;
+	private Question currentQuestion;
+	private int currentQuestionNumber;
 
-    //getters and setters
-    public Assessment getAssessment() {
-        return assessment;
-    }
+	public AssessmentHandler(){
 
-    public void setAssessment(Assessment assessment) {
-        this.assessment = assessment;
-    }
+	}
+	public static void start(Assessment assessment){
+		// start taking the assessment
+		ArrayList<Question> question = assessment.getQuestions();		
+	}
+	public double calculateScore(){
+		return 0;
+	}
 
-    public int getNumberCorrect() {
-        return numberCorrect;
-    }
+	//getters and setters
+	public Assessment getAssessment() {
+		return assessment;
+	}
 
-    public void setNumberCorrect(int numberCorrect) {
-        this.numberCorrect = numberCorrect;
-    }
+	public void setAssessment(Assessment assessment) {
+		this.assessment = assessment;
+	}
 
-    public int getNumberIncorrect() {
-        return numberIncorrect;
-    }
-    public void setNumberIncorrect(int numberIncorrect) {
-        this.numberIncorrect = numberIncorrect;
-    }
+	public int getNumberCorrect() {
+		return numberCorrect;
+	}
 
-    public Question getCurrentQuestion() {
-        return currentQuestion;
-    }
+	public void setNumberCorrect(int numberCorrect) {
+		this.numberCorrect = numberCorrect;
+	}
 
-    public void setCurrentQuestion(Question currentQuestion) {
-        this.currentQuestion = currentQuestion;
-    }
+	public int getNumberIncorrect() {
+		return numberIncorrect;
+	}
+	public void setNumberIncorrect(int numberIncorrect) {
+		this.numberIncorrect = numberIncorrect;
+	}
 
-    public int getCurrentQuestionNumber() {
-        return currentQuestionNumber;
-    }
+	public Question getCurrentQuestion() {
+		return currentQuestion;
+	}
 
-    public void setCurrentQuestionNumber(int currentQuestionNumber) {
-        this.currentQuestionNumber = currentQuestionNumber;
-    }
+	public void setCurrentQuestion(Question currentQuestion) {
+		this.currentQuestion = currentQuestion;
+	}
 
+	public int getCurrentQuestionNumber() {
+		return currentQuestionNumber;
+	}
 
-    public AssessmentHandler(){
-
-    }
-    public void startAssessment(Assessment assessment){
-        
-    }
-    public double calculateScore(){
-        return 0;
-    }
+	public void setCurrentQuestionNumber(int currentQuestionNumber) {
+		this.currentQuestionNumber = currentQuestionNumber;
+	}
 
 
 }
