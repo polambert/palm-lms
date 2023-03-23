@@ -265,8 +265,11 @@ public class LMS {
             case "Leave Comment":
             {
                 System.out.println("What is your Comment?");
-                String comment= scan.nextLine();
+                String userComment= scan.nextLine();
+                ArrayList<Comment> replies = new ArrayList<>();
+                Comment comment = new Comment(UUID.randomUUID(), comment, UserManager.getInstance().getLoggedInUser(), LocalDate.now(), replies);
                 //add comment to the array list of comments
+                leaveComment(comment, course);
                 break;
             }
             case "Return to Course":
@@ -306,6 +309,11 @@ public class LMS {
             {
                 System.out.println("What is your Review?");
                 String comment= scan.nextLine();
+                System.out.println("What is your rating? (1-5)");
+                int rating = scan.nextInt();
+                scan.nextLine();
+                Review review = new Review(UUID.randomUUID(), rating, comment, UserManager.getInstance().getLoggedInUser(), LocalDate.now());
+                leaveReview(review, course);
                 //add review to the array list of reviews
                 break;
             }
