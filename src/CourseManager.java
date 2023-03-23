@@ -47,7 +47,7 @@ public class CourseManager {
 		return true;
 	}
 
-	public static boolean writeAllCourses() {
+	public boolean writeAllCourses() {
 		dbManager.writeCoursesToDB(courses);
 
 		return true;
@@ -99,6 +99,7 @@ public class CourseManager {
 
 			course.setAuthor(author);
 			course.setAuthorId(author.getId());
+			course.setLanguage(language);
 			course.setTitle(title);
 			course.setDescription(description);
 

@@ -16,6 +16,7 @@ public class Comment {
 		this.id = id;
 		this.comment = comment;
 		this.author = author;
+		this.authorId = author.getId();
 		this.date = date;
 		this.replies = replies;
 	}

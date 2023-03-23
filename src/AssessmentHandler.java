@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class AssessmentHandler
 {
@@ -11,21 +12,48 @@ public class AssessmentHandler
 	public AssessmentHandler(){
 
 	}
-	public static void start(Assessment assessment){
+	
+	// returns grade achieved
+	public static double start(Assessment assessment) {
 		// start taking the assessment
-		ArrayList<Question> question = assessment.getQuestions();		
+		Scanner scanner = new Scanner(System.in);
+
+		ArrayList<Question> questions = assessment.getQuestions();
+
+		int numCorrect = 0;
+		int numWrong = 0;
+
+		for (int i = 0; i < questions.size(); i++) {
+			Question question = questions.get(i);
+			System.out.println("Question #" + (i+1) + ": " + question.getQuestion());
+
+			ArrayList<String> answers = question.getAnswers();
+			for (int j = 0; j < answers.size(); j++) {
+				System.out.println("  " + (j+1) + ". " + answers.get(j));
+			}
+
+			// get answer
+			int answer = Integer.parseInt(scanner.nextLine()) - 1;
+			int correct = question.getCorrectAnswer();
+
+			if (answer == correct) {
+				System.out.println("Correct!");
+				numCorrect++;
+			} else {
+				System.out.println("Sorry, that was incorrect.");
+				numWrong++;
+			}
+		}
+
+		double grade = numCorrect / (numCorrect + numWrong);
+
+		System.out.println("You scored a " + (int) grade + ".");
+
+		return grade;
 	}
+
 	public double calculateScore(){
 		return 0;
-	}
-
-	//getters and setters
-	public Assessment getAssessment() {
-		return assessment;
-	}
-
-	public void setAssessment(Assessment assessment) {
-		this.assessment = assessment;
 	}
 
 	public int getNumberCorrect() {

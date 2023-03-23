@@ -12,8 +12,6 @@ public class User
 	private LocalDate dateOfBirth;
 	private boolean canCreateCourses;
 	private ArrayList<CourseProgress> courseProgresses = new ArrayList<>();
-	
-
 
 	public User(UUID id, String firstName, String lastName, String email, LocalDate dateOfBirth, ArrayList<CourseProgress> courseProgresses) {
 		this.id = id;

@@ -90,14 +90,6 @@ public class UIHandler extends LMS
 		return true;
 	}
 
-	public boolean leaveReview(Review review, Course course){
-		return true;
-	}
-
-	public boolean leaveComment(Comment comment, Course course){
-		return true;
-	}
-
 	public boolean deleteReview(Review review, Course course){
 		return true;
 	}

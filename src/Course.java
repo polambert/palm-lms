@@ -118,7 +118,7 @@ public class Course {
 	}
 
 	public Review addReview(int rating, String text, User author) {
-		return new Review(id, rating, text, author, LocalDate.now());
+		return new Review(UUID.randomUUID(), rating, text, author, LocalDate.now());
 	}
 
 	public int getChapterCount() {

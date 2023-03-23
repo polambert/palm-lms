@@ -264,7 +264,7 @@ public class LMS {
 
 
     private static void showCommentMenu() {
-        System.out.println("*****Review Menu*****");
+        System.out.println("*****Comment Menu*****");
         System.out.println("Course: ");
         System.out.println("*************************");
         //print out all the current Comments
@@ -285,8 +285,12 @@ public class LMS {
             case "Leave Comment":
             {
                 System.out.println("What is your Comment?");
-                String comment= scan.nextLine();
+                String userComment= scan.nextLine();
+                ArrayList<Comment> replies = new ArrayList<>();
+                Comment comment = new Comment(UUID.randomUUID(), userComment, UserManager.getInstance().getLoggedInUser(), LocalDate.now(), replies);
                 //add comment to the array list of comments
+				course.getComments().add(comment);
+				CourseManager.getInstance().writeAllCourses();
                 break;
             }
             case "Return to Course":
@@ -324,9 +328,18 @@ public class LMS {
         {
             case "Leave Review":
             {
-                System.out.println("What is your Review?");
+                System.out.print("What is your Review? ");
                 String comment= scan.nextLine();
-                //add review to the array list of reviews
+                System.out.print("What is your rating? (1-5) ");
+                int rating = Integer.parseInt(scan.nextLine());
+
+				if (rating >= 1 && rating <= 5) {
+					course.addReview(rating, comment, UserManager.getInstance().getLoggedInUser());
+					CourseManager.getInstance().writeAllCourses();
+				} else {
+					System.out.println("Unable to add review, please make sure rating is between 1-5.");
+				}
+
                 break;
             }
             case "Return to Course":
