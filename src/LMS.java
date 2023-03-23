@@ -1,6 +1,6 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.time.LocalDate;
 import java.util.UUID;
 
 //Methods that contain arrays that are print later
@@ -35,7 +35,7 @@ public class LMS {
 	 * @param dateString datestring in format of YYYY-MM-DD
 	 * @return LocalDate representing datestring given
 	 */
-	private LocalDate dateStringToDate(String dateString) {
+	private static LocalDate dateStringToDate(String dateString) {
 		// date strings are formatted YYYY-MM-DD
 		String[] split = dateString.split("-");
 
@@ -85,6 +85,13 @@ public class LMS {
                 //print all enrolled classes
                 UUID userID = UserManager.getInstance().getIdFromEmail(email);
                 CourseManager.getInstance().getCourseById(userID);
+                ArrayList<Course> enrolledCourse = CourseManager.getInstance().getEnrolledCourses(UserManager.getInstance().getLoggedInUser());
+                for(int i=0;i<enrolledCourse.size();i++) 
+                {
+                    System.out.println(enrolledCourse);
+                    
+                }
+            
                 break;
             }
             case "Enroll in a Course":
@@ -112,7 +119,7 @@ public class LMS {
             }
             case "Enter a Course":
             {
-                System.out.println("What class would you like to enroll in");
+                System.out.println("What class would you like to enter");
                 String course= scan.nextLine();
                 //convert string to course
                 //courseMenu(course);
@@ -120,7 +127,7 @@ public class LMS {
             }
             case "Log Out":
             {
-                //logout();
+                UserManager.getInstance().logout();
                 break;
             }
             default :
@@ -169,13 +176,20 @@ public class LMS {
                 for (int i = 0; i < pass.length(); i++) {
                     ch[i] = pass.charAt(i);
                 }
-                System.out.println("What is your date of birth?");
+                System.out.println("What is your date of birth? (YYYY-MM-DD)");
                 String birthday= scan.nextLine();
+                LocalDate date = dateStringToDate(birthday);
+
+                UserManager.getInstance().attemptSignup(email, ch, name, name, date);
+
+                // YYYY-MM-DD
+                //LocalDate date = dateStringToDate(date);
                 //signup(name, email, Date dateOfBirth, ch);
                 return;
             }
             case "Quit":{
                 System.out.println("Thank you for using PALM");
+                
                 return;
             }
             default :{
@@ -186,9 +200,9 @@ public class LMS {
 
     private static void showCourseMenu(Course course, Chapter chapter) {
         System.out.println("***************");
-        System.out.println("Course:" + course);
-        System.out.println("Chapter:" + chapter);
-        System.out.println("Rating:");
+        System.out.println("Course: " + course.getTitle());
+        System.out.println("Chapter: " + course.getChapterCount());
+        System.out.println("Rating: ");
         System.out.println("***************");
         for(int i=0;i<=COURSE_MENU.length;i++)
             System.out.println((i+1)+". "+COURSE_MENU[i]);
