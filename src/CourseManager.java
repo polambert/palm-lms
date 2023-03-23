@@ -99,6 +99,7 @@ public class CourseManager {
 
 			course.setAuthor(author);
 			course.setAuthorId(author.getId());
+			course.setLanguage(language);
 			course.setTitle(title);
 			course.setDescription(description);
 
