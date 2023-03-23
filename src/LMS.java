@@ -244,7 +244,7 @@ public class LMS {
 
 
     private static void showCommentMenu() {
-        System.out.println("*****Review Menu*****");
+        System.out.println("*****Comment Menu*****");
         System.out.println("Course: ");
         System.out.println("*************************");
         //print out all the current Comments
