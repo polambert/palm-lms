@@ -78,6 +78,8 @@ public class LMS {
         Scanner scan = new Scanner(System.in);
         int num = Integer.parseInt(scan.nextLine());
         String command = HOME_MENU[num-1];
+        clearScreen();
+
         switch(command)
         {
             case "View Enrolled Courses":
@@ -214,18 +216,23 @@ public class LMS {
         Scanner scan = new Scanner(System.in);
         int num = Integer.parseInt(scan.nextLine());
         String command = SIGN_IN_MENU[num-1];
+        clearScreen();
+
         switch(command){
             case "Log In": {
                 System.out.println("What is your email?");
                 String email= scan.nextLine();
+                clearScreen();
                 System.out.println("What is your password?");
                 String pass= scan.nextLine();
+                clearScreen();
                 char[] password = new char[pass.length()];
                 for (int i = 0; i < pass.length(); i++) {
                     password[i] = pass.charAt(i);
                 }
                 UserManager.getInstance().attemptLogin(email, password);
                 homeMenu(email);
+                clearScreen();
                 break;
             }
             case "New User":{
@@ -241,10 +248,11 @@ public class LMS {
                 }
                 System.out.println("What is your date of birth? (YYYY-MM-DD)");
                 String birthday= scan.nextLine();
+                clearScreen();
                 LocalDate date = dateStringToDate(birthday);
 
                 UserManager.getInstance().attemptSignup(email, ch, name, name, date);
-
+                clearScreen();
                 // YYYY-MM-DD
                 //LocalDate date = dateStringToDate(date);
                 //signup(name, email, Date dateOfBirth, ch);
@@ -282,6 +290,7 @@ public class LMS {
         Scanner scan = new Scanner(System.in);
         int num = Integer.parseInt(scan.nextLine());
         String command = COURSE_MENU[num-1];
+        clearScreen();
 
 		switch(command)
 		{
@@ -345,6 +354,8 @@ public class LMS {
         Scanner scan = new Scanner(System.in);
         int num = Integer.parseInt(scan.nextLine());
         String command = COMMENT_MENU[num-1];
+        clearScreen();
+        
         switch(command)
         {
             case "Leave Comment":
@@ -420,8 +431,10 @@ public class LMS {
         }
     }
 
-
-
+    private static void clearScreen() {  
+        System.out.print("\033[H\033[2J");  
+        System.out.flush();  
+    }  
 
 	
 }
