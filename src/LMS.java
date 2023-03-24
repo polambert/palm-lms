@@ -123,8 +123,7 @@ public class LMS {
                 ArrayList<Chapter> chaptersList = new ArrayList<Chapter>(chapters);
                 course.setChapters(chaptersList);
 
-                for(int i = 0; i < chapters; i++)
-                {
+                for(int i = 0; i < chapters; i++){
                     int chapterNumber = i + 1;
                     System.out.println("What is the name of chapter " + chapterNumber + "?");
                     String chapterName = scan.nextLine();
@@ -136,6 +135,33 @@ public class LMS {
                     System.out.println("How many questions is the chapter " + chapterNumber + " test?");
                     int numQuestions = Integer.parseInt(scan.nextLine());
                     ArrayList<Question> questions = new ArrayList<Question>(numQuestions);
+
+                    for(int j = 0; j < numQuestions; j++)
+                    {
+                        int questionNumber = j + 1;
+                        System.out.println("What is question number "+ questionNumber + "?");
+                        String actualQuestion = scan.nextLine();
+
+                        //ask user if we want to change number of answer options to anything other than 4
+                        ArrayList<String> options = new ArrayList<String>(4);
+
+                        for(int k = 0; k < 4; k++)
+                        {
+                            int optionNumber = k + 1;
+                            System.out.println("What is question "+ questionNumber + ", option number " + optionNumber + "?");
+                            String option = scan.nextLine();
+                            options.set(k, option);
+                        }
+
+                        System.out.println("Which option 1-4 is the correct anser");
+                        int optionNumber = Integer.parseInt(scan.nextLine());
+                        int rightAnswer = optionNumber - 1;
+
+
+                        Question question = new Question(actualQuestion, options, rightAnswer);
+                        questions.set(j, question);
+                    }
+                
 
                     Assessment test = new Assessment(questions);
 
