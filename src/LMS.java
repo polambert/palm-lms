@@ -62,7 +62,7 @@ public class LMS {
 	}
 
 
-    //method that prints array
+    //method that prints array of options
     private static void showHomeMenu() {
         System.out.println("*****Home Menu*****");
         for(int i=0;i<HOME_MENU.length;i++)
@@ -120,16 +120,32 @@ public class LMS {
 
                 System.out.println("How many chapters is the course");
                 int chapters = Integer.parseInt(scan.nextLine());
+                ArrayList<Chapter> chaptersList = new ArrayList<Chapter>(chapters);
+                course.setChapters(chaptersList);
 
                 for(int i = 0; i < chapters; i++)
                 {
-                    System.out.println("How many sections is chapter " + i);
-                    int sections = Integer.parseInt(scan.nextLine());
+                    int chapterNumber = i + 1;
+                    System.out.println("What is the name of chapter " + chapterNumber + "?");
+                    String chapterName = scan.nextLine();
+
+                    System.out.println("How many sections is chapter " + chapterNumber + "?");
+                    int numSections = Integer.parseInt(scan.nextLine());
+                    ArrayList<Section> sections = new ArrayList<Section>(numSections);
+
+                    System.out.println("How many questions is the chapter " + chapterNumber + " test?");
+                    int numQuestions = Integer.parseInt(scan.nextLine());
+                    ArrayList<Question> questions = new ArrayList<Question>(numQuestions);
+
+                    Assessment test = new Assessment(questions);
+
+                    Chapter chapter = new Chapter(chapterName, sections, test);
+                
+            
+
                 }
 
-                System.out.println("How many sections is the course");
-                int sections = Integer.parseInt(scan.nextLine());
-                
+              
                 CourseManager.getInstance().writeAllCourses();
                 System.out.println("Your course "+ name + " is created! The course id is " + course.getId());
                 
