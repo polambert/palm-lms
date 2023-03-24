@@ -303,9 +303,10 @@ public class UserDBManager extends DataConstants {
 		userObj.put(USER_OBJ_FIRSTNAME, user.getFirstName());
 		userObj.put(USER_OBJ_LASTNAME, user.getLastName());
 		userObj.put(USER_OBJ_EMAIL, user.getEmail());
-		userObj.put(USER_OBJ_DATEOFBIRTH, user.getDateOfBirth());
+		userObj.put(USER_OBJ_DATEOFBIRTH, user.getDateOfBirth().toString());
 		userObj.put(USER_OBJ_PASSWORD, hashedPassword);
 		userObj.put(USER_OBJ_CANCREATECOURSES, false);
+		userObj.put(USER_OBJ_COURSEPROGRESSES, new JSONArray());
 
 		// no grades or courses yet -- this is a brand new user
 
