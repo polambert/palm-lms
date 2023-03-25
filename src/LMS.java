@@ -72,6 +72,8 @@ public class LMS {
     }
 
 
+    
+
     //switch statement method
     private static void homeMenu(String email) {
         showHomeMenu();
@@ -144,16 +146,19 @@ public class LMS {
                         System.out.println("What is question number "+ questionNumber + "?");
                         String actualQuestion = scan.nextLine();
 
-                        //ask user if we want to change number of answer options to anything other than 4
                         ArrayList<String> options = new ArrayList<String>(4);
 
-                        for(int k = 0; k < 4; k++)
-                        {
+                        //get options for the question
+                        for(int k = 0; k < 4; k++){
+
+                            
                             int optionNumber = k + 1;
                             System.out.println("What is question "+ questionNumber + ", option number " + optionNumber + "?");
                             String option = scan.nextLine();
                             options.set(k, option);
                         }
+
+                        
 
                         System.out.println("Which option 1-4 is the correct anser");
                         int optionNumber = Integer.parseInt(scan.nextLine());
