@@ -321,8 +321,6 @@ public class LMS {
 		//add course and section to show course below
 
 		showCourseMenu(course, course.getChapters().get(UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course).getChaptersCompleted()));
-
-		//Left unfinished - LukeLane
 		Scanner scan = new Scanner(System.in);
 		int num = Integer.parseInt(scan.nextLine());
 		String command = COURSE_MENU[num-1];
@@ -413,6 +411,7 @@ public class LMS {
 				//add comment to the array list of comments
 				course.getComments().add(comment);
 				CourseManager.getInstance().writeAllCourses();
+				clearScreen();
 				break;
 			}
 			case "Return to Course":
@@ -461,7 +460,7 @@ public class LMS {
 				} else {
 					System.out.println("Unable to add review, please make sure rating is between 1-5.");
 				}
-
+				clearScreen();
 				break;
 			}
 			case "Return to Course":
