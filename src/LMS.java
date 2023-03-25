@@ -340,11 +340,21 @@ public class LMS {
 				break;
 			}
 			case "View/Leave Review": {
-				//switch to Review display
+				ArrayList<Review> reviews;
+				reviews = course.getReviews();
+				for(Review review : reviews){
+					System.out.println(review.toString());
+				}
+				reviewMenu(course);
 				break;
 			}
 			case "View/Leave Comment": {
-				//switch to Comment display
+				ArrayList<Comment> comments;
+				comments = course.getComments();
+				for(Comment comment : comments){
+					System.out.println(comment.toString());
+				}
+				commentMenu(course);
 				break;
 			}
 			case "Drop Class": {
@@ -385,7 +395,7 @@ public class LMS {
 		System.out.println("What would you like to do?:");
 	}
 
-	private void commentMenu(Course course) {
+	private static void commentMenu(Course course) {
 		showCommentMenu();
 		Scanner scan = new Scanner(System.in);
 		int num = Integer.parseInt(scan.nextLine());
@@ -431,7 +441,7 @@ public class LMS {
 		System.out.println("What would you like to do?:");
 	}
 
-	private void reviewMenu(Course course) {
+	private static void reviewMenu(Course course) {
 		showReviewMenu();
 		Scanner scan = new Scanner(System.in);
 		int num = Integer.parseInt(scan.nextLine());
