@@ -42,6 +42,13 @@ public class UserManager {
 	}
 
 	public boolean writeAllUsers() {
+		// save logged in user
+		for (int i = 0; i < users.size(); i++) {
+			if (users.get(i).getId().equals(loggedInUser.getId())) {
+				users.set(i, loggedInUser);
+			}
+		}
+
 		return dbManager.writeUsersToDB(users);
 	}
 

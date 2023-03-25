@@ -111,7 +111,7 @@ public class User
 	}
 
 	public ArrayList<CourseProgress> getCourseProgresses() {
-		return courseProgresses;
+		return this.courseProgresses;
 	}
 
 	public void setCourseProgresses(ArrayList<CourseProgress> courseProgresses) {
@@ -121,7 +121,13 @@ public class User
         this.canCreateCourses = canCreateCourses;
 	}
 	public ArrayList<Course> getEnrolledCourses() {
-		return null;
+		ArrayList<Course> courses = new ArrayList<>();
+
+		for (int i = 0; i < courseProgresses.size(); i++) {
+			courses.add(courseProgresses.get(i).getCourse());
+		}
+
+		return courses;
 	}
 
 

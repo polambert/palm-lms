@@ -81,7 +81,7 @@ public class CourseManager {
 				Review review = reviews.get(j);
 				if (review.getAuthor() == null && review.getAuthorId() != null) {
 					review.setAuthor(UserManager.getInstance().getUserFromId(review.getAuthorId()));
-					System.out.println(UserManager.getInstance().getUserFromId(review.getAuthorId()));
+					//System.out.println(UserManager.getInstance().getUserFromId(review.getAuthorId()));
 				}
 			}
 
