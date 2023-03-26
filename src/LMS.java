@@ -323,8 +323,6 @@ public class LMS {
 		//add course and section to show course below
 
 		showCourseMenu(course, course.getChapters().get(UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course).getChaptersCompleted()));
-
-		//Left unfinished - LukeLane
 		Scanner scan = new Scanner(System.in);
 		int num = Integer.parseInt(scan.nextLine());
 		String command = COURSE_MENU[num-1];
@@ -338,15 +336,25 @@ public class LMS {
 				break;
 			}
 			case "Take Quiz": {
-				//startAssessment(CourseProgress courseProgress);
+				UIHandler.startAssessment(UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course));
 				break;
 			}
 			case "View/Leave Review": {
-				//switch to Review display
+				ArrayList<Review> reviews;
+				reviews = course.getReviews();
+				for(Review review : reviews){
+					System.out.println(review.toString());
+				}
+				reviewMenu(course);
 				break;
 			}
 			case "View/Leave Comment": {
-				//switch to Comment display
+				ArrayList<Comment> comments;
+				comments = course.getComments();
+				for(Comment comment : comments){
+					System.out.println(comment.toString());
+				}
+				commentMenu(course);
 				break;
 			}
 			case "Drop Class": {
@@ -387,7 +395,7 @@ public class LMS {
 		System.out.println("What would you like to do?:");
 	}
 
-	private void commentMenu(Course course) {
+	private static void commentMenu(Course course) {
 		showCommentMenu();
 		Scanner scan = new Scanner(System.in);
 		int num = Integer.parseInt(scan.nextLine());
@@ -405,6 +413,7 @@ public class LMS {
 				//add comment to the array list of comments
 				course.getComments().add(comment);
 				CourseManager.getInstance().writeAllCourses();
+				clearScreen();
 				break;
 			}
 			case "Return to Course":
@@ -433,7 +442,7 @@ public class LMS {
 		System.out.println("What would you like to do?:");
 	}
 
-	private void reviewMenu(Course course) {
+	private static void reviewMenu(Course course) {
 		showReviewMenu();
 		Scanner scan = new Scanner(System.in);
 		int num = Integer.parseInt(scan.nextLine());
@@ -453,7 +462,7 @@ public class LMS {
 				} else {
 					System.out.println("Unable to add review, please make sure rating is between 1-5.");
 				}
-
+				clearScreen();
 				break;
 			}
 			case "Return to Course":

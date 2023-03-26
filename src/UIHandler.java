@@ -1,6 +1,9 @@
 
 import java.util.Date;
 import java.util.Scanner;
+
+import org.json.simple.JSONObject;
+
 import java.util.ArrayList;
 
 public class UIHandler extends LMS
@@ -73,8 +76,52 @@ public class UIHandler extends LMS
 		return true;
 	}
 
-	public void startAssessment(CourseProgress courseProgress) {
-
+	public static void startAssessment(CourseProgress courseProgress) {
+		Course assessmentCourse = courseProgress.getCourse();
+		//Start on current chapter of progress
+		int chapterStart = courseProgress.getChaptersCompleted();
+		//Start at next section quiz since previous would already be completed
+		int sectionStart = courseProgress.getSectionsCompleted()+1;
+		//Return true if chapter progress isn't complete
+		boolean availableChapterAssessment = (courseProgress.getChapterProgress() < assessmentCourse.getChapterCount());
+		//Return true if section progress isn't complete
+		boolean availableSectionAssessment = (courseProgress.getSectionProgress() < assessmentCourse.getChapters().get(chapterStart).getSectionCount());
+		//Return true if all sections in chapter are done, starts the Test
+		boolean availableChapterTest = (assessmentCourse.getChapters().get(chapterStart).getSectionCount() == courseProgress.getSectionProgress());
+		//Return true if all sections in chapter are done, including the Test, start new Chapter
+		boolean nothingAvailable = (assessmentCourse.getChapters().get(chapterStart).getSectionCount() < courseProgress.getSectionProgress());
+		//Taking a section quiz
+		if(availableChapterAssessment && availableSectionAssessment) {
+			Assessment quiz = assessmentCourse.getChapters().get(chapterStart).getSections().get(sectionStart).getQuiz();
+			double score = assessmentHandler.start(quiz);
+			if(score >= 90.0) {
+				courseProgress.incSectionProgress();
+				courseProgress.completedSectionAssessment(chapterStart, sectionStart, score);
+				userManager.writeAllUsers();
+			}
+				
+		}
+		//Taking a Chapter Test
+		else if(availableChapterTest) {
+			Assessment test = assessmentCourse.getChapters().get(chapterStart).getTest();
+			double score = assessmentHandler.start(test);
+			if(score >= 90.0) {
+				courseProgress.incSectionProgress();
+				courseProgress.completedSectionAssessment(chapterStart, sectionStart, score);
+				userManager.writeAllUsers();
+			}
+		}
+		//Kind of assuming here that if the chapter's section progress and the chapter's 
+		//	section count are the same then you would increment 1 more time for the progress 
+		//	as a way to signify in the next check that all section quiz have been taken as 
+		//	well as the section test so you can move on to the next chapter and eventually final exam
+		//New Chapter, Taking new quiz in new section, Also resetting section counter for new chapter
+		else if(nothingAvailable) {
+			courseProgress.incChapterProgress();
+			courseProgress.setSectionsCompleted(0);
+			userManager.writeAllUsers();
+			startAssessment(courseProgress);
+		}
 	}
 
 	public boolean enrollCourse(Course course) {

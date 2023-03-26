@@ -48,6 +48,19 @@ public class CourseProgress {
 
 		grades.add(finalExam); // final exam
 	}
+
+	public void completedSectionAssessment(int chapterIndex, int sectionIndex, double grade) {
+		// Check if the specified chapter and section exist in the grades arraylist
+		if (grades.size() <= chapterIndex) {
+			grades.add(new ArrayList<Double>());
+		}
+		else if (grades.get(chapterIndex).size() <= sectionIndex) {
+			grades.get(chapterIndex).add(0.0);
+		}
+	
+		// Update the grade at the specified chapter and section
+		grades.get(chapterIndex).set(sectionIndex, grade);
+	}
 	
 	public String toString() {
 		String s = "[CourseProgress] courseId: " + course.getId() + "\n";
