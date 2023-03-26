@@ -138,7 +138,7 @@ public class UserDBManager extends DataConstants {
 
 				String dateString = (String) certificateObj.get(CERTIFICATE_OBJ_DATECOMPLETED);
 				LocalDate certificateDate = null;
-				if (!dateString.equals("0000-00-00")) {
+				if (!dateString.equals("")) {
 					certificateDate = dateStringToDate(dateString);
 				}
 
@@ -207,6 +207,10 @@ public class UserDBManager extends DataConstants {
 		userObj.put(USER_OBJ_DATEOFBIRTH, user.getDateOfBirth().toString());
 		userObj.put(USER_OBJ_CANCREATECOURSES, user.canCreateCourses());
 
+		if (user.getFirstName().equals("Parker")) {
+			System.out.println(user.getCourseProgresses().size());
+		}
+
 		// get their password
 		try {
 			File file = new File(USER_FOLDER + user.getId() + ".json");
@@ -254,11 +258,13 @@ public class UserDBManager extends DataConstants {
 				certificateObj.put(CERTIFICATE_OBJ_DATECOMPLETED, "");
 			}
 
-			courseProgressObj.put(COURSEPROGRESS_OBJ_COURSEID, courseProgress.getCourse().getId());
+			courseProgressObj.put(COURSEPROGRESS_OBJ_COURSEID, courseProgress.getCourse().getId().toString());
 			courseProgressObj.put(COURSEPROGRESS_OBJ_CHAPTERSCOMPLETED, courseProgress.getChaptersCompleted());
 			courseProgressObj.put(COURSEPROGRESS_OBJ_SECTIONSCOMPLETED, courseProgress.getSectionsCompleted());
 			courseProgressObj.put(COURSEPROGRESS_OBJ_GRADES, gradesArr);
 			courseProgressObj.put(COURSEPROGRESS_OBJ_CERTIFICATE, certificateObj);
+
+			courseProgressArr.add(courseProgressObj);
 		}
 
 		userObj.put(USER_OBJ_COURSEPROGRESSES, courseProgressArr);
@@ -310,6 +316,8 @@ public class UserDBManager extends DataConstants {
 
 		// no grades or courses yet -- this is a brand new user
 
+		boolean success = writeUserToDB(userObj);
+
 		// write to file
 		return writeUserToDB(userObj);
 	}
@@ -357,6 +365,8 @@ public class UserDBManager extends DataConstants {
 
 	public User attemptLogin(String email, char[] password) {
 		UUID id = getIdFromEmail(email);
+
+		if (id == null) { return null; }
 
 		try {
 			File file = new File(USER_FOLDER + id.toString() + ".json");
