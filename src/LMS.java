@@ -335,8 +335,10 @@ public class LMS {
 		int s = progress.getSectionsCompleted() + 1;
 		int sLeft = course.getChapters().get(c-1).getSections().size() - s;
 
-		if (sLeft >= 0) {
-			System.out.println("On Chapter " + c + ", Section " + s + " (" + sLeft + " sections left in chapter).");
+		if (sLeft > 0) {
+			System.out.println("On Chapter " + c + ", Section " + s + " (" + sLeft + " more sections left in chapter).");
+		} else if (sLeft == 0) {
+			System.out.println("On Chapter " + c + ", Section " + s + " (no more sections in chapter).");
 		} else if (progress.canTakeTest()) {
 			System.out.println("Ready to take Chapter " + c + " test.");
 		} else if (progress.canTakeFinal()) {
