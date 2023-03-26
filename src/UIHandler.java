@@ -111,6 +111,10 @@ public class UIHandler extends LMS
 				userManager.writeAllUsers();
 			}
 		}
+		//Kind of assuming here that if the chapter's section progress and the chapter's 
+		//	section count are the same then you would increment 1 more time for the progress 
+		//	as a way to signify in the next check that all section quiz have been taken as 
+		//	well as the section test so you can move on to the next chapter and eventually final exam
 		//New Chapter, Taking new quiz in new section, Also resetting section counter for new chapter
 		else if(nothingAvailable) {
 			courseProgress.incChapterProgress();
