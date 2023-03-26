@@ -207,10 +207,6 @@ public class UserDBManager extends DataConstants {
 		userObj.put(USER_OBJ_DATEOFBIRTH, user.getDateOfBirth().toString());
 		userObj.put(USER_OBJ_CANCREATECOURSES, user.canCreateCourses());
 
-		if (user.getFirstName().equals("Parker")) {
-			System.out.println(user.getCourseProgresses().size());
-		}
-
 		// get their password
 		try {
 			File file = new File(USER_FOLDER + user.getId() + ".json");

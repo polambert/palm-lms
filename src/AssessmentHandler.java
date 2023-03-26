@@ -12,6 +12,12 @@ public class AssessmentHandler
 	public AssessmentHandler(){
 
 	}
+
+	private static void clearScreen() {
+		System.out.println("\n\n\n\n\n\n"); // visually shows clear if they scroll up
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+	}
 	
 	// returns grade achieved
 	public static double start(Assessment assessment) {
@@ -36,6 +42,8 @@ public class AssessmentHandler
 			int answer = Integer.parseInt(scanner.nextLine()) - 1;
 			int correct = question.getCorrectAnswer();
 
+			clearScreen();
+
 			if (answer == correct) {
 				System.out.println("Correct!");
 				numCorrect++;
@@ -45,9 +53,19 @@ public class AssessmentHandler
 			}
 		}
 
-		double grade = numCorrect / (numCorrect + numWrong);
+		double grade = 100 * numCorrect / (numCorrect + numWrong);
 
-		System.out.println("You scored a " + (int) grade + ".");
+		System.out.println("You scored a " + (int) grade + "%.");
+
+		if (grade >= 80) {
+			// pass
+			System.out.println("You passed! You will now be moved on to the next section.");
+		} else {
+			// fail
+			System.out.println("You failed, and you will have to retake this section quiz again.");
+		}
+
+		System.out.println();
 
 		return grade;
 	}
