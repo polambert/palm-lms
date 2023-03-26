@@ -334,7 +334,7 @@ public class LMS {
 				break;
 			}
 			case "Take Quiz": {
-				//startAssessment(CourseProgress courseProgress);
+				UIHandler.startAssessment(UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course));
 				break;
 			}
 			case "View/Leave Review": {
