@@ -204,7 +204,7 @@ public class LMS {
                             //get options method 
 							ArrayList<String> options = getOptions();
 
-							System.out.println("Which option 1-4 is the correct anser");
+							System.out.println("Which option 1-4 is the correct answer");
 							int optionNumber = Integer.parseInt(scan.nextLine());
 							int rightAnswer = optionNumber - 1;
 
@@ -300,18 +300,6 @@ public class LMS {
 			}
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
 
 	public static void showSignInMenu() {
 		System.out.println("*****Welcome to PALM*****");
