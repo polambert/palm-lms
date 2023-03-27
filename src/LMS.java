@@ -17,6 +17,7 @@ public class LMS {
 		"View Enrolled Courses",
 		"Enroll in a Course",
 		"Create a Course",
+        "Edit a Course",
 		"Log Out"
 	};
 	private static final String[] SIGN_IN_MENU = {
@@ -175,6 +176,7 @@ public class LMS {
 						int numQuestions = Integer.parseInt(scan.nextLine());
 						ArrayList<Question> questions = new ArrayList<Question>(numQuestions);
 
+                        /* 
 						for(int j = 0; j < numQuestions; j++)
 						{
 							int questionNumber = j + 1;
@@ -200,12 +202,13 @@ public class LMS {
 							Question question = new Question(actualQuestion, options, rightAnswer);
 							questions.add(question);
 						}
+                        */
 					
-
 						Assessment test = new Assessment(questions);
 
 						Chapter chapter = new Chapter(chapterName, sections, test);
 					
+                        chaptersList.add(i, chapter);
 				
 
 					}
@@ -219,6 +222,10 @@ public class LMS {
 
 					break;
 				}
+                case "Edit a Course":
+                {
+                    return;
+                }
 				case "Log Out":
 				{
 					UserManager.getInstance().logout();
