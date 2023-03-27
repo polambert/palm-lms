@@ -800,18 +800,20 @@ public class LMS {
 	}
 
 	private  static ArrayList<String> getOptions(){
+        Scanner scaner = new Scanner(System.in);
         ArrayList<String> options = new ArrayList<String>(4);
         for(int k = 0; k < 4; k++)
         {
             int questionNumber = k + 1;
-            try (Scanner scan = new Scanner(System.in)) {
+           
                 
                 int optionNumber = k + 1;
                 System.out.println("What is question "+ questionNumber + ", option number " + optionNumber + "?");
-                String option = scan.nextLine();
-                options.set(k, option);
+                String option = scaner.nextLine();
+                options.add(option);
                 
-            }
+                
+            
         }
         return options;
     }
