@@ -97,6 +97,14 @@ public class CourseProgress {
 		return s;
 	}
 
+	public boolean canTakeTest() {
+		return sectionsCompleted >= course.getChapters().get(chaptersCompleted).getSections().size();
+	}
+
+	public boolean canTakeFinal() {
+		return chaptersCompleted >= course.getChapters().size();
+	}
+
 
 	// getters and setters
 	public Course getCourse() {
@@ -162,16 +170,16 @@ public class CourseProgress {
 		return sectionsCompleted;
 	}
 	public void setChapterProgress(int newChapterProgress) {
-
+		this.chaptersCompleted = newChapterProgress;
 	}
 	public void setSectionProgress(int newSectionProgress) {
-
+		this.sectionsCompleted = newSectionProgress;
 	}
 	public int incChapterProgress(){   
-		return chaptersCompleted+1;
+		return ++chaptersCompleted;
 	}
 	public int incSectionProgress(){
-		return sectionsCompleted+1;
+		return ++sectionsCompleted;
 	}
 	public double getProgressPercent(){
 		return chaptersCompleted/course.getChapterCount();

@@ -7,21 +7,77 @@
 	"description": "With this course you can master JavaScript in less than 2 months!",
 	"chapters": [
 		{
-			"name": "The Basics",
+			"name": "Introduction to JavaScript",
 			"sections": [
 				{
-					"name": "Introduction to JavaScript",
-					"text": "JavaScript is...",
+					"name": "Usage and Variables",
+					"text": "JavaScript is a cross-platform, object-oriented scripting language used to add functionality to webpages. It is dynamically-typed, and considered by many to be easy to learn. To start, you can create a variable in JavaScript with:\n\nlet x = 5;\n\nwhere 'x' is the name of the variable, and '5' is the value that we want it to hold. The 'let' tells JavaScript that we want to create a variable, and the equals sign assigns it to 5. In this case, 'x' is a number, because its value is the number 5. We can also have other types of variables:\n\nlet a = \"Hello, I'm a string!\";\nlet b = 12.12952;\nlet c = false;\n\nIn these cases, a, b, and c represent a String, a Number, and a Boolean respectively. A String value holds text, which can include words and numbers. A Number is any kind of number, like an integer or a decimal. A Boolean stores one simple state: true or false. A Boolean can't be any other value.",
 					"quiz": [
 						{
-							"question": "Which of the following is the proper way to define a function in JS?",
+							"question": "Which of the following is the proper way to define a variable in JS?",
 							"answers": [
-								"function() foo { ... }",
-								"function{} foo ( ... )",
-								"function foo() { ... }",
-								"function foo{} ( ... )"
+								"let x = 5;",
+								"let 5 = x;",
+								"let x 5; =",
+								"x let = 5;"
+							],
+							"correctAnswer": 0
+						},
+						{
+							"question": "What is JavaScript mainly used for?",
+							"answers": [
+								"Embedded devices",
+								"Cybersecurity and ethical hacking",
+								"Adding functionality to web pages",
+								"Creating malware"
 							],
 							"correctAnswer": 2
+						},
+						{
+							"question": "Which of these is NOT a possible primitive type for a variable in JS?",
+							"answers": [
+								"Boolean",
+								"Double",
+								"Number",
+								"String"
+							],
+							"correctAnswer": 1
+						}
+					]
+				},
+				{
+					"name": "Comments and Declarations",
+					"text": "In JavaScript, like many other languages, programmers may want to leave comments for themselves or other people who might be working on the same code. To add a comment in JS, you can do the following.\n\n// This is a single line comment.\n\n/*\n    This is\n    a multi-line\n    comment.\n*/\n\nComments should be added once every couple of lines, or when you feel you need to explain something that may not be obvious to the naked eye.\n\nIn JS, there are several different ways to declare variables. In the last section, you learned that you can use 'let' to declare a variable, but you can also use 'var' and 'const'. There differences are listed below.\n\n  var: Declares a variable\n  let: Declares a block-scoped, local variable\n  const: Declares a constant\n\nFor now, you don't need to understand the difference between 'var' and 'let' (just use 'let' for now), but 'const' can be used to create constant variables, like such:\n\nconst MIN_RADIUS = 33.0;\nconst MAX_RADIUS = 38.0;\n\nFrom that code, we can assume that the author was writing something with circles that can have a radius from 33 to 38. Constants allow you to change the values in your code without having to find where the variables were defined later on.",
+					"quiz": [
+						{
+							"question": "How do you write a single-line comment?",
+							"answers": [
+								"/ My comment here /",
+								"/* My comment here */",
+								"/**/ My comment here",
+								"// My comment here"
+							],
+							"correctAnswer": 3
+						},
+						{
+							"question": "What should you use 'const' for?",
+							"answers": [
+								"Creating high-level constants to avoid 'magic numbers'",
+								"To let the compiler know you're constipated",
+								"To add a constraint",
+								"Creating a variable"
+							],
+							"correctAnswer": 0
+						},
+						{
+							"question": "Which of the following is the proper way to define a constant in JS?",
+							"answers": [
+								"const MY_CONSTANT = 8.0;",
+								"const my constant = 8.0;",
+								"CONSTANT MY_const = 8.0;",
+								"MY_CONSTANT const = 8.0;"
+							],
+							"correctAnswer": 0
 						}
 					]
 				}

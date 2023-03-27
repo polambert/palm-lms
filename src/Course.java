@@ -38,6 +38,14 @@ public class Course {
 		this.comments = comments;
 	}
 
+	public double getRating() {
+		double sum = 0.0;
+		for (int i = 0; i < reviews.size(); i++) {
+			sum += reviews.get(i).getRating();
+		}
+		return sum / reviews.size();
+	}
+
 	//getters and setters
 	public UUID getAuthorId() { return this.authorId; }
 	public void setAuthorId(UUID authorId) { this.authorId = authorId; }

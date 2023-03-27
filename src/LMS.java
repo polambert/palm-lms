@@ -10,13 +10,13 @@ public class LMS {
 		"Take Quiz",
 		"View/Leave Review",
 		"View/Leave Comment",
-		"Drop Class","Go Home"
+		"Drop This Class",
+		"Go Home"
 	};
 	private static final String[] HOME_MENU = {
 		"View Enrolled Courses",
 		"Enroll in a Course",
 		"Create a Course",
-		"Enter a Course",
 		"Log Out"
 	};
 	private static final String[] SIGN_IN_MENU = {
@@ -72,7 +72,7 @@ public class LMS {
 		for(int i=0;i<HOME_MENU.length;i++)
 			System.out.println((i+1)+". "+HOME_MENU[i]);
 		System.out.println("***************");
-		System.out.println("What would you like to do?:");
+		System.out.print("What would you like to do? ");
 	}
 
 
@@ -98,14 +98,17 @@ public class LMS {
 						System.out.println("You are not currently enrolled in any courses.\n");
 						break;
 					}
+					
+					System.out.println("Which course would you like to select?\n");
 
 					for(int i=0; i<courses.size(); i++){
 						System.out.println((i+1) + ". " + courses.get(i).getTitle());   
 					}
 					
-					System.out.print("Enter a number: ");
+					System.out.print("\nEnter a number: ");
 					int enrollClass = Integer.parseInt(scan.nextLine());
 					Course enroll = courses.get(enrollClass - 1);
+					clearScreen();
 					courseMenu(enroll);
 				
 					break;
@@ -119,6 +122,7 @@ public class LMS {
 						System.out.println("  " + (i+1) + ". " + courses.get(i).getTitle());
 						System.out.println("      Language: " + courses.get(i).getLanguage());
 						System.out.println("      Description: " + courses.get(i).getDescription());
+						System.out.println("      Rating: " + courses.get(i).getRating());
 					}
 					
 					System.out.print("Enter a number: ");
@@ -128,9 +132,15 @@ public class LMS {
 					boolean success = UserManager.getInstance().getLoggedInUser().enrollIn(course);
 					UserManager.getInstance().writeAllUsers();
 
+					clearScreen();
+
 					if (success) {
 						System.out.println("You are now enrolled in '" + course.getName() + "'.");
-						System.out.println("Sending you to the course menu.");
+						System.out.println("Sending you to the course menu.\n");
+						courseMenu(course);
+					} else {
+						System.out.println("An error has occured.");
+						System.out.println("You were not able to be enrolled in '" + course.getName() + "'.\n");
 					}
 
 					break;
@@ -188,7 +198,7 @@ public class LMS {
 
 
 							Question question = new Question(actualQuestion, options, rightAnswer);
-							questions.set(j, question);
+							questions.add(question);
 						}
 					
 
@@ -207,14 +217,6 @@ public class LMS {
 
 					
 
-					break;
-				}
-				case "Enter a Course":
-				{
-					System.out.println("What class would you like to enter");
-					String course= scan.nextLine();
-					//convert string to course
-					//courseMenu(course);
 					break;
 				}
 				case "Log Out":
@@ -236,10 +238,12 @@ public class LMS {
 		for(int i=0;i<SIGN_IN_MENU.length;i++)
 			System.out.println((i+1)+". "+SIGN_IN_MENU[i]);
 		System.out.println("***************");
-		System.out.println("What would you like to do?:");
+		System.out.print("What would you like to do? ");
 	}
 
 	public static void signInMenu() {
+		clearScreen();
+
 		while (true) {
 			showSignInMenu();
 			Scanner scan = new Scanner(System.in);
@@ -249,9 +253,11 @@ public class LMS {
 
 			switch(command) {
 				case "Log In": {
+					System.out.println("You are logging in.");
 					System.out.println("What is your email?");
 					String email= scan.nextLine();
 					clearScreen();
+					System.out.println("You are logging in.");
 					System.out.println("What is your password?");
 					String pass= scan.nextLine();
 					clearScreen();
@@ -273,12 +279,22 @@ public class LMS {
 					break;
 				}
 				case "New User":{
-					System.out.println("What is your name?");
-					String name= scan.nextLine();
+					System.out.println("You are creating a new account.");
+					System.out.println("What is your first name?");
+					String firstName = scan.nextLine();
+					clearScreen();
+					System.out.println("You are creating a new account.");
+					System.out.println("What is your last name?");
+					String lastName = scan.nextLine();
+					clearScreen();
+					System.out.println("You are creating a new account.");
 					System.out.println("What is your email?");
 					String email= scan.nextLine();
+					clearScreen();
+					System.out.println("You are creating a new account.");
 					System.out.println("What is your password?");
 					String pass= scan.nextLine();
+					clearScreen();
 					char[] ch = new char[pass.length()];
 					for (int i = 0; i < pass.length(); i++) {
 						ch[i] = pass.charAt(i);
@@ -288,96 +304,156 @@ public class LMS {
 					clearScreen();
 					LocalDate date = dateStringToDate(birthday);
 
-					UserManager.getInstance().attemptSignup(email, ch, name, name, date);
-					clearScreen();
-					// YYYY-MM-DD
-					//LocalDate date = dateStringToDate(date);
-					//signup(name, email, Date dateOfBirth, ch);
-					return;
+					boolean success = UserManager.getInstance().attemptSignup(email, ch, firstName, lastName, date);
+
+					if (success) {
+						System.out.println("Successfully created your account with email '" + email + "'.");
+						System.out.println("Please log in.\n");
+					}
+					break;
 				}
 				case "Quit":{
-					System.out.println("Thank you for using PALM");
+					System.out.println("Thank you for using PALM.");
+
+					System.exit(0);
 					
-					return;
+					break;
 				}
-				default :{
+				default: {
 					System.err.println("Error! Invalid command entered. Please try again.");
+					break;
 				}
 			}
 		}
 	}
 
 	private static void showCourseMenu(Course course, Chapter chapter) {
-		System.out.println("***************");
+		System.out.println("******* Course Menu ******");
 		System.out.println("Course: " + course.getTitle());
-		System.out.println("Chapter: " + course.getChapterCount());
-		System.out.println("Rating: ");
-		System.out.println("***************");
-		for(int i=0;i<COURSE_MENU.length;i++)
-			System.out.println((i+1)+". "+COURSE_MENU[i]);
-		System.out.println("***************");
-		System.out.println("What would you like to do?:");
+		System.out.println("Rating: " + course.getRating());
+		
+		CourseProgress progress = UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course);
+		int c = progress.getChaptersCompleted() + 1;
+		int s = progress.getSectionsCompleted() + 1;
+		int sLeft = course.getChapters().get(c-1).getSections().size() - s;
+
+		if (sLeft > 0) {
+			System.out.println("On Chapter " + c + ", Section " + s + " (" + sLeft + " more sections left in chapter).");
+		} else if (sLeft == 0) {
+			System.out.println("On Chapter " + c + ", Section " + s + " (no more sections in chapter).");
+		} else if (progress.canTakeTest()) {
+			System.out.println("Ready to take Chapter " + c + " test.");
+		} else if (progress.canTakeFinal()) {
+			System.out.println("Ready to take final.");
+		}
+
+		System.out.println("**************************");
+		for(int i=0;i<COURSE_MENU.length;i++) {
+			if (COURSE_MENU[i].equals("Take Quiz")) {
+				// see if they are able to take a test or a final
+				if (progress.canTakeTest()) {
+					System.out.println((i+1) + ". Take Test");
+				} else if (progress.canTakeFinal()) {
+					System.out.println((i+1) + ". Take Final");
+				} else {
+					System.out.println((i+1) + ". " + COURSE_MENU[i]);
+				}
+			} else {
+				System.out.println((i+1) + ". " + COURSE_MENU[i]);
+			}
+		}
+		System.out.println("**************************");
+		System.out.print("What would you like to do? ");
 	}
 
 	private static void courseMenu(Course course) {
-		//add course and section to show course below
 
-		showCourseMenu(course, course.getChapters().get(UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course).getChaptersCompleted()));
-		Scanner scan = new Scanner(System.in);
-		int num = Integer.parseInt(scan.nextLine());
-		String command = COURSE_MENU[num-1];
-		clearScreen();
+		while (true) {
+			showCourseMenu(course, course.getChapters().get(UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course).getChaptersCompleted()));
+			Scanner scan = new Scanner(System.in);
+			int num = Integer.parseInt(scan.nextLine());
+			String command = COURSE_MENU[num-1];
+			clearScreen();
 
-		switch(command)
-		{
-			case "Study Section": {
-				//study section
-				//print text for user to read
-				break;
-			}
-			case "Take Quiz": {
-				UIHandler.startAssessment(UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course));
-				break;
-			}
-			case "View/Leave Review": {
-				ArrayList<Review> reviews;
-				reviews = course.getReviews();
-				for(Review review : reviews){
-					System.out.println(review.toString());
-				}
-				reviewMenu(course);
-				break;
-			}
-			case "View/Leave Comment": {
-				ArrayList<Comment> comments;
-				comments = course.getComments();
-				for(Comment comment : comments){
-					System.out.println(comment.toString());
-				}
-				commentMenu(course);
-				break;
-			}
-			case "Drop Class": {
-				System.out.println("What class would you like to drop");
-				ArrayList<Course> courses = UserManager.getInstance().getLoggedInUser().getEnrolledCourses();  
-				for(int i=0;i<courses.size();i++){
-					System.out.println((i+1) + ". " + courses.get(i).getTitle());
-				}
-				int dropClass = Integer.parseInt(scan.nextLine());
+			switch(command)
+			{
+				case "Study Section": {
+					//study section
+					//print text for user to read
+					CourseProgress progress = UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course);
+					
+					ArrayList<Chapter> chapters = course.getChapters();
+					int c = progress.getChapterProgress();
+					Chapter chapter = chapters.get(progress.getChapterProgress());
+					
+					ArrayList<Section> sections = chapter.getSections();
+					int s = progress.getSectionProgress();
+					Section section = sections.get(progress.getSectionProgress());
 
-				Course drop = courses.get(dropClass - 1);
-				UserManager.getInstance().getLoggedInUser().drop(drop);
-				break;
-				}
-			
-			case "Go Home": {
-				//get user email
-				//homeMenu(email);
-				break;
-			}
-			default : {
+					System.out.println("Studying section of '" + course.getTitle() + "'");
+					System.out.println("Chapter #" + (c+1) + ", Section #" + (s+1));
+					System.out.println();
 
-				System.err.println("Error! Invalid command entered. Please try again.");
+					if (s == 0) {
+						// first section, display chapter name
+						System.out.println("CHAPTER " + (c+1) + ": " + chapter.getName());
+					}
+
+					System.out.println("SECTION " + (c+1) + ": " + section.getName());
+					System.out.println();
+
+					System.out.println(section.getText());
+					System.out.println();
+
+					
+					break;
+				}
+				case "Take Quiz": {
+					UIHandler.startAssessment(UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course));
+					break;
+				}
+				case "View/Leave Review": {
+					ArrayList<Review> reviews;
+					reviews = course.getReviews();
+					for(Review review : reviews){
+						System.out.println(review.toString());
+					}
+					reviewMenu(course);
+					break;
+				}
+				case "View/Leave Comment": {
+					ArrayList<Comment> comments;
+					comments = course.getComments();
+					for(Comment comment : comments){
+						System.out.println(comment.toString());
+					}
+					commentMenu(course);
+					break;
+				}
+				case "Drop This Class": {
+					System.out.print("Are you sure you want to drop '" + course.getTitle() + "'? (y/N) ");
+					char c = scan.next().charAt(0);
+
+					if (c == 'y' || c == 'Y') {
+						// drop the class
+						UserManager.getInstance().getLoggedInUser().drop(course);
+						UserManager.getInstance().writeAllUsers();
+
+						System.out.println("You are no longer enrolled in '" + course.getTitle() + "'.\n");
+					}
+
+					break;
+				}
+				
+				case "Go Home": {
+					//get user email
+					//homeMenu(email);
+					break;
+				}
+				default : {
+
+					System.err.println("Error! Invalid command entered. Please try again.");
+				}
 			}
 		}
 	}
@@ -478,10 +554,11 @@ public class LMS {
 		}
 	}
 
-	private static void clearScreen() {  
-		System.out.print("\033[H\033[2J");  
-		System.out.flush();  
-	}  
+	private static void clearScreen() {
+		System.out.println("\n\n\n\n\n\n"); // visually shows clear if they scroll up
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+	}
 
 	
 }
