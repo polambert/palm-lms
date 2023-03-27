@@ -603,11 +603,23 @@ public class LMS {
 	}
 
 
-	private static void showCommentMenu() {
+	private static void showCommentMenu(Course course) {
 		System.out.println("*****Comment Menu*****");
-		System.out.println("Course: ");
-		System.out.println("*************************");
-		//print out all the current Comments
+		System.out.println("Course: " + course.getTitle());
+		System.out.println("******* Comments ********");
+		System.out.println();
+
+		ArrayList<Comment> comments = course.getComments();
+
+		for (int i = 0; i < comments.size(); i++) {
+			Comment comment = comments.get(i);
+			System.out.println(comment.getComment());
+
+			System.out.println("  By: " + comment.getAuthor().getFullName());
+			System.out.println("  On: " + comment.getDate());
+		}
+
+		System.out.println();
 		System.out.println("*************************");
 		for(int i=0;i<COMMENT_MENU.length;i++)
 			System.out.println((i+1)+". "+COMMENT_MENU[i]);
@@ -616,7 +628,7 @@ public class LMS {
 	}
 
 	private static void commentMenu(Course course) {
-		showCommentMenu();
+		showCommentMenu(course);
 		Scanner scan = new Scanner(System.in);
 		int num = Integer.parseInt(scan.nextLine());
 		String command = COMMENT_MENU[num-1];

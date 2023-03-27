@@ -39,6 +39,10 @@ public class User
         return false;
     }
 
+	public String getFullName() {
+		return firstName + " " + lastName;
+	}
+
 	public String toString() {
 		String s = "[User] id: " + id + "\n";
 		s += "\tfirstName: " + firstName + "\n";
