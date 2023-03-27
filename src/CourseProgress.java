@@ -53,8 +53,7 @@ public class CourseProgress {
 		// Check if the specified chapter and section exist in the grades arraylist
 		if (grades.size() <= chapterIndex) {
 			grades.add(new ArrayList<Double>());
-		}
-		else if (grades.get(chapterIndex).size() <= sectionIndex) {
+		} else if (grades.get(chapterIndex).size() <= sectionIndex) {
 			grades.get(chapterIndex).add(0.0);
 		}
 	
@@ -98,11 +97,28 @@ public class CourseProgress {
 	}
 
 	public boolean canTakeTest() {
+		if (chaptersCompleted >= course.getChapterCount()) {
+			// this means they can take the final
+			return false;
+		}
+		if (certificateId != null) {
+			return false; // course is finished
+		}
 		return sectionsCompleted >= course.getChapters().get(chaptersCompleted).getSections().size();
 	}
 
 	public boolean canTakeFinal() {
+		if (certificateId != null) {
+			return false; // course is finished
+		}
 		return chaptersCompleted >= course.getChapters().size();
+	}
+
+	public boolean hasFinishedCourse() {
+		if (certificateId != null) {
+			return true;
+		}
+		return false;
 	}
 
 
@@ -184,8 +200,10 @@ public class CourseProgress {
 	public double getProgressPercent(){
 		return chaptersCompleted/course.getChapterCount();
 	}
-	public String generateCertificate(){
-		return "";
+	public UUID generateCertificate() {
+		this.certificateId = UUID.randomUUID();
+		this.dateCompleted = LocalDate.now();
+		return certificateId;
 	}
 
 
