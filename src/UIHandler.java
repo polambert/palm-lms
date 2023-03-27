@@ -1,6 +1,7 @@
 
 import java.util.Date;
 import java.util.Scanner;
+import java.util.UUID;
 
 import org.json.simple.JSONObject;
 
@@ -66,32 +67,61 @@ public class UIHandler extends LMS
 		signInMenu();
 	}
 
-	public static boolean login(String email, char[] password) {
-		return true;
-	}
-
-	public boolean logout() {
-		return true;
-	}
-
-	public boolean signup(String name, String email, Date dateOfBirth, char[] password) {
-		return true;
-	}
-
 	public static void startAssessment(CourseProgress courseProgress) {
+		Course course = courseProgress.getCourse();
+
+		boolean canTakeTest = courseProgress.canTakeTest();
+		boolean canTakeFinal = courseProgress.canTakeFinal();
+
+		if (canTakeFinal) {
+			// course final
+			Assessment finalExam = course.getFinalExam();
+			double score = AssessmentHandler.start(finalExam);
+			if (score >= MIN_PASSING_GRADE) {
+				// CERTIFICATE STUFF HERE
+				courseProgress.generateCertificate();
+				System.out.println("Congratulations -- you have completed '" + course.getTitle() + "'!");
+				System.out.println("You can view your certificate from the course menu.");
+				courseProgress.completedSectionAssessment(course.getChapterCount(), 0, score);
+				userManager.writeAllUsers();
+			}
+		} else if (canTakeTest) {
+			// chapter test
+			Assessment test = course.getChapters().get(courseProgress.getChaptersCompleted()).getTest();
+			double score = AssessmentHandler.start(test);
+			if (score >= MIN_PASSING_GRADE) {
+				// move to first section of next chapter
+				courseProgress.completedSectionAssessment(courseProgress.getChaptersCompleted(), courseProgress.getSectionsCompleted(), score);
+				courseProgress.incChapterProgress();
+				courseProgress.setSectionProgress(0);
+				userManager.writeAllUsers();
+			}
+		} else {
+			// section quiz
+			Assessment quiz = course.getChapters().get(courseProgress.getChaptersCompleted()).getSections().get(courseProgress.getSectionsCompleted()).getQuiz();
+			double score = AssessmentHandler.start(quiz);
+			if (score >= MIN_PASSING_GRADE) {
+				// move to next section
+				courseProgress.completedSectionAssessment(courseProgress.getChaptersCompleted(), courseProgress.getSectionsCompleted(), score);
+				courseProgress.incSectionProgress();
+				userManager.writeAllUsers();
+			}
+		}
+
+		/*
 		Course assessmentCourse = courseProgress.getCourse();
 		//Start on current chapter of progress
 		int chapterStart = courseProgress.getChaptersCompleted();
 		// Don't start at next section, we are on this section so we take this quiz
 		int sectionStart = courseProgress.getSectionsCompleted();
 		//Return true if chapter progress isn't complete
-		boolean availableChapterAssessment = (courseProgress.getChapterProgress() < assessmentCourse.getChapterCount());
+		boolean availableChapterAssessment = !courseProgress.canTakeTest(); // (courseProgress.getChapterProgress() < assessmentCourse.getChapterCount());
 		//Return true if section progress isn't complete
-		boolean availableSectionAssessment = (courseProgress.getSectionProgress() < assessmentCourse.getChapters().get(chapterStart).getSectionCount());
+		boolean availableSectionAssessment = !courseProgress.canTakeTest(); // (courseProgress.getSectionProgress() < assessmentCourse.getChapters().get(chapterStart).getSectionCount());
 		//Return true if all sections in chapter are done, starts the Test
-		boolean availableChapterTest = (assessmentCourse.getChapters().get(chapterStart).getSectionCount() == courseProgress.getSectionProgress());
+		boolean availableChapterTest = courseProgress.canTakeTest(); // (assessmentCourse.getChapters().get(chapterStart).getSectionCount() == courseProgress.getSectionProgress());
 		//Return true if all sections in chapter are done, including the Test, start new Chapter
-		boolean nothingAvailable = (assessmentCourse.getChapters().get(chapterStart).getSectionCount() < courseProgress.getSectionProgress());
+		boolean nothingAvailable = false; // (assessmentCourse.getChapters().get(chapterStart).getSectionCount() < courseProgress.getSectionProgress());
 		//Taking a section quiz
 		if(availableChapterAssessment && availableSectionAssessment) {
 			Assessment quiz = assessmentCourse.getChapters().get(chapterStart).getSections().get(sectionStart).getQuiz();
@@ -124,30 +154,8 @@ public class UIHandler extends LMS
 			userManager.writeAllUsers();
 			startAssessment(courseProgress);
 		}
+		*/
 	}
-
-	public boolean enrollCourse(Course course) {
-		return true;
-	}
-
-//>>>>>>> 5c5c6f818b5e6cccdc86d643c472e0d14d5592c1
-	public boolean dropCourse(Course course){
-		return true;
-	}
-
-	public boolean makeCourse() {
-		return true;
-	}
-
-	public boolean deleteReview(Review review, Course course){
-		return true;
-	}
-
-	public boolean deleteComment(Comment comment, Course course){
-		return true;
-	}
-
-
 
    
 

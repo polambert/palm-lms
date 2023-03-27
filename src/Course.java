@@ -21,6 +21,7 @@ public class Course {
 		this.id = id;
 		this.name = name;
 		this.author = author;
+		this.authorId = author.getId();
 		this.chapters = chapters;
 		this.finalExam = finalExam;
 		this.reviews = reviews;
@@ -126,7 +127,9 @@ public class Course {
 	}
 
 	public Review addReview(int rating, String text, User author) {
-		return new Review(UUID.randomUUID(), rating, text, author, LocalDate.now());
+		Review review = new Review(UUID.randomUUID(), rating, text, author, LocalDate.now());
+		reviews.add(review);
+		return review;
 	}
 
 	public int getChapterCount() {

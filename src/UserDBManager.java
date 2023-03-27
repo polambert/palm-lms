@@ -145,7 +145,7 @@ public class UserDBManager extends DataConstants {
 				String idString = (String) certificateObj.get(CERTIFICATE_OBJ_CERTIFICATEID);
 				UUID certificateId = null;
 				if (!idString.equals("")) {
-					UUID.fromString(idString);
+					certificateId = UUID.fromString(idString);
 				}
 
 				Course course = CourseManager.getInstance().getCourseById(courseId);

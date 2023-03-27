@@ -3,6 +3,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+
 //Methods that contain arrays that are print later
 public class LMS {
 	private static final String[] COURSE_MENU = {
@@ -10,6 +14,7 @@ public class LMS {
 		"Take Quiz",
 		"View/Leave Review",
 		"View/Leave Comment",
+		"View Grades",
 		"Drop This Class",
 		"Go Home"
 	};
@@ -145,6 +150,11 @@ public class LMS {
 				}
 				case "Create a Course":
 				{
+					if (!UserManager.getInstance().getLoggedInUser().canCreateCourses()) {
+						System.out.println("You do not have permission to create a course.\n");
+						return;
+					}
+
 					System.out.println("What is the name of the class");
 					String name = scan.nextLine();
 					System.out.println("What is the title of the class");
@@ -325,7 +335,7 @@ public class LMS {
 		}
 	}
 
-	private static void showCourseMenu(Course course, Chapter chapter) {
+	private static void showCourseMenu(Course course) {
 		System.out.println("******* Course Menu ******");
 		System.out.println("Course: " + course.getTitle());
 		System.out.println("Rating: " + course.getRating());
@@ -333,23 +343,37 @@ public class LMS {
 		CourseProgress progress = UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course);
 		int c = progress.getChaptersCompleted() + 1;
 		int s = progress.getSectionsCompleted() + 1;
-		int sLeft = course.getChapters().get(c-1).getSections().size() - s;
 
-		if (sLeft > 0) {
-			System.out.println("On Chapter " + c + ", Section " + s + " (" + sLeft + " more sections left in chapter).");
-		} else if (sLeft == 0) {
-			System.out.println("On Chapter " + c + ", Section " + s + " (no more sections in chapter).");
-		} else if (progress.canTakeTest()) {
-			System.out.println("Ready to take Chapter " + c + " test.");
-		} else if (progress.canTakeFinal()) {
+		// see if they're finished with course content
+		if (progress.getCertificateId() != null) {
+			// course has been completed
+			System.out.println("You have completed this course.");
+		} else if (c - 1 == course.getChapterCount() && progress.canTakeFinal()) {
 			System.out.println("Ready to take final.");
+			System.out.println(progress.getCertificateId());
+		} else {
+			int sLeft = course.getChapters().get(c-1).getSections().size() - s;
+
+			if (sLeft > 0) {
+				System.out.println("On Chapter " + c + ", Section " + s + " (" + sLeft + " more sections left in chapter).");
+			} else if (sLeft == 0) {
+				System.out.println("On Chapter " + c + ", Section " + s + " (no more sections in chapter).");
+			} else if (progress.canTakeTest()) {
+				System.out.println("Ready to take Chapter " + c + " test.");
+			} else if (progress.canTakeFinal()) {
+				System.out.println(progress.getCertificateId());
+				System.out.println("Ready to take final.");
+			}
 		}
 
 		System.out.println("**************************");
 		for(int i=0;i<COURSE_MENU.length;i++) {
 			if (COURSE_MENU[i].equals("Take Quiz")) {
 				// see if they are able to take a test or a final
-				if (progress.canTakeTest()) {
+				if (progress.getCertificateId() != null) {
+					// finished with course
+					System.out.println((i+1) + ". View Certificate");
+				} else if (progress.canTakeTest()) {
 					System.out.println((i+1) + ". Take Test");
 				} else if (progress.canTakeFinal()) {
 					System.out.println((i+1) + ". Take Final");
@@ -364,10 +388,49 @@ public class LMS {
 		System.out.print("What would you like to do? ");
 	}
 
+	private static void displaySection(Course course, int c, int s) {
+		Chapter chapter = course.getChapters().get(c);
+		Section section = chapter.getSections().get(s);
+		System.out.println("Studying section of '" + course.getTitle() + "'");
+
+		String text = "Chapter #" + (c+1) + ", Section #" + (s+1) + "\n\n";
+
+		if (s == 0) {
+			// first section, display chapter name
+			text += "CHAPTER " + (c+1) + ": " + chapter.getName() + "\n";
+		}
+
+		text += "SECTION " + (c+1) + ": " + section.getName() + "\n\n";
+
+		text += section.getText() + "\n\n";
+
+		System.out.println(text);
+
+		System.out.print("Type '1' if you would like to save this text to a file, anything else to return: ");
+		Scanner scanner = new Scanner(System.in);
+
+		if (scanner.nextLine().equals("1")) {
+			// save to file
+			System.out.print("Enter filename: ");
+			String location = scanner.nextLine();
+			File file = new File(location);
+			try {
+				FileWriter writer = new FileWriter(file);
+				writer.write(text);
+				writer.flush();
+				writer.close();
+
+				System.out.println("Section text successfully saved to " + location + "\n");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	private static void courseMenu(Course course) {
 
 		while (true) {
-			showCourseMenu(course, course.getChapters().get(UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course).getChaptersCompleted()));
+			showCourseMenu(course);
 			Scanner scan = new Scanner(System.in);
 			int num = Integer.parseInt(scan.nextLine());
 			String command = COURSE_MENU[num-1];
@@ -379,53 +442,138 @@ public class LMS {
 					//study section
 					//print text for user to read
 					CourseProgress progress = UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course);
-					
-					ArrayList<Chapter> chapters = course.getChapters();
-					int c = progress.getChapterProgress();
-					Chapter chapter = chapters.get(progress.getChapterProgress());
-					
-					ArrayList<Section> sections = chapter.getSections();
-					int s = progress.getSectionProgress();
-					Section section = sections.get(progress.getSectionProgress());
 
-					System.out.println("Studying section of '" + course.getTitle() + "'");
-					System.out.println("Chapter #" + (c+1) + ", Section #" + (s+1));
-					System.out.println();
+					System.out.println("1. View Section I'm Currently On");
+					System.out.println("2. View Specific Section");
+					System.out.print("What would you like to do? ");
+					String answer = scan.nextLine();
+					clearScreen();
+					
+					if (answer.equals("2")) {
+						// view specific section
+						System.out.println("Viewing a Specific Section");
+						int cc = course.getChapterCount();
 
-					if (s == 0) {
-						// first section, display chapter name
-						System.out.println("CHAPTER " + (c+1) + ": " + chapter.getName());
+						System.out.print("Chapter (" + cc + " available): ");
+						int c = Integer.parseInt(scan.nextLine()) - 1;
+
+						if (c >= 0 && c < course.getChapterCount()) {
+							Chapter chapter = course.getChapters().get(c);
+
+							int sc = chapter.getSectionCount();
+
+							System.out.print("Section (" + sc + " in chapter): ");
+							int s = Integer.parseInt(scan.nextLine()) - 1;
+
+							if (s >= 0 && s < chapter.getSectionCount()) {
+								clearScreen();
+
+								displaySection(course, c, s);
+							} else {
+								System.out.println("Sorry, that is not a valid section number.");
+							}
+						} else {
+							System.out.println("Sorry, that is not a valid chapter number.");
+						}
+					} else if (answer.equals("1")) {
+						// view current section
+						if (progress.hasFinishedCourse()) {
+							System.out.println("You've already finished this course.\n");
+							break;
+						}
+	
+						if (progress.canTakeTest()) {
+							System.out.println("I see that you're studying for a test.");
+						}
+						
+						ArrayList<Chapter> chapters = course.getChapters();
+						int c = progress.getChapterProgress();
+						Chapter chapter = chapters.get(progress.getChapterProgress());
+						
+						ArrayList<Section> sections = chapter.getSections();
+						int s = progress.getSectionProgress();
+						
+						displaySection(course, c, s);
+					} else {
+						System.out.println("Sorry, that's not an option. Returning you to course menu.\n");
 					}
-
-					System.out.println("SECTION " + (c+1) + ": " + section.getName());
-					System.out.println();
-
-					System.out.println(section.getText());
-					System.out.println();
-
-					
 					break;
 				}
 				case "Take Quiz": {
-					UIHandler.startAssessment(UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course));
+					CourseProgress progress = UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course);
+					if (progress.getCertificateId() != null) {
+						// finished course, show their certificate
+						User user = UserManager.getInstance().getLoggedInUser();
+						String name = user.getFirstName() + " " + user.getLastName();
+						String text = "This certificate honors " + name + " for completion of the course '" + course.getTitle() + "'\n";
+						text += "    Date Completed: " + progress.getDateCompleted() + "\n";
+						text += "    Certificate ID: " + progress.getCertificateId() + "\n";
+
+						System.out.println(text);
+						System.out.println();
+						System.out.print("Type '1' if you would like to save this certificate to a text file, anything else to return: ");
+
+						Scanner scanner = new Scanner(System.in);
+						String answer = scanner.nextLine();
+						
+						clearScreen();
+
+						if (answer.equals("1")) {
+							// save to text file.
+							System.out.print("Where would you like it to be saved? ");
+							String location = scanner.nextLine();
+							File file = new File(location);
+							try {
+								FileWriter writer = new FileWriter(file);
+								writer.write(text);
+								writer.flush();
+								writer.close();
+
+								System.out.println("Certificate successfully saved to " + location);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					} else {
+						UIHandler.startAssessment(UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course));
+					}
 					break;
 				}
 				case "View/Leave Review": {
-					ArrayList<Review> reviews;
-					reviews = course.getReviews();
-					for(Review review : reviews){
-						System.out.println(review.toString());
-					}
 					reviewMenu(course);
 					break;
 				}
 				case "View/Leave Comment": {
-					ArrayList<Comment> comments;
-					comments = course.getComments();
-					for(Comment comment : comments){
-						System.out.println(comment.toString());
-					}
 					commentMenu(course);
+					break;
+				}
+				case "View Grades": {
+					System.out.println("Your current grades for '" + course.getTitle() + "':");
+					System.out.println("Hyphens (--) mean that an assessment has not yet been completed.");
+					System.out.println("Parentheses () indicate a chapter test.");
+					System.out.println();
+
+					ArrayList<ArrayList<Double>> grades = UserManager.getInstance().getLoggedInUser().getCourseProgressIn(course).getGrades();
+					for (int i = 0; i < grades.size(); i++) {
+						if (i == grades.size() - 1) {
+							System.out.println("  Final Exam: " + grades.get(i).get(0));
+						} else {
+							System.out.print("  Chapter #" + (i+1) + ": ");
+
+							for (int j = 0; j < grades.get(i).size(); j++) {
+								if (j < grades.get(i).size() - 1) {
+									System.out.print(grades.get(i).get(j) + ", ");
+								} else {
+									System.out.print("(" + grades.get(i).get(j) + ")");
+								}
+							}
+
+							System.out.println();
+						}
+					}
+
+					System.out.println();
+
 					break;
 				}
 				case "Drop This Class": {
@@ -444,9 +592,7 @@ public class LMS {
 				}
 				
 				case "Go Home": {
-					//get user email
-					//homeMenu(email);
-					break;
+					return;
 				}
 				default : {
 
@@ -503,31 +649,53 @@ public class LMS {
 		}
 	}
 
-	private static void showReviewMenu() {
+	private static void showReviewMenu(Course course) {
 		System.out.println("*****Review Menu*****");
-		System.out.println("Course: ");
-		System.out.println("Rating: ");
-		System.out.println("*************************");
-		//print out all the current Review
+		System.out.println("Course: " + course.getTitle());
+		System.out.println("Rating: " + course.getRating());
+		System.out.println("********* Reviews **********");
+		System.out.println();
+		ArrayList<Review> reviews = course.getReviews();
+		for (int i = 0; i < reviews.size(); i++) {
+			Review review = reviews.get(i);
+			for (int j = 0; j < 5; j++) {
+				if (j < review.getRating()) System.out.print("*");
+				else System.out.print("_");
+			}
+			System.out.print(" ");
+			System.out.println(review.getText());
+			User author = review.getAuthor();
+			String name = author.getFirstName() + " " + author.getLastName();
+			System.out.print("  " + review.getRating() + " star");
+			if (review.getRating() != 1) System.out.print("s");
+			System.out.println();
+			System.out.println("  By: " + name);
+			System.out.println("  On: " + review.getDate());
+		}
+		System.out.println();
 		System.out.println("*************************");
 		for(int i=0;i<REVIEW_MENU.length;i++)
 			System.out.println((i+1)+". "+REVIEW_MENU[i]);
+		
 		System.out.println("*************************");
 		System.out.println("What would you like to do?:");
 	}
 
 	private static void reviewMenu(Course course) {
-		showReviewMenu();
+		showReviewMenu(course);
 		Scanner scan = new Scanner(System.in);
 		int num = Integer.parseInt(scan.nextLine());
 		String command = REVIEW_MENU[num-1];
+
+		clearScreen();
+
 		switch(command)
 		{
 			case "Leave Review":
 			{
 				System.out.print("What is your Review? ");
 				String comment= scan.nextLine();
-				System.out.print("What is your rating? (1-5) ");
+				System.out.print("What is your rating? [1-5] ");
 				int rating = Integer.parseInt(scan.nextLine());
 
 				if (rating >= 1 && rating <= 5) {

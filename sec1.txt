@@ -1,0 +1,16 @@
+Chapter #1, Section #1
+CHAPTER 1: Introduction to JavaScript
+SECTION 1: Usage and Variables
+
+JavaScript is a cross-platform, object-oriented scripting language used to add functionality to webpages. It is dynamically-typed, and considered by many to be easy to learn. To start, you can create a variable in JavaScript with:
+
+let x = 5;
+
+where 'x' is the name of the variable, and '5' is the value that we want it to hold. The 'let' tells JavaScript that we want to create a variable, and the equals sign assigns it to 5. In this case, 'x' is a number, because its value is the number 5. We can also have other types of variables:
+
+let a = "Hello, I'm a string!";
+let b = 12.12952;
+let c = false;
+
+In these cases, a, b, and c represent a String, a Number, and a Boolean respectively. A String value holds text, which can include words and numbers. A Number is any kind of number, like an integer or a decimal. A Boolean stores one simple state: true or false. A Boolean can't be any other value.
+
