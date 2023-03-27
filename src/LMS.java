@@ -176,7 +176,7 @@ public class LMS {
 						int numQuestions = Integer.parseInt(scan.nextLine());
 						ArrayList<Question> questions = new ArrayList<Question>(numQuestions);
 
-                        /* 
+                        
 						for(int j = 0; j < numQuestions; j++)
 						{
 							int questionNumber = j + 1;
@@ -184,15 +184,9 @@ public class LMS {
 							String actualQuestion = scan.nextLine();
 
 							//ask user if we want to change number of answer options to anything other than 4
-							ArrayList<String> options = new ArrayList<String>(4);
+							
 
-							for(int k = 0; k < 4; k++)
-							{
-								int optionNumber = k + 1;
-								System.out.println("What is question "+ questionNumber + ", option number " + optionNumber + "?");
-								String option = scan.nextLine();
-								options.set(k, option);
-							}
+							ArrayList<String> options = getOptions();
 
 							System.out.println("Which option 1-4 is the correct anser");
 							int optionNumber = Integer.parseInt(scan.nextLine());
@@ -202,7 +196,7 @@ public class LMS {
 							Question question = new Question(actualQuestion, options, rightAnswer);
 							questions.add(question);
 						}
-                        */
+                        
 					
 						Assessment test = new Assessment(questions);
 
@@ -567,5 +561,20 @@ public class LMS {
 		System.out.flush();
 	}
 
-	
+	private  static ArrayList<String> getOptions(){
+        ArrayList<String> options = new ArrayList<String>(4);
+        for(int k = 0; k < 4; k++)
+        {
+            int questionNumber = k + 1;
+            try (Scanner scan = new Scanner(System.in)) {
+                
+                int optionNumber = k + 1;
+                System.out.println("What is question "+ questionNumber + ", option number " + optionNumber + "?");
+                String option = scan.nextLine();
+                options.set(k, option);
+                
+            }
+        }
+        return options;
+    }
 }
