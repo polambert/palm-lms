@@ -38,6 +38,14 @@ public class LMS {
 		"Leave Review",
 		"Return to Course"
 	};
+    private static final String[] EDIT_MENU = {
+		"Name",
+		"Description",
+		"Language",
+        "Return to Course",
+        "Title"
+
+	};
 
 
 	/**
@@ -192,10 +200,8 @@ public class LMS {
 							int questionNumber = j + 1;
 							System.out.println("What is question number "+ questionNumber + "?");
 							String actualQuestion = scan.nextLine();
-
-							//ask user if we want to change number of answer options to anything other than 4
 							
-
+                            //get options method 
 							ArrayList<String> options = getOptions();
 
 							System.out.println("Which option 1-4 is the correct anser");
@@ -228,7 +234,13 @@ public class LMS {
 				}
                 case "Edit a Course":
                 {
-                    return;
+                    System.out.println("What is the UUID of the course you want to edit?");
+					String courseUuid = scan.nextLine();
+                    UUID uuid = UUID.fromString(courseUuid);
+                    Course course = CourseManager.getInstance().getCourseById(uuid);
+                    courseEditMenu(course);
+
+                    
                 }
 				case "Log Out":
 				{
@@ -242,6 +254,64 @@ public class LMS {
 			}
 		}
 	}
+
+    public static void showCourseEditMenu() {
+		System.out.println("*****Edit Course Menue*****");
+		System.out.println("***************");
+		for(int i=0;i<EDIT_MENU.length;i++)
+			System.out.println((i+1)+". "+EDIT_MENU[i]);
+		System.out.println("***************");
+		System.out.print("What would you like to do? ");
+	}
+
+
+    public static void courseEditMenu(Course course) {
+		clearScreen();
+
+		while (true) {
+			showCourseEditMenu();
+			Scanner scan = new Scanner(System.in);
+			int num = Integer.parseInt(scan.nextLine());
+			String command = EDIT_MENU[num-1];
+			clearScreen();
+
+			switch(command) {
+				case "Name": {
+					
+					break;
+				}
+				case "Description":{
+					
+                    break;
+				}
+				case "Language":{
+				
+					break;
+				}
+                case "Title":{
+				
+					break;
+				}
+
+				default: {
+					System.err.println("Error! Invalid command entered. Please try again.");
+					break;
+				}
+			}
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 
 	public static void showSignInMenu() {
 		System.out.println("*****Welcome to PALM*****");
