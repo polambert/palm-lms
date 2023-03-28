@@ -84,6 +84,7 @@ public class LMS {
 	//method that prints array of options
 	private static void showHomeMenu() {
 		System.out.println("*****Home Menu*****");
+		System.out.println("Welcome, " + UserManager.getInstance().getLoggedInUser().getFullName());
 		for(int i=0;i<HOME_MENU.length;i++)
 			System.out.println((i+1)+". "+HOME_MENU[i]);
 		System.out.println("***************");
@@ -135,6 +136,7 @@ public class LMS {
 
 					for(int i=0; i < courses.size(); i++) {
 						System.out.println("  " + (i+1) + ". " + courses.get(i).getTitle());
+						System.out.println("      ID: " + courses.get(i).getId());
 						System.out.println("      Language: " + courses.get(i).getLanguage());
 						System.out.println("      Description: " + courses.get(i).getDescription());
 						System.out.println("      Rating: " + courses.get(i).getRating());
@@ -544,7 +546,6 @@ public class LMS {
 			System.out.println("You have completed this course.");
 		} else if (c - 1 == course.getChapterCount() && progress.canTakeFinal()) {
 			System.out.println("Ready to take final.");
-			System.out.println(progress.getCertificateId());
 		} else {
 			int sLeft = course.getChapters().get(c-1).getSections().size() - s;
 
@@ -755,6 +756,12 @@ public class LMS {
 							System.out.print("  Chapter #" + (i+1) + ": ");
 
 							for (int j = 0; j < grades.get(i).size(); j++) {
+								String grade = "--";
+
+								if (grades.get(i).get(j) > 0.1) {
+									// completed
+									grade = String.valueOf(grades.get(i).get(j));
+								}
 								if (j < grades.get(i).size() - 1) {
 									System.out.print(grades.get(i).get(j) + ", ");
 								} else {
@@ -780,6 +787,7 @@ public class LMS {
 						UserManager.getInstance().writeAllUsers();
 
 						System.out.println("You are no longer enrolled in '" + course.getTitle() + "'.\n");
+						return;
 					}
 
 					break;
@@ -946,7 +954,7 @@ public class LMS {
                 options.add(option);
                 
                 
-            
+    
         }
         return options;
     }

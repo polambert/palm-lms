@@ -44,6 +44,9 @@ public class Course {
 		for (int i = 0; i < reviews.size(); i++) {
 			sum += reviews.get(i).getRating();
 		}
+		if (reviews.size() == 0) {
+			return 0;
+		}
 		return sum / reviews.size();
 	}
 

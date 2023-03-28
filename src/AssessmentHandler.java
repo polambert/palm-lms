@@ -44,7 +44,11 @@ public class AssessmentHandler
 			}
 		}
 
-		double grade = 100 * numCorrect / (numCorrect + numWrong);
+		double grade = 100;
+
+		if (questions.size() != 0) {
+			grade = 100 * numCorrect / (numCorrect + numWrong);
+		}
 
 		System.out.println("You scored a " + (int) grade + "%.");
 

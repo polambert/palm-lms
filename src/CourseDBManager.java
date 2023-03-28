@@ -131,7 +131,7 @@ public class CourseDBManager extends DataConstants {
 			String title = (String) courseObj.get(COURSE_OBJ_TITLE);
 			String name = (String) courseObj.get(COURSE_OBJ_NAME);
 			UUID authorId = UUID.fromString((String) courseObj.get(COURSE_OBJ_AUTHOR));
-			// System.out.println(authorId);
+			System.out.println(authorId);
 			String description = (String) courseObj.get(COURSE_OBJ_DESCRIPTION);
 
 			JSONArray chaptersArr 	= (JSONArray) courseObj.get(COURSE_OBJ_CHAPTERS);
