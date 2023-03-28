@@ -9,6 +9,7 @@
             "sections": [
 				{
 					"name": "Section 1",
+					"text": "",
 					"quiz": [
 						{
 							"question": "Pick blue.",
@@ -30,6 +31,7 @@
             "sections": [
 				{
 					"name": "Section 1",
+					"text": "",
 					"quiz": [
 						{
 							"question": "Pick blue.",
@@ -50,17 +52,18 @@
             "name": "Loops",
             "sections": [
 				{
-					"name": "Section 1",
+					"name": "The While Loop",
+					"text": "In Python, you can use something called a loop to perform an action more than once. For example, the while loop, represented below, can allow you to perform an action while a condition is true.\n\ni = 1\nwhile i == 1:\n    print(\"i is still 1!\")",
 					"quiz": [
 						{
-							"question": "Pick blue.",
+							"question": "Which of the following is the proper way to define a while loop?",
 							"answers": [
-								"Blue",
-								"Green",
-								"Pink",
-								"Purple"
+								"While running:",
+								"while :running:",
+								"while running",
+								"while running:"
 							],
-							"correctAnswer": 0
+							"correctAnswer": 3
 						}
 					]
 				}
@@ -72,6 +75,7 @@
             "sections": [
 				{
 					"name": "Section 1",
+					"text": "",
 					"quiz": [
 						{
 							"question": "Pick blue.",
@@ -93,6 +97,7 @@
             "sections": [
 				{
 					"name": "Section 1",
+					"text": "",
 					"quiz": [
 						{
 							"question": "Pick blue.",
@@ -114,6 +119,7 @@
             "sections": [
 				{
 					"name": "Section 1",
+					"text": "",
 					"quiz": [
 						{
 							"question": "Pick blue.",
