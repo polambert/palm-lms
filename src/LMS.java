@@ -688,6 +688,7 @@ public class LMS {
 						UserManager.getInstance().writeAllUsers();
 
 						System.out.println("You are no longer enrolled in '" + course.getTitle() + "'.\n");
+						return;
 					}
 
 					break;
@@ -854,7 +855,7 @@ public class LMS {
                 options.add(option);
                 
                 
-            
+    
         }
         return options;
     }
