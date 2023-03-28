@@ -42,11 +42,8 @@ public class LMS {
 		"Name",
 		"Description",
 		"Language",
-        "Return to Course",
         "Title",
         "Edit Chapters",
-        "Edit sections",
-        "Edit final",
         "Go Home"
 
 	};
@@ -315,15 +312,117 @@ public class LMS {
                     //homeMenu();
                 }
                 case "Edit Chapters":{
-                    
-					break;
-				}
-                case "Edit sections":{
-                    
-					break;
-				}
-                case "Edit final":{
-                    
+                    System.out.println("The current chapters are: ");
+
+                    ArrayList<Chapter> chapters =  course.getChapters();
+                    for(int i =0; i < chapters.size(); i++){
+                        Chapter current = chapters.get(i);
+                        System.out.println(i + 1 + ". " + current.getName());
+                    }
+
+                    System.out.println("Which chapter number would you like to edit?");
+                    int editChapter = Integer.parseInt(scan.nextLine());
+
+                    Chapter editingChapter = chapters.get(editChapter - 1);
+
+                    System.out.println("The current chapter info is: ");
+                    System.out.println("The current chapter name is: " + editingChapter.getName());
+                    System.out.println("The current number of sections is: " + editingChapter.getSectionCount());
+
+                    System.out.println("Would you like to edit the chapter? For name type 1, for quiz type 2, and type 3 for no");
+                    int editName = Integer.parseInt(scan.nextLine());
+                    if(editName == 1){
+                        System.out.println("What is the new name for the chapter?");
+                        String newName= scan.nextLine();
+                        editingChapter.setName(newName);
+
+                    } else if(editName == 2){
+                        Assessment editAssessment = editingChapter.getTest();
+                        System.out.println("Would you like to add a question? For yes type 1, For no type 2");
+                        int addQuestion = Integer.parseInt(scan.nextLine());
+                        if(addQuestion == 1){
+                            ArrayList<Question> questions = editAssessment.getQuestions();
+
+                            System.out.println("What is the new question?");
+							String actualQuestion = scan.nextLine();
+							
+                            //get options method 
+							ArrayList<String> options = getOptions();
+
+							System.out.println("Which option 1-4 is the correct answer");
+							int optionNumber = Integer.parseInt(scan.nextLine());
+							int rightAnswer = optionNumber - 1;
+
+							Question question = new Question(actualQuestion, options, rightAnswer);
+							questions.add(question);
+
+                            System.out.println("Question added to the quiz?");
+                            CourseManager.getInstance().writeAllCourses();
+
+                        } else {
+
+                        }
+
+
+
+                    }else if(editName == 3){
+
+                    }else {
+                        System.err.println("Error! Invalid command entered. Please try again.");
+                    }
+
+                    ArrayList<Section> sections = editingChapter.getSections();
+
+                    System.out.println("Would you like to edit/add a section: To edit a current section type 1, To create a new section type 2, if no type 3");
+                    int editSection = Integer.parseInt(scan.nextLine());
+                    if(editSection == 1){
+                        for(int i =0; i < sections.size(); i++){
+                            Section current = sections.get(i);
+                            System.out.println(i + 1 + ". " + current.getName());
+                        }
+
+                        System.out.println("Which section number would you like to edit?");
+                        int editSect = Integer.parseInt(scan.nextLine());
+
+                        Section editingSection = sections.get(editSect - 1);
+
+                        System.out.println("Would you like to edit: 1.Name, 2.Quiz, 3.text Enter(1-3)");
+                        int editSectPart = Integer.parseInt(scan.nextLine());
+                        if(editSectPart == 1){
+                            System.out.println("The current name of the section is " + editingSection.getName());
+                            System.out.println("What is the new name for the section? ");
+                            String newName= scan.nextLine();
+                            editingSection.setName(newName);
+                            CourseManager.getInstance().writeAllCourses();
+                        } else if(editSectPart == 2){
+                            //System.out.println("The current quiz of the section is " + editingSection.getName());
+                            
+
+                        } else if(editSectPart == 3){
+                            System.out.println("The current text for the section is " + editingSection.getText());
+                            System.out.println("What is the new text for the section? ");
+                            String newText= scan.nextLine();
+                            editingSection.setName(newText);
+                            CourseManager.getInstance().writeAllCourses();
+                        }
+
+
+
+                    } else if(editSection == 2){
+
+                        System.out.println("What is the new name for the new section?");
+                        String newSectName= scan.nextLine();
+                        System.out.println("What is the text for the new section?");
+                        String newSectText= scan.nextLine();
+
+                        Section newSection = new Section(newSectName, newSectText, null);
+                        sections.add(newSection);
+                        CourseManager.getInstance().writeAllCourses();
+                    }else {
+                        System.err.println("Error! Invalid command entered. Please try again.");
+                    }
+
+
 					break;
 				}
 				default: {
