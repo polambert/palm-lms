@@ -48,24 +48,54 @@
 			]
         },
         {
-            "test": [],
+            "test": [
+				{
+					"question": "Which of the following is the proper way to define a while loop?",
+					"answers": [
+						"While running:",
+						"while :running:",
+						"while running",
+						"while running:"
+					],
+					"correctAnswer": 3
+				},
+				{
+					"question": "What would this return: \ni >= 5;\nwhile i >= 2:\nprint(i)\ni = i+1?",
+					"answers": [
+						"5, 4, 3, 2, 1",
+						"4, 3, 2, 1",
+						"5, 2, 1",
+						"5, 4, 3, 2"
+					],
+					"correctAnswer": 4
+				},
+				{
+					"question": "Which of the following is the proper way to define a for loop?",
+					"answers": [
+						"for i in range(1, 5){ }",
+						"for i in range(1, 5):",
+						"for i in range 1, 5:",
+						"for i in range 1, 5{ }"
+					],
+					"correctAnswer": 2
+				},
+				{
+					"question": "What would this return: \nfor x in range(5):\n   print(x)",
+					"answers": [
+						"0, 1, 2, 3, 4, 5",
+						"1, 2, 3, 4, 5",
+						"0, 1, 2, 3, 4",
+						"1, 2, 3, 4"
+					],
+					"correctAnswer": 3
+				}
+			],
             "name": "Loops",
             "sections": [
 				{
 					"name": "The While Loop",
 					"text": "In Python, you can use something called a loop to perform an action more than once. For example, the while loop, represented below, can allow you to perform an action while a condition is true.\n\ni = 1\nwhile i == 1:\n    print(\"i is still 1!\")",
-					"quiz": [
-						{
-							"question": "Which of the following is the proper way to define a while loop?",
-							"answers": [
-								"While running:",
-								"while :running:",
-								"while running",
-								"while running:"
-							],
-							"correctAnswer": 3
-						}
-					]
+					"quiz": []
 				}
 			]
         },
