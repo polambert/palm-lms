@@ -280,27 +280,31 @@ public class LMS {
 			String command = EDIT_MENU[num-1];
 			clearScreen();
             CourseManager.getInstance().writeAllCourses();
-            
+
 			switch(command) {
 				case "Name": {
+                    System.out.println("Current name is: " + course.getName());
                     System.out.println("What would you like to name the course?");
                     String newName = scan.nextLine();
                     course.setName(newName);
 					break;
 				}
 				case "Description":{
+                    System.out.println("Current description is: " + course.getDescription());
 					System.out.println("What would you like to set as the description the course?");
                     String newDescription = scan.nextLine();
                     course.setDescription(newDescription);
                     break;
 				}
 				case "Language":{
+                    System.out.println("Current language is: " + course.getLanguage());
                     System.out.println("What would you like to set as the language the course?");
                     String newLanguage= scan.nextLine();
                     course.setLanguage(newLanguage);
 					break;
 				}
                 case "Title":{
+                    System.out.println("Current title is: " + course.getTitle());
                     System.out.println("What would you like to set as the title the course?");
                     String newTitle= scan.nextLine();
                     course.setTitle(newTitle);
