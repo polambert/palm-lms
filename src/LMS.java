@@ -87,6 +87,7 @@ public class LMS {
 	//method that prints array of options
 	private static void showHomeMenu() {
 		System.out.println("*****Home Menu*****");
+		System.out.println("Welcome, " + UserManager.getInstance().getLoggedInUser().getFullName());
 		for(int i=0;i<HOME_MENU.length;i++)
 			System.out.println((i+1)+". "+HOME_MENU[i]);
 		System.out.println("***************");
@@ -445,7 +446,6 @@ public class LMS {
 			System.out.println("You have completed this course.");
 		} else if (c - 1 == course.getChapterCount() && progress.canTakeFinal()) {
 			System.out.println("Ready to take final.");
-			System.out.println(progress.getCertificateId());
 		} else {
 			int sLeft = course.getChapters().get(c-1).getSections().size() - s;
 
