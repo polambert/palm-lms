@@ -43,7 +43,11 @@ public class LMS {
 		"Description",
 		"Language",
         "Return to Course",
-        "Title"
+        "Title",
+        "Edit Chapters",
+        "Edit sections",
+        "Edit final",
+        "Go Home"
 
 	};
 
@@ -234,12 +238,8 @@ public class LMS {
 				}
                 case "Edit a Course":
                 {
-                    System.out.println("What is the UUID of the course you want to edit?");
-					String courseUuid = scan.nextLine();
-                    UUID uuid = UUID.fromString(courseUuid);
-                    Course course = CourseManager.getInstance().getCourseById(uuid);
-                    courseEditMenu(course);
-
+                    courseEditMenu();
+                    break;
                     
                 }
 				case "Log Out":
@@ -265,40 +265,70 @@ public class LMS {
 	}
 
 
-    public static void courseEditMenu(Course course) {
+    public static void courseEditMenu() {
 		clearScreen();
-
+        Scanner scan = new Scanner(System.in);
+        System.out.println("What is the UUID of the course you want to edit?");
+        String courseUuid = scan.nextLine();
+        UUID uuid = UUID.fromString(courseUuid);
+        Course course = CourseManager.getInstance().getCourseById(uuid);
+                    
+        clearScreen();
 		while (true) {
 			showCourseEditMenu();
-			Scanner scan = new Scanner(System.in);
 			int num = Integer.parseInt(scan.nextLine());
 			String command = EDIT_MENU[num-1];
 			clearScreen();
-
+            CourseManager.getInstance().writeAllCourses();
+            
 			switch(command) {
 				case "Name": {
-					
+                    System.out.println("What would you like to name the course?");
+                    String newName = scan.nextLine();
+                    course.setName(newName);
 					break;
 				}
 				case "Description":{
-					
+					System.out.println("What would you like to set as the description the course?");
+                    String newDescription = scan.nextLine();
+                    course.setDescription(newDescription);
                     break;
 				}
 				case "Language":{
-				
+                    System.out.println("What would you like to set as the language the course?");
+                    String newLanguage= scan.nextLine();
+                    course.setLanguage(newLanguage);
 					break;
 				}
                 case "Title":{
-				
+                    System.out.println("What would you like to set as the title the course?");
+                    String newTitle= scan.nextLine();
+                    course.setTitle(newTitle);
 					break;
 				}
-
+                case "Go Home":{
+                    System.out.println("Leaving course edit mode?");
+                    //homeMenu();
+                }
+                case "Edit Chapters":{
+                    
+					break;
+				}
+                case "Edit sections":{
+                    
+					break;
+				}
+                case "Edit final":{
+                    
+					break;
+				}
 				default: {
 					System.err.println("Error! Invalid command entered. Please try again.");
 					break;
 				}
 			}
 		}
+
 	}
 
 	public static void showSignInMenu() {
