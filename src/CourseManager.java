@@ -53,6 +53,16 @@ public class CourseManager {
 		return true;
 	}
 
+	public ArrayList<Course> getCoursesMadeByUser(User user) {
+		ArrayList<Course> courseList = new ArrayList<>();
+		for (int i = 0; i < courses.size(); i++) {
+			if (courses.get(i).getAuthorId().equals(user.getId())) {
+				courseList.add(courses.get(i));
+			}
+		}
+		return courseList;
+	}
+
 	public void updateComments(ArrayList<Comment> comments) {
 		for (int i = 0; i < comments.size(); i++) {
 			Comment comment = comments.get(i);
