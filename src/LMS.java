@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
 
+import javax.lang.model.util.ElementScanner6;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -237,7 +239,8 @@ public class LMS {
 				}
                 case "Edit a Course":
                 {
-                    courseEditMenu();
+					User user = UserManager.getInstance().getLoggedInUser();
+                    courseEditMenu(user);
                     break;
                     
                 }
@@ -264,17 +267,23 @@ public class LMS {
 	}
 
 
-    public static void courseEditMenu() {
+    public static void courseEditMenu(User user) {
 		clearScreen();
         Scanner scan = new Scanner(System.in);
-        System.out.println("What is the UUID of the course you want to edit?");
-        String courseUuid = scan.nextLine();
-        UUID uuid = UUID.fromString(courseUuid);
-        Course course = CourseManager.getInstance().getCourseById(uuid);
+        ArrayList<Course> uCourses = CourseManager.getInstance().getCoursesMadeByUser(user);
+        for(int i =0; i<uCourses.size(); i++){
+            Course coursePrint = uCourses.get(i);
+            System.out.println((i + 1) + " "+coursePrint.getName());
+        }
+		System.out.println("Which course number would you like to edit" );
+		int chosenCourse = Integer.parseInt(scan.nextLine());
+        Course course = uCourses.get(chosenCourse-1);
                     
         clearScreen();
 		while (true) {
 			showCourseEditMenu();
+            System.out.println("Currently editing course: " + course.getName());
+            System.out.println("**********" );
 			int num = Integer.parseInt(scan.nextLine());
 			String command = EDIT_MENU[num-1];
 			clearScreen();
@@ -328,23 +337,39 @@ public class LMS {
                     Chapter editingChapter = chapters.get(editChapter - 1);
 
                     System.out.println("The current chapter info is: ");
-                    System.out.println("The current chapter name is: " + editingChapter.getName());
-                    System.out.println("The current number of sections is: " + editingChapter.getSectionCount());
-
-                    System.out.println("Would you like to edit the chapter? For name type 1, for quiz type 2, and type 3 for no");
+                    System.out.println("Name: " + editingChapter.getName());
+                    System.out.println("Number of Sections: " + editingChapter.getSectionCount());
+					System.out.println("********************");
+                    System.out.println("How you like to edit the chapter?");
+					System.out.println("1. Name");
+					System.out.println("2. Quiz");
+					System.out.println("3. Edit/Add Sections");
+					System.out.println("4. Retuen to Edit Menue");
+					System.out.println("********************");
                     int editName = Integer.parseInt(scan.nextLine());
+
                     if(editName == 1){
                         System.out.println("What is the new name for the chapter?");
                         String newName= scan.nextLine();
                         editingChapter.setName(newName);
 
                     } else if(editName == 2){
-                        Assessment editAssessment = editingChapter.getTest();
-                        System.out.println("Would you like to add a question? For yes type 1, For no type 2");
-                        int addQuestion = Integer.parseInt(scan.nextLine());
-                        if(addQuestion == 1){
-                            ArrayList<Question> questions = editAssessment.getQuestions();
 
+                        Assessment editAssessment = editingChapter.getTest();
+                        
+						ArrayList<Question> questions = editAssessment.getQuestions();
+
+						System.out.println("The current questions are:");
+						for(int i= 0; i < questions.size(); i ++)
+						{
+							Question question = questions.get(i);
+							System.out.println((i + 1) + question.getQuestion());
+						}
+
+						System.out.println("Would you like to add a question? For yes type 1, For no type 2");
+                        int addQuestion = Integer.parseInt(scan.nextLine());
+
+                        if(addQuestion == 1){
                             System.out.println("What is the new question?");
 							String actualQuestion = scan.nextLine();
 							
@@ -362,68 +387,72 @@ public class LMS {
                             CourseManager.getInstance().writeAllCourses();
 
                         } else {
-
+							courseEditMenu(user);
                         }
 
 
 
                     }else if(editName == 3){
+						ArrayList<Section> sections = editingChapter.getSections();
 
-                    }else {
-                        System.err.println("Error! Invalid command entered. Please try again.");
-                    }
+						System.out.println("The current sections are:");
+						for(int i =0; i < sections.size(); i++){
+							Section current = sections.get(i);
+							System.out.println(i + 1 + ". " + current.getName());
+						}
 
-                    ArrayList<Section> sections = editingChapter.getSections();
+						System.out.println("Would you like to edit/add a section: To edit a current section type 1, To create a new section type 2, if no type 3");
+						int editSection = Integer.parseInt(scan.nextLine());
 
-                    System.out.println("Would you like to edit/add a section: To edit a current section type 1, To create a new section type 2, if no type 3");
-                    int editSection = Integer.parseInt(scan.nextLine());
-                    if(editSection == 1){
-                        for(int i =0; i < sections.size(); i++){
-                            Section current = sections.get(i);
-                            System.out.println(i + 1 + ". " + current.getName());
-                        }
+						if(editSection == 1){
+	
+							System.out.println("Which section number would you like to edit?");
+							int editSect = Integer.parseInt(scan.nextLine());
+	
+							Section editingSection = sections.get(editSect - 1);
+	
+							System.out.println("Would you like to edit: 1.Name, 2.Quiz, 3.text Enter(1-3)");
+							int editSectPart = Integer.parseInt(scan.nextLine());
+							if(editSectPart == 1){
+								System.out.println("The current name of the section is " + editingSection.getName());
+								System.out.println("What is the new name for the section? ");
+								String newName= scan.nextLine();
+								editingSection.setName(newName);
+								CourseManager.getInstance().writeAllCourses();
+							} else if(editSectPart == 2){
+								//System.out.println("The current quiz of the section is " + editingSection.getName());
+								
+	
+							} else if(editSectPart == 3){
+								System.out.println("The current text for the section is " + editingSection.getText());
+								System.out.println("What is the new text for the section? ");
+								String newText= scan.nextLine();
+								editingSection.setName(newText);
+								CourseManager.getInstance().writeAllCourses();
+							}
+	
+	
+	
+						} else if(editSection == 2){
 
-                        System.out.println("Which section number would you like to edit?");
-                        int editSect = Integer.parseInt(scan.nextLine());
+							System.out.println("What is the new name for the new section?");
+							String newSectName= scan.nextLine();
+							System.out.println("What is the text for the new section?");
+							String newSectText= scan.nextLine();
+	
+							Section newSection = new Section(newSectName, newSectText, null);
+							sections.add(newSection);
+							CourseManager.getInstance().writeAllCourses();
+						} else {
+							System.err.println("Error! Invalid command entered. Please try again.");
+						}
 
-                        Section editingSection = sections.get(editSect - 1);
-
-                        System.out.println("Would you like to edit: 1.Name, 2.Quiz, 3.text Enter(1-3)");
-                        int editSectPart = Integer.parseInt(scan.nextLine());
-                        if(editSectPart == 1){
-                            System.out.println("The current name of the section is " + editingSection.getName());
-                            System.out.println("What is the new name for the section? ");
-                            String newName= scan.nextLine();
-                            editingSection.setName(newName);
-                            CourseManager.getInstance().writeAllCourses();
-                        } else if(editSectPart == 2){
-                            //System.out.println("The current quiz of the section is " + editingSection.getName());
-                            
-
-                        } else if(editSectPart == 3){
-                            System.out.println("The current text for the section is " + editingSection.getText());
-                            System.out.println("What is the new text for the section? ");
-                            String newText= scan.nextLine();
-                            editingSection.setName(newText);
-                            CourseManager.getInstance().writeAllCourses();
-                        }
-
-
-
-                    } else if(editSection == 2){
-
-                        System.out.println("What is the new name for the new section?");
-                        String newSectName= scan.nextLine();
-                        System.out.println("What is the text for the new section?");
-                        String newSectText= scan.nextLine();
-
-                        Section newSection = new Section(newSectName, newSectText, null);
-                        sections.add(newSection);
-                        CourseManager.getInstance().writeAllCourses();
-                    }else {
-                        System.err.println("Error! Invalid command entered. Please try again.");
-                    }
-
+                    }else if(editName == 4){
+                        courseEditMenu(user);
+					} else {
+						System.err.println("Error! Invalid command entered. Please try again.");
+					}
+				
 
 					break;
 				}
