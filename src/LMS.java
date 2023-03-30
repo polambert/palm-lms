@@ -273,7 +273,7 @@ public class LMS {
         ArrayList<Course> uCourses = CourseManager.getInstance().getCoursesMadeByUser(user);
         for(int i =0; i<uCourses.size(); i++){
             Course coursePrint = uCourses.get(i);
-            System.out.println((i + 1) + " "+coursePrint.getName());
+            System.out.println((i + 1) + " "+coursePrint.getTitle() + " (" + coursePrint.getId() + ")");
         }
 		System.out.println("Which course number would you like to edit" );
 		int chosenCourse = Integer.parseInt(scan.nextLine());
@@ -319,7 +319,8 @@ public class LMS {
 					break;
 				}
                 case "Go Home":{
-                    System.out.println("Leaving course edit mode?");
+                    System.out.println("Leaving course edit mode.");
+					return;
                     //homeMenu();
                 }
                 case "Edit Chapters":{
@@ -334,6 +335,8 @@ public class LMS {
                     System.out.println("Which chapter number would you like to edit?");
                     int editChapter = Integer.parseInt(scan.nextLine());
 
+					clearScreen();
+
                     Chapter editingChapter = chapters.get(editChapter - 1);
 
                     System.out.println("The current chapter info is: ");
@@ -344,9 +347,11 @@ public class LMS {
 					System.out.println("1. Name");
 					System.out.println("2. Quiz");
 					System.out.println("3. Edit/Add Sections");
-					System.out.println("4. Retuen to Edit Menue");
+					System.out.println("4. Return to Edit Menu");
 					System.out.println("********************");
                     int editName = Integer.parseInt(scan.nextLine());
+
+					clearScreen();
 
                     if(editName == 1){
                         System.out.println("What is the new name for the chapter?");
@@ -385,13 +390,7 @@ public class LMS {
 
                             System.out.println("Question added to the quiz?");
                             CourseManager.getInstance().writeAllCourses();
-
-                        } else {
-							courseEditMenu(user);
                         }
-
-
-
                     }else if(editName == 3){
 						ArrayList<Section> sections = editingChapter.getSections();
 
@@ -448,7 +447,8 @@ public class LMS {
 						}
 
                     }else if(editName == 4){
-                        courseEditMenu(user);
+
+                        break;
 					} else {
 						System.err.println("Error! Invalid command entered. Please try again.");
 					}
