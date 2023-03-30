@@ -1,7 +1,6 @@
-Chapter #3, Section #1
+Chapter #3, Section #2
 
-CHAPTER 3: Loops
-SECTION 3: The For Loop
+SECTION 3: The While Loop
 
 In Python, you can use something called a loop to perform an action more than once. For example, the for loop, represented below, can allow you to perform an action a certain number of times.
 
