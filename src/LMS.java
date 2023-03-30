@@ -260,7 +260,7 @@ public class LMS {
 	}
 
     public static void showCourseEditMenu() {
-		System.out.println("*****Edit Course Menue*****");
+		System.out.println("*****Edit Course Menu*****");
 		System.out.println("***************");
 		for(int i=0;i<EDIT_MENU.length;i++)
 			System.out.println((i+1)+". "+EDIT_MENU[i]);
@@ -370,7 +370,7 @@ public class LMS {
 						for(int i= 0; i < questions.size(); i ++)
 						{
 							Question question = questions.get(i);
-							System.out.println((i + 1) + question.getQuestion());
+							System.out.println((i + 1) + ". " + question.getQuestion().replace("\n", "\n\t"));
 						}
 
 						System.out.println("Would you like to add a question? For yes type 1, For no type 2");
@@ -976,13 +976,13 @@ public class LMS {
         ArrayList<String> options = new ArrayList<String>(4);
         for(int k = 0; k < 4; k++)
         {
-            int questionNumber = k + 1;
+            int questionNumber = 1;
            
                 
-                int optionNumber = k + 1;
-                System.out.println("What is question "+ questionNumber + ", option number " + optionNumber + "?");
-                String option = scaner.nextLine();
-                options.add(option);
+			int optionNumber = k + 1;
+			System.out.println("What is question "+ questionNumber + ", option number " + optionNumber + "?");
+			String option = scaner.nextLine();
+			options.add(option);
                 
                 
     
