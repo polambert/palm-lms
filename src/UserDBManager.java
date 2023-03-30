@@ -89,6 +89,11 @@ public class UserDBManager extends DataConstants {
 		return users;
 	}
 
+	/**
+	 * Loads a user from specified file
+	 * @param file file to read from
+	 * @return User object
+	 */
 	private User readUserFile(File file) {
 		User user = null;
 
@@ -318,6 +323,11 @@ public class UserDBManager extends DataConstants {
 		return writeUserToDB(userObj);
 	}
 
+	/**
+	 * Returns user's id given email
+	 * @param email email of user to find
+	 * @return ID of user with same email
+	 */
 	public UUID getIdFromEmail(String email) {
 		try {
 			FileReader reader = new FileReader(new File(USER_LOGIN_LOOKUP));
@@ -338,6 +348,10 @@ public class UserDBManager extends DataConstants {
 		return null;
 	}
 
+	/**
+	 * Updates the master login lookup file
+	 * @param users list of users to store in the file
+	 */
 	public void updateLoginLookup(ArrayList<User> users) {
 		JSONObject lookupObj = new JSONObject();
 
@@ -359,6 +373,12 @@ public class UserDBManager extends DataConstants {
 		}
 	}
 
+	/**
+	 * Attempts a login
+	 * @param email email
+	 * @param password password, raw unhashed
+	 * @return User object, null if login fails
+	 */
 	public User attemptLogin(String email, char[] password) {
 		UUID id = getIdFromEmail(email);
 
@@ -390,6 +410,11 @@ public class UserDBManager extends DataConstants {
 		return null;
 	}
 
+	/**
+	 * Hashed a password using HASH_ALGORITHM
+	 * @param password raw password to hash
+	 * @return Hashed password
+	 */
 	public String hashPassword(char[] password) {
 		MessageDigest md = null;
 

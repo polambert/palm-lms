@@ -3,6 +3,10 @@ import java.util.UUID;
 
 import java.time.LocalDate;
 
+/**
+ * Stores information about a Review
+ * @author Kaleb Bah
+ */
 public class Review {
 	private int rating;
 	private String text;
@@ -43,6 +47,7 @@ public class Review {
 		this.date = date;
 	}
 
+	// getters and setters
 	public UUID getAuthorId() { return this.authorId; }
 	public void setAuthorId(UUID authorId) { this.authorId = authorId; }
 

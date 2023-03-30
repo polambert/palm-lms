@@ -3,6 +3,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * Stores all information and methods related to a Course
+ * @author Luke Lane, Kaleb Bah
+ */
 public class Course {
 	private UUID id;
 	private String language;
@@ -16,6 +20,16 @@ public class Course {
 	private ArrayList<Review> reviews = new ArrayList<>();
 	private ArrayList<Comment> comments = new ArrayList<>();
 
+	/**
+	 * Constructs a Course with a User author
+	 * @param id ID of course
+	 * @param name name of course
+	 * @param author author of course
+	 * @param chapters list of chapters
+	 * @param finalExam final exam assessment
+	 * @param reviews list of reviews
+	 * @param comments list of comments
+	 */
 	public Course(UUID id, String name, User author, ArrayList<Chapter> chapters,
 	Assessment finalExam, ArrayList<Review> reviews, ArrayList<Comment> comments) {
 		this.id = id;
@@ -28,6 +42,16 @@ public class Course {
 		this.comments = comments;
 	}
 	
+	/**
+	 * Constructs a Course with a UUID author
+	 * @param id ID of course
+	 * @param name name of course
+	 * @param authorId ID of author of course
+	 * @param chapters list of chapters
+	 * @param finalExam final exam assessment
+	 * @param reviews list of reviews
+	 * @param comments list of comments
+	 */
 	public Course(UUID id, String name, UUID authorId, ArrayList<Chapter> chapters,
 	Assessment finalExam, ArrayList<Review> reviews, ArrayList<Comment> comments) {
 		this.id = id;
@@ -39,6 +63,10 @@ public class Course {
 		this.comments = comments;
 	}
 
+	/**
+	 * Returns the average rating of the course
+	 * @return Average rating of the course
+	 */
 	public double getRating() {
 		double sum = 0.0;
 		for (int i = 0; i < reviews.size(); i++) {
@@ -50,7 +78,7 @@ public class Course {
 		return sum / reviews.size();
 	}
 
-	//getters and setters
+	// getters and setters
 	public UUID getAuthorId() { return this.authorId; }
 	public void setAuthorId(UUID authorId) { this.authorId = authorId; }
 	public UUID getId() {

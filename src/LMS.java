@@ -9,7 +9,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 
-//Methods that contain arrays that are print later
+/**
+ * Represents a top-level facade for the learning management system's UI
+ * @author Ayush Patel, Parker Lambert, PALM
+ */
 public class LMS {
 	private static final String[] COURSE_MENU = {
 		"Study Section",
@@ -84,7 +87,9 @@ public class LMS {
 	}
 
 
-	//method that prints array of options
+	/**
+	 * Displays home menu
+	 */
 	private static void showHomeMenu() {
 		System.out.println("*****Home Menu*****");
 		System.out.println("Welcome, " + UserManager.getInstance().getLoggedInUser().getFullName());
@@ -94,10 +99,10 @@ public class LMS {
 		System.out.print("What would you like to do? ");
 	}
 
-
-    
-
-	//switch statement method
+	/**
+	 * Logic for home menu
+	 * @param email email of logged in user
+	 */
 	private static void homeMenu(String email) {
 		while (true) {
 			showHomeMenu();
@@ -260,6 +265,9 @@ public class LMS {
 		}
 	}
 
+	/**
+	 * Displays course edit menu
+	 */
     public static void showCourseEditMenu() {
 		System.out.println("*****Edit Course Menu*****");
 		System.out.println("***************");
@@ -269,7 +277,10 @@ public class LMS {
 		System.out.print("What would you like to do? ");
 	}
 
-
+	/**
+	 * Logic for course edit menu
+	 * @param user logged in user
+	 */
     public static void courseEditMenu(User user) {
 		clearScreen();
         Scanner scan = new Scanner(System.in);
@@ -468,6 +479,9 @@ public class LMS {
 
 	}
 
+	/**
+	 * Displays sign in menu
+	 */
 	public static void showSignInMenu() {
 		System.out.println("*****Welcome to PALM*****");
 		System.out.println("***************");
@@ -477,6 +491,9 @@ public class LMS {
 		System.out.print("What would you like to do? ");
 	}
 
+	/**
+	 * Logic for sign in menu
+	 */
 	public static void signInMenu() {
 		clearScreen();
 
@@ -563,6 +580,10 @@ public class LMS {
 		}
 	}
 
+	/**
+	 * Displays course menu
+	 * @param course course to display
+	 */
 	private static void showCourseMenu(Course course) {
 		System.out.println("******* Course Menu ******");
 		System.out.println("Course: " + course.getTitle());
@@ -615,6 +636,12 @@ public class LMS {
 		System.out.print("What would you like to do? ");
 	}
 
+	/**
+	 * Displays section text and asks if they would like to save it to file
+	 * @param course specified course
+	 * @param c chapter number (starting at 0)
+	 * @param s section number (starting at 0)
+	 */
 	private static void displaySection(Course course, int c, int s) {
 		Chapter chapter = course.getChapters().get(c);
 		Section section = chapter.getSections().get(s);
@@ -654,6 +681,10 @@ public class LMS {
 		}
 	}
 
+	/**
+	 * Logic for course menu
+	 * @param course course to use
+	 */
 	private static void courseMenu(Course course) {
 
 		while (true) {
@@ -836,6 +867,11 @@ public class LMS {
 		}
 	}
 
+	/**
+	 * Displays list of comments
+	 * @param comments list of comments to display
+	 * @param depth used for recursion purposes, use 0 when calling
+	 */
 	private static void displayComments(ArrayList<Comment> comments, int depth) {
 		for (int i = 0; i < comments.size(); i++) {
 			Comment comment = comments.get(i);
@@ -860,7 +896,10 @@ public class LMS {
 		}
 	}
 
-
+	/**
+	 * Displays the comment menu
+	 * @param course course comments are on
+	 */
 	private static void showCommentMenu(Course course) {
 		System.out.println("*****Comment Menu*****");
 		System.out.println("Course: " + course.getTitle());
@@ -879,6 +918,10 @@ public class LMS {
 		System.out.println("What would you like to do?:");
 	}
 
+	/**
+	 * Logic for the comment menu
+	 * @param course course comments are on
+	 */
 	private static void commentMenu(Course course) {
 		showCommentMenu(course);
 		Scanner scan = new Scanner(System.in);
@@ -924,6 +967,10 @@ public class LMS {
 		}
 	}
 
+	/**
+	 * Displays the review menu
+	 * @param course course reviews are on
+	 */
 	private static void showReviewMenu(Course course) {
 		System.out.println("*****Review Menu*****");
 		System.out.println("Course: " + course.getTitle());
@@ -956,6 +1003,10 @@ public class LMS {
 		System.out.println("What would you like to do?:");
 	}
 
+	/**
+	 * Logic for the review menu
+	 * @param course course reviews are on
+	 */
 	private static void reviewMenu(Course course) {
 		showReviewMenu(course);
 		Scanner scan = new Scanner(System.in);
@@ -995,27 +1046,30 @@ public class LMS {
 		}
 	}
 
+	/**
+	 * Clears the screen
+	 */
 	private static void clearScreen() {
 		System.out.println("\n\n\n\n\n\n"); // visually shows clear if they scroll up
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 	}
 
-	private  static ArrayList<String> getOptions(){
+	/**
+	 * Gets 4 answer options for a question
+	 * @return List of answers
+	 */
+	private static ArrayList<String> getOptions(){
         Scanner scaner = new Scanner(System.in);
         ArrayList<String> options = new ArrayList<String>(4);
         for(int k = 0; k < 4; k++)
         {
             int questionNumber = 1;
-           
-                
+			
 			int optionNumber = k + 1;
 			System.out.println("What is question "+ questionNumber + ", option number " + optionNumber + "?");
 			String option = scaner.nextLine();
 			options.add(option);
-                
-                
-    
         }
         return options;
     }

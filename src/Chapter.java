@@ -3,7 +3,8 @@
 import java.util.ArrayList;
 
 /**
- * This class sets all parameters for a Chapter
+ * This class stores all informationa and methods for chapters
+ * @author Luke Lane
  */
 public class Chapter {
     private String name;
@@ -20,6 +21,7 @@ public class Chapter {
         this.test = test;
     }
 
+    // getters and setters
     public String getName() {
         return this.name;
     }

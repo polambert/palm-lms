@@ -2,6 +2,7 @@
 /**
  * This class will provide the information for a Courses section
  * and provide the description
+ * @author Luke Lane
  */
 public class Section {
     private String name;
@@ -18,6 +19,7 @@ public class Section {
         this.quiz = quiz;
     }
 
+    // getters and setters
     public String getName() {
         return this.name;
     }

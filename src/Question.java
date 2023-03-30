@@ -3,11 +3,13 @@ import java.util.ArrayList;
 
 /**
  * This class will hold the information that each question holds
+ * @author PALM
  */
 public class Question {
     private String question;
     private ArrayList<String> answers;
     private int correctAnswer;
+
     /**
      * Creates a new question
      * @param question String; The actual question
@@ -20,6 +22,7 @@ public class Question {
         this.correctAnswer = correctAnswer;
     }
 
+    // getters and setters
     public ArrayList<String> getAnswers() {
         return answers;
     }

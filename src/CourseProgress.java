@@ -4,6 +4,10 @@ import java.util.UUID;
 
 import java.time.LocalDate;
 
+/**
+ * Stores information about a user's completion in a Course.
+ * @author Kaleb Bah, Parker Lambert
+ */
 public class CourseProgress {
 	private Course course;
 	private int chaptersCompleted;
@@ -13,7 +17,13 @@ public class CourseProgress {
 	private LocalDate dateCompleted;
 	private UUID certificateId;
 
-
+	/**
+	 * Constructs a CourseProgress with already provided information
+	 * @param course Course
+	 * @param chaptersCompleted Number of chapters finished
+	 * @param sectionsCompleted Number of sections finished
+	 * @param grades 2D array of grades
+	 */
 	public CourseProgress(Course course, int chaptersCompleted, int sectionsCompleted, ArrayList<ArrayList<Double>> grades) {
 		this.course = course;
 		this.chaptersCompleted = chaptersCompleted;
@@ -21,6 +31,10 @@ public class CourseProgress {
 		this.grades = grades;
 	}
 
+	/**
+	 * Constructs a brand-new course progress for when a user enrolls in a Course
+	 * @param course Course
+	 */
 	public CourseProgress(Course course) {
 		this.course = course;
 		this.chaptersCompleted = 0;
@@ -49,6 +63,12 @@ public class CourseProgress {
 		grades.add(finalExam); // final exam
 	}
 
+	/**
+	 * Updates users' grades after completing a quiz
+	 * @param chapterIndex Chapter
+	 * @param sectionIndex Section
+	 * @param grade Grade for assessment
+	 */
 	public void completedSectionAssessment(int chapterIndex, int sectionIndex, double grade) {
 		// Check if the specified chapter and section exist in the grades arraylist
 		if (grades.size() <= chapterIndex) {
@@ -61,6 +81,10 @@ public class CourseProgress {
 		grades.get(chapterIndex).set(sectionIndex, grade);
 	}
 	
+	/**
+	 * String representation of CourseProgress, used for debug
+	 * @return string representation used for debug
+	 */
 	public String toString() {
 		String s = "[CourseProgress] courseId: " + course.getId() + "\n";
 		s += "\tcourseName: " + course.getName() + "\n";
@@ -96,6 +120,10 @@ public class CourseProgress {
 		return s;
 	}
 
+	/**
+	 * Returns true if user can take test
+	 * @return true if user can take test
+	 */
 	public boolean canTakeTest() {
 		if (chaptersCompleted >= course.getChapterCount()) {
 			// this means they can take the final
@@ -107,6 +135,10 @@ public class CourseProgress {
 		return sectionsCompleted >= course.getChapters().get(chaptersCompleted).getSections().size();
 	}
 
+	/**
+	 * Returns true if user can take final
+	 * @return true if user can take final
+	 */
 	public boolean canTakeFinal() {
 		if (certificateId != null) {
 			return false; // course is finished
@@ -114,11 +146,25 @@ public class CourseProgress {
 		return chaptersCompleted >= course.getChapters().size();
 	}
 
+	/**
+	 * Returns true if user has finished course
+	 * @return true if user has finished course
+	 */
 	public boolean hasFinishedCourse() {
 		if (certificateId != null) {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Generates a certificate, called upon completion of a Course
+	 * @return UUID of certificate
+	 */
+	public UUID generateCertificate() {
+		this.certificateId = UUID.randomUUID();
+		this.dateCompleted = LocalDate.now();
+		return certificateId;
 	}
 
 
@@ -199,11 +245,6 @@ public class CourseProgress {
 	}
 	public double getProgressPercent(){
 		return chaptersCompleted/course.getChapterCount();
-	}
-	public UUID generateCertificate() {
-		this.certificateId = UUID.randomUUID();
-		this.dateCompleted = LocalDate.now();
-		return certificateId;
 	}
 
 

@@ -116,6 +116,11 @@ public class CourseDBManager extends DataConstants {
 		return new Assessment(questions);
 	}
 	
+	/**
+	 * Loads Course from file
+	 * @param file File object to load from
+	 * @return Course from file
+	 */
 	public Course readCourseFile(File file) {
 		try {
 			FileReader reader = new FileReader(file);
@@ -326,6 +331,11 @@ public class CourseDBManager extends DataConstants {
 		}
 	}
 
+	/**
+	 * Converts an Assessment to a writeable JSON array
+	 * @param assessment Assessment to write
+	 * @return writeable JSON array
+	 */
 	private JSONArray writeAssessment(Assessment assessment) {
 		if (assessment == null) {
 			return new JSONArray();
@@ -360,6 +370,11 @@ public class CourseDBManager extends DataConstants {
 		return questionsArr;
 	}
 
+	/**
+	 * Converts a list of Comments to a writeable JSON array
+	 * @param comments Comments to write
+	 * @return writeable JSON array
+	 */
 	private JSONArray writeComments(ArrayList<Comment> comments) {
 		JSONArray commentsArray = new JSONArray();
 		for(Comment comment : comments){

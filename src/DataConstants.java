@@ -3,7 +3,10 @@
 // CSCE 247
 
 
-
+/**
+ * Stores important data constants for CourseDBManager and UserDBManager
+ * @author Parker Lambert
+ */
 public class DataConstants {
 	protected final String COURSE_FOLDER 				= "./json/courses/";
 	protected final String COURSE_FILE_EXTENSION 		= "json";

@@ -1,0 +1,6 @@
+Chapter #3, Section #2
+
+SECTION 3: The While Loop
+
+A while loop is a control flow statement in Python that allows the programmer to perform a set of instructions while a certain condition is true.
+

@@ -35,12 +35,20 @@ public class UserManager {
 		return UserManager.userManager;
 	}
 
+	/**
+	 * Loads all users from disk
+	 * @return
+	 */
 	public boolean loadAllUsers() {
 		users = dbManager.readUsersFromDB();
 
 		return true;
 	}
 
+	/**
+	 * Writes all users to disk
+	 * @return
+	 */
 	public boolean writeAllUsers() {
 		// save logged in user
 		for (int i = 0; i < users.size(); i++) {
@@ -52,6 +60,7 @@ public class UserManager {
 		return dbManager.writeUsersToDB(users);
 	}
 
+	// main method used for testing loading/writing/signup/login of users
 	/*
 	public static void main(String[] args) {
 		CourseManager.getInstance().loadAllCourses();
@@ -80,7 +89,6 @@ public class UserManager {
 		System.out.println(UserManager.getInstance().attemptLogin("parker@test.com", pass));
 	}
 	*/
-
 
 	/**
 	 * Attempts a login with provided email and password
@@ -124,10 +132,20 @@ public class UserManager {
 		return success;
 	}
 
+	/**
+	 * Returns a user's ID given their email
+	 * @param email email of user to find
+	 * @return ID of user with same email
+	 */
 	public UUID getIdFromEmail(String email) {
 		return dbManager.getIdFromEmail(email);
 	}
 
+	/**
+	 * Returns a user object given an id
+	 * @param id id of user to find
+	 * @return user object of user with same id
+	 */
 	public User getUserFromId(UUID id) {
 		for (int i = 0; i < users.size(); i++) {
 			if (id.equals(users.get(i).getId())) {
@@ -137,16 +155,26 @@ public class UserManager {
 		return null;
 	}
 
+	/**
+	 * Updates master login lookup find
+	 */
 	private void updateLoginLookup() {
 		loadAllUsers();
 
 		dbManager.updateLoginLookup(users);
 	}
 
+	/**
+	 * Returns the currently logged in user
+	 * @return The currently logged in user
+	 */
 	public User getLoggedInUser() {
 		return this.loggedInUser;
 	}
 
+	/**
+	 * Logs the user out
+	 */
 	public void logout() {
 		this.loggedInUser = null;
 	}

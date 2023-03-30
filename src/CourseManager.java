@@ -31,6 +31,11 @@ public class CourseManager {
 		return CourseManager.courseManager;
 	}
 
+	/**
+	 * Returns course with the specified ID
+	 * @param id ID of course to look for
+	 * @return Course with ID
+	 */
 	public Course getCourseById(UUID id) {
 		for (int i = 0; i < courses.size(); i++) {
 			if (courses.get(i).getId().equals(id)) {
@@ -41,18 +46,31 @@ public class CourseManager {
 		return null;
 	}
 
+	/**
+	 * Loads and sets all courses
+	 * @return True if success
+	 */
 	public boolean loadAllCourses() {
 		courses = dbManager.readCoursesFromDB();
 
 		return true;
 	}
 
+	/**
+	 * Writes all courses to disk
+	 * @return True if success
+	 */
 	public boolean writeAllCourses() {
 		dbManager.writeCoursesToDB(courses);
 
 		return true;
 	}
 
+	/**
+	 * Gets all courses made by specified user
+	 * @param user User to find courses they made
+	 * @return List of courses the user made
+	 */
 	public ArrayList<Course> getCoursesMadeByUser(User user) {
 		ArrayList<Course> courseList = new ArrayList<>();
 		for (int i = 0; i < courses.size(); i++) {
@@ -63,6 +81,10 @@ public class CourseManager {
 		return courseList;
 	}
 
+	/**
+	 * Sets User author for all comments
+	 * @param comments Comments to set user for
+	 */
 	public void updateComments(ArrayList<Comment> comments) {
 		for (int i = 0; i < comments.size(); i++) {
 			Comment comment = comments.get(i);
@@ -76,6 +98,10 @@ public class CourseManager {
 		}
 	}
 
+	/**
+	 * Sets all User authors for anything that didn't get it when loadAllCourses
+	 *     was called
+	 */
 	public void updateUsers() {
 		for (int i = 0; i < courses.size(); i++) {
 			Course course = courses.get(i);
@@ -101,6 +127,14 @@ public class CourseManager {
 		}
 	}
 
+	/**
+	 * Creates a new course
+	 * @param name name of the course
+	 * @param title title of the course
+	 * @param language langauge the course teaches
+	 * @param description description of the course
+	 * @return New Course
+	 */
 	public Course createCourse(String name, String title, String language, String description) {
 		User author = UserManager.getInstance().getLoggedInUser();
 		if (author.canCreateCourses()) {
@@ -122,6 +156,7 @@ public class CourseManager {
 		}
 	}
 
+	// This main method is for testing loading/writing courses
 	/*
 	public static void main(String[] args) {
 		CourseManager.getInstance().loadAllCourses();
@@ -145,6 +180,11 @@ public class CourseManager {
 	}
 	*/
 
+	/**
+	 * Returns all courses that a specified User is enrolled in
+	 * @param user User to check enrollment
+	 * @return List of courses the user is enrolled in
+	 */
 	public ArrayList<Course> getEnrolledCourses(User user) {
 		ArrayList<CourseProgress> courseProgresses = user.getCourseProgresses();
 		ArrayList<Course> enrolledCourses = new ArrayList<>();
@@ -157,7 +197,7 @@ public class CourseManager {
 		return enrolledCourses;
 	}
 
-	// getter and setter...
+	// getter and setter
 	public ArrayList<Course> getCourses() {
 		return this.courses;
 	}

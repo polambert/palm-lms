@@ -7,6 +7,10 @@ import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * Holds the main method, which uses the top-level facade LMS.
+ * @author Ayush Patel
+ */
 public class UIHandler extends LMS {
 	private static AssessmentHandler assessmentHandler;
 	private static CourseManager courseManager;
@@ -14,42 +18,10 @@ public class UIHandler extends LMS {
 
 	private static final double MIN_PASSING_GRADE = 80.0;
 
-
-	//getters and setters
-	
-
-	public AssessmentHandler getAssessmentHandler() {
-		return assessmentHandler;
-	}
-
-	public void setAssessmentHandler(AssessmentHandler assessmentHandler) {
-		this.assessmentHandler = assessmentHandler;
-	}
-
-	public CourseManager getCourseManager() {
-		return courseManager;
-	}
-
-	public void setCourseManager(CourseManager courseManager) {
-		this.courseManager = courseManager;
-	}
-
-	public UserManager getUserManager() {
-		return userManager;
-	}
-
-	public void setUserManager(UserManager userManager) {
-		this.userManager = userManager;
-	}
-	/* 
-		public static void main (String args[]){
-			courseManager = CourseManager.getInstance();
-			userManager = UserManager.getInstance();
-
-			courseManager.loadAllCourses();
-		}
-	*/
-	//=======
+	/**
+	 * Static main method entry point for LMS
+	 * @param args Command line arguments
+	 */
 	public static void main(String args[]) {
 		courseManager = CourseManager.getInstance();
 		userManager = UserManager.getInstance();
@@ -60,6 +32,11 @@ public class UIHandler extends LMS {
 		signInMenu();
 	}
 
+	/**
+	 * Handles appropriate logic for assessments, calls AssessmentHandler.start
+	 * @param courseProgress The User's CourseProgress for the Course they are
+	 *     taking an assessment in
+	 */
 	public static void startAssessment(CourseProgress courseProgress) {
 		Course course = courseProgress.getCourse();
 
@@ -100,63 +77,30 @@ public class UIHandler extends LMS {
 				userManager.writeAllUsers();
 			}
 		}
-
-		/*
-		Course assessmentCourse = courseProgress.getCourse();
-		//Start on current chapter of progress
-		int chapterStart = courseProgress.getChaptersCompleted();
-		// Don't start at next section, we are on this section so we take this quiz
-		int sectionStart = courseProgress.getSectionsCompleted();
-		//Return true if chapter progress isn't complete
-		boolean availableChapterAssessment = !courseProgress.canTakeTest(); // (courseProgress.getChapterProgress() < assessmentCourse.getChapterCount());
-		//Return true if section progress isn't complete
-		boolean availableSectionAssessment = !courseProgress.canTakeTest(); // (courseProgress.getSectionProgress() < assessmentCourse.getChapters().get(chapterStart).getSectionCount());
-		//Return true if all sections in chapter are done, starts the Test
-		boolean availableChapterTest = courseProgress.canTakeTest(); // (assessmentCourse.getChapters().get(chapterStart).getSectionCount() == courseProgress.getSectionProgress());
-		//Return true if all sections in chapter are done, including the Test, start new Chapter
-		boolean nothingAvailable = false; // (assessmentCourse.getChapters().get(chapterStart).getSectionCount() < courseProgress.getSectionProgress());
-		//Taking a section quiz
-		if(availableChapterAssessment && availableSectionAssessment) {
-			Assessment quiz = assessmentCourse.getChapters().get(chapterStart).getSections().get(sectionStart).getQuiz();
-			double score = assessmentHandler.start(quiz);
-			if(score >= MIN_PASSING_GRADE) {
-				courseProgress.incSectionProgress();
-				courseProgress.completedSectionAssessment(chapterStart, sectionStart, score);
-				userManager.writeAllUsers();
-			}
-				
-		}
-		//Taking a Chapter Test
-		else if(availableChapterTest) {
-			Assessment test = assessmentCourse.getChapters().get(chapterStart).getTest();
-			double score = assessmentHandler.start(test);
-			if(score >= MIN_PASSING_GRADE) {
-				courseProgress.incSectionProgress();
-				courseProgress.completedSectionAssessment(chapterStart, sectionStart, score);
-				userManager.writeAllUsers();
-			}
-		}
-		//Kind of assuming here that if the chapter's section progress and the chapter's 
-		//	section count are the same then you would increment 1 more time for the progress 
-		//	as a way to signify in the next check that all section quiz have been taken as 
-		//	well as the section test so you can move on to the next chapter and eventually final exam
-		//New Chapter, Taking new quiz in new section, Also resetting section counter for new chapter
-		else if(nothingAvailable) {
-			courseProgress.incChapterProgress();
-			courseProgress.setSectionsCompleted(0);
-			userManager.writeAllUsers();
-			startAssessment(courseProgress);
-		}
-		*/
 	}
 
-   
+	// getters and setters
+	public AssessmentHandler getAssessmentHandler() {
+		return assessmentHandler;
+	}
 
-    
-    
+	public void setAssessmentHandler(AssessmentHandler assessmentHandler) {
+		this.assessmentHandler = assessmentHandler;
+	}
 
+	public CourseManager getCourseManager() {
+		return courseManager;
+	}
+
+	public void setCourseManager(CourseManager courseManager) {
+		this.courseManager = courseManager;
+	}
+
+	public UserManager getUserManager() {
+		return userManager;
+	}
+
+	public void setUserManager(UserManager userManager) {
+		this.userManager = userManager;
+	}
 }
-
-
-
-

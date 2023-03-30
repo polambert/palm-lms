@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import java.time.LocalDate;
 
+/**
+ * Stores all information related to a Comment
+ * @author Kaleb Bah
+ */
 public class Comment {
 	private String comment;
 	private User author;
@@ -12,6 +16,14 @@ public class Comment {
 	private LocalDate date;
 	private ArrayList<Comment> replies;
 
+	/**
+	 * Instantiates a Comment with a User author
+	 * @param id ID of the comment
+	 * @param comment Text entered by the user
+	 * @param author User who posted the comment
+	 * @param date Date comment was posted
+	 * @param replies List of replies to the comment
+	 */
 	public Comment(UUID id, String comment, User author, LocalDate date, ArrayList<Comment> replies) {
 		this.id = id;
 		this.comment = comment;
@@ -21,6 +33,14 @@ public class Comment {
 		this.replies = replies;
 	}
 	
+	/**
+	 * Instantiates a Comment with a UUID author
+	 * @param id ID of the comment
+	 * @param comment Text entered by the user
+	 * @param authorId ID of user who posted the comment
+	 * @param date Date comment was posted
+	 * @param replies List of replies to the comment
+	 */
 	public Comment(UUID id, String comment, UUID authorId, LocalDate date, ArrayList<Comment> replies) {
 		this.id = id;
 		this.comment = comment;
@@ -29,10 +49,15 @@ public class Comment {
 		this.replies = replies;
 	}
 
+	/**
+	 * Adds a reply to this Comment's replies
+	 * @param reply Reply to add
+	 */
 	public void addReply(Comment reply) {
 		this.replies.add(reply);
 	}
 
+	// getters and setters
 	public UUID getAuthorId() { return this.authorId; }
 	public void setAuthorId(UUID authorId) { this.authorId = authorId; }
 

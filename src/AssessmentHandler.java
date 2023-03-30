@@ -2,15 +2,27 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * AssessmentHandler
+ * Provides the static method for assessment-taking
+ * @author Parker Lambert
+ */
 public class AssessmentHandler
 {
+	/**
+	 * Clears the screen
+	 */
 	private static void clearScreen() {
 		System.out.println("\n\n\n\n\n\n"); // visually shows clear if they scroll up
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 	}
 	
-	// returns grade achieved
+	/**
+	 * Starts and runs an Assessment for the User to take
+	 * @param assessment The Assessment to take
+	 * @return Grade, from 0 to 100 inclusive
+	 */
 	public static double start(Assessment assessment) {
 		// start taking the assessment
 		Scanner scanner = new Scanner(System.in);

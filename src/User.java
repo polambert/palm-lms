@@ -3,6 +3,10 @@ import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.UUID;
 
+/**
+ * Stores information and methods for a User in LMS
+ * @author Luke Lane, Parker Lambert
+ */
 public class User 
 {
 	private String firstName;
@@ -13,6 +17,15 @@ public class User
 	private boolean canCreateCourses;
 	private ArrayList<CourseProgress> courseProgresses = new ArrayList<>();
 
+	/**
+	 * Constructs a User
+	 * @param id User's ID
+	 * @param firstName first name
+	 * @param lastName last name
+	 * @param email email
+	 * @param dateOfBirth date of birth
+	 * @param courseProgresses list of progress in all enrolled courses
+	 */
 	public User(UUID id, String firstName, String lastName, String email, LocalDate dateOfBirth, ArrayList<CourseProgress> courseProgresses) {
 		this.id = id;
 		this.firstName = firstName;
@@ -22,12 +35,22 @@ public class User
 		this.courseProgresses = courseProgresses;
 	}
 
+	/**
+	 * Enrolls the user in <course>
+	 * @param course Course to enroll user in
+	 * @return true if success
+	 */
     public boolean enrollIn(Course course) {
         CourseProgress cp = new CourseProgress(course);
         courseProgresses.add(cp);
         return true;
     }
 
+	/**
+	 * Drops specified course
+	 * @param course Course to drop
+	 * @return true if success
+	 */
     public boolean drop(Course course) {
         for (int i = 0; i < courseProgresses.size(); i++) {
             if (courseProgresses.get(i).getCourse().getId().equals(course.getId())) {
@@ -39,10 +62,18 @@ public class User
         return false;
     }
 
+	/**
+	 * Returns full name (firstName + " " + lastName)
+	 * @return full name
+	 */
 	public String getFullName() {
 		return firstName + " " + lastName;
 	}
 
+	/**
+	 * Returns a string representation of the User used for debug purposes
+	 * @return string representation debug only
+	 */
 	public String toString() {
 		String s = "[User] id: " + id + "\n";
 		s += "\tfirstName: " + firstName + "\n";
@@ -59,6 +90,11 @@ public class User
 		return s;
 	}
 
+	/**
+	 * Returns CourseProgres in specified Course
+	 * @param course Course to get progress in
+	 * @return User's CourseProgress in Course
+	 */
     public CourseProgress getCourseProgressIn(Course course) {
         for (int i = 0; i < courseProgresses.size(); i++) {
             if (course.getId().equals(courseProgresses.get(i).getCourse().getId())) {
@@ -69,7 +105,7 @@ public class User
     }
 
 
-	//getters and setters
+	// getters and setters
 	public String getFirstName() {
 		return firstName;
 	}
