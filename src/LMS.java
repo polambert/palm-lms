@@ -149,7 +149,9 @@ public class LMS {
 					Course course = courses.get(enrollClass - 1);
 					
 					boolean success = UserManager.getInstance().getLoggedInUser().enrollIn(course);
-					UserManager.getInstance().writeAllUsers();
+					if (success) {
+						UserManager.getInstance().writeAllUsers();
+					}
 
 					clearScreen();
 
