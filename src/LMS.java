@@ -34,6 +34,7 @@ public class LMS {
 	};
 	private static final String[] COMMENT_MENU = {
 		"Leave Comment",
+		"Reply to Comment",
 		"Return to Course"
 	};
 	private static final String[] REVIEW_MENU = {
@@ -835,6 +836,30 @@ public class LMS {
 		}
 	}
 
+	private static void displayComments(ArrayList<Comment> comments, int depth) {
+		for (int i = 0; i < comments.size(); i++) {
+			Comment comment = comments.get(i);
+
+			String tab = "";
+			for (int j = 0; j < depth; j++) {
+				tab += "  ";
+			}
+
+			if (depth == 0) {
+				System.out.println((i+1) + ": " + comment.getComment());
+			} else {
+				System.out.println(tab + comment.getComment());
+			}
+
+			System.out.println(tab + "  By: " + comment.getAuthor().getFullName());
+			System.out.println(tab + "  On: " + comment.getDate());
+
+			if (comment.getReplies().size() != 0) {
+				displayComments(comment.getReplies(), depth + 1);
+			}
+		}
+	}
+
 
 	private static void showCommentMenu(Course course) {
 		System.out.println("*****Comment Menu*****");
@@ -844,13 +869,7 @@ public class LMS {
 
 		ArrayList<Comment> comments = course.getComments();
 
-		for (int i = 0; i < comments.size(); i++) {
-			Comment comment = comments.get(i);
-			System.out.println(comment.getComment());
-
-			System.out.println("  By: " + comment.getAuthor().getFullName());
-			System.out.println("  On: " + comment.getDate());
-		}
+		displayComments(comments, 0);
 
 		System.out.println();
 		System.out.println("*************************");
@@ -865,12 +884,12 @@ public class LMS {
 		Scanner scan = new Scanner(System.in);
 		int num = Integer.parseInt(scan.nextLine());
 		String command = COMMENT_MENU[num-1];
-		clearScreen();
 		
 		switch(command)
 		{
 			case "Leave Comment":
 			{
+				clearScreen();
 				System.out.println("What is your Comment?");
 				String userComment= scan.nextLine();
 				ArrayList<Comment> replies = new ArrayList<>();
@@ -881,14 +900,25 @@ public class LMS {
 				clearScreen();
 				break;
 			}
+			case "Reply to Comment": {
+				System.out.print("Which comment do you want to reply to? ");
+				int r = Integer.parseInt(scan.nextLine());
+				ArrayList<Comment> comments = course.getComments();
+				Comment comment = comments.get(r - 1);
+
+				System.out.print("What is your reply? ");
+				String text = scan.nextLine();
+				Comment reply = new Comment(UUID.randomUUID(), text, UserManager.getInstance().getLoggedInUser(), LocalDate.now(), new ArrayList<>());
+				comment.addReply(reply);
+				break;
+			}
 			case "Return to Course":
 			{
+				clearScreen();
 				courseMenu(course);
 				return;
 			}
-			default :
-			{
-				
+			default: {
 				System.err.println("Error! Invalid command entered. Please try again.");
 			}
 		}

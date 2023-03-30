@@ -7,9 +7,7 @@ import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 
-public class UIHandler extends LMS
-{
-	private static ProgramState state;
+public class UIHandler extends LMS {
 	private static AssessmentHandler assessmentHandler;
 	private static CourseManager courseManager;
 	private static UserManager userManager;
@@ -18,12 +16,7 @@ public class UIHandler extends LMS
 
 
 	//getters and setters
-	public ProgramState getState() {
-		return state;
-	}
-	public void setState(ProgramState state) {
-		this.state = state;
-	}
+	
 
 	public AssessmentHandler getAssessmentHandler() {
 		return assessmentHandler;

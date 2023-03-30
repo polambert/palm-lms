@@ -29,6 +29,10 @@ public class Comment {
 		this.replies = replies;
 	}
 
+	public void addReply(Comment reply) {
+		this.replies.add(reply);
+	}
+
 	public UUID getAuthorId() { return this.authorId; }
 	public void setAuthorId(UUID authorId) { this.authorId = authorId; }
 

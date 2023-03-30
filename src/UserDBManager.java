@@ -127,7 +127,7 @@ public class UserDBManager extends DataConstants {
 					ArrayList<Double> sectionGrades = new ArrayList<>();
 
 					for (int k = 0; k < sectionGradesArr.size(); k++) {
-						Double grade = (Double) sectionGradesArr.get(k);
+						Double grade = ((Number) sectionGradesArr.get(k)).doubleValue();
 						sectionGrades.add(grade);
 					}
 
@@ -236,7 +236,7 @@ public class UserDBManager extends DataConstants {
 				JSONArray gradesArrArr = new JSONArray();
 
 				for (int k = 0; k < grades.get(j).size(); k++) {
-					gradesArrArr.add(grades.get(j).get(k));
+					gradesArrArr.add((double) grades.get(j).get(k) + 0.00000001);
 				}
 
 				gradesArr.add(gradesArrArr);
