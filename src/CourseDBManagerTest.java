@@ -204,14 +204,4 @@ public class CourseDBManagerTest {
 		JSONArray commentsArr = new CourseDBManager().writeComments(null);
 		assertNull(commentsArr);
 	}
-
-	/*
-		readCourseFile
-		loadAssessment
-		loadComments
-		dateStringToDate
-		writeCourseToDB
-		writeAssessment
-		writeComments
-	*/
 }
