@@ -33,7 +33,7 @@ public class CourseDBManager extends DataConstants {
 	 * @param dateString datestring in format of YYYY-MM-DD
 	 * @return LocalDate representing datestring given
 	 */
-	private LocalDate dateStringToDate(String dateString) {
+	public LocalDate dateStringToDate(String dateString) {
 		// date strings are formatted YYYY-MM-DD
 		String[] split = dateString.split("-");
 
@@ -94,7 +94,7 @@ public class CourseDBManager extends DataConstants {
 	 * @param jsonAssessment JSONArray containing assessment data
 	 * @return Assessment with all information provided
 	 */
-	private Assessment loadAssessment(JSONArray arr) {
+	public Assessment loadAssessment(JSONArray arr) {
 		ArrayList<Question> questions = new ArrayList<>();
 
 		for (int i = 0; i < arr.size(); i++) {
@@ -257,7 +257,7 @@ public class CourseDBManager extends DataConstants {
 	 * Writes the specified course to the database
 	 * @param course Course to write
 	 */
-	public void writeCourseToDB(Course course) {
+	public boolean writeCourseToDB(Course course) {
 		try {
 			File file = new File(COURSE_FOLDER + course.getId().toString() + "." + COURSE_FILE_EXTENSION);
 			FileWriter fw = new FileWriter(file);
@@ -326,8 +326,10 @@ public class CourseDBManager extends DataConstants {
 			fw.write(courseObj.toJSONString());
 			fw.flush();
 			fw.close();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 
@@ -375,7 +377,7 @@ public class CourseDBManager extends DataConstants {
 	 * @param comments Comments to write
 	 * @return writeable JSON array
 	 */
-	private JSONArray writeComments(ArrayList<Comment> comments) {
+	public JSONArray writeComments(ArrayList<Comment> comments) {
 		JSONArray commentsArray = new JSONArray();
 		for(Comment comment : comments){
 			JSONObject commentObject = new JSONObject();
