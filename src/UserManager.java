@@ -183,4 +183,8 @@ public class UserManager {
 	public ArrayList<User> getUsers() {
 		return this.users;
 	}
+
+	public void addUser(User user, ArrayList<User> userList) {
+		userList.add(user);
+	}
 }
