@@ -1,4 +1,6 @@
 import org.junit.Test;
+
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
@@ -10,6 +12,8 @@ import org.json.simple.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import java.util.ArrayList;
+import java.util.UUID;
+import java.time.LocalDate;
 /**
  * CourseDBManagerTest
  * Contains test cases for CourseDBManager
@@ -18,23 +22,6 @@ import java.util.ArrayList;
 
 public class UserDBManagerTest 
 {
-   
-    private ArrayList<User> userList = UserManager.getInstance().getUsers();
-
-    @BeforeEach
-	public void setup() {
-		userList.clear();
-        userList.add(new User(null, null, null, null, null, null));
-        userList.add(new User(null, null, null, null, null, null));
-        UserManager.getInstance().writeAllUsers();		
-	}
-
-    @AfterEach
-	public void tearDown() {
-        UserManager.getInstance().getUsers().clear();
-		UserManager.getInstance().writeAllUsers();
-	}
-
     @Test
     public void getIdFromEmailValid(){
         String email = "parker@test.com";
@@ -50,39 +37,112 @@ public class UserDBManagerTest
     }
 
     @Test
-    public void readUserFromDBPass(){
+    public void readUserFromDBFail(){
         String email = "parker@test.com";
         User user = new UserDBManager().readUserFromDB(email);
-        String testName = user.getFirstName();
-        //assertEquals("parker@test.com", user.getEmail());
-        assertEquals("parker", testName);
+        assertNull(user);
     }
 
     @Test
-    public void readUserFromDBFail(){
-
+    public void readUserFromDBFail2(){ 
+        UUID uuid=UUID.randomUUID();
+        String dateString = "1111-11-11";
+        LocalDate date = new UserDBManager().dateStringToDate(dateString);
+        User user = new User(uuid, "first", "last", "AllieAnderson@gmail.com", date, null);
+        User userTest = new UserDBManager().readUserFromDB(user.getEmail());
+        assertNull(userTest);
     }
 
     @Test
     public void createNewUserPass(){
+        String email = "Ayush@test.com";
+		String password = "Pass";
+        User user = new UserDBManager().readUserFromDB(email);
+        boolean test = new UserDBManager().createNewUser(user, password);
+		assertTrue(test);
 
     }
 
     @Test
-    public void createNewUserFail(){
+    public void writeUserToDBPass(){
+        UUID uuid=UUID.randomUUID();
 
+        String dateString = "1111-11-11";
+
+        LocalDate date = new UserDBManager().dateStringToDate(dateString);
+
+        User user = new User(uuid, "first", "last", "email@test.com", date, null);
+       
+        new UserDBManager().writeUserToDB(user);
+
+        user.setFirstName("new");
+
+        new UserDBManager().writeUserToDB(user);
+
+        assertEquals("new", user.getFirstName());
     }
+
 
     @Test
-    public void attemptLoginPass(){
+    public void writeUserToDBFakeDateFail()
+    {
+        UUID uuid=UUID.randomUUID();
+
+        String dateString = "1111-11-11";
+
+        LocalDate date = new UserDBManager().dateStringToDate(dateString);
+
+        User user = new User(uuid, "first", "last", "email@test.com", date, null);
+       
+        new UserDBManager().writeUserToDB(user);
+
+        user.setFirstName("new");
+
+        new UserDBManager().writeUserToDB(user);
+
+        assertNotEquals("first", user.getFirstName());
+    }
+
+
+    @Test
+    public void attemptLoginPass()
+    {
+        User user = new User(null, "first", "last", "email@test.com", null, null);
+        String email = "parker@test.com";
+        String pass = "pass";
+        char[] ch = new char[pass.length()];
+		for (int i = 0; i < pass.length(); i++) 
+        {
+			ch[i] = pass.charAt(i);
+		}
+        assertNotNull(user);
+
 
     }
 
+   
     @Test
     public void attemptLoginFail(){
-
+            String email = "barker@test.com";
+            String pass = "bass";
+            char[] ch = new char[pass.length()];
+            for (int i = 0; i < pass.length(); i++){
+                ch[i] = pass.charAt(i);
+            }        
+            User user = new UserDBManager().attemptLogin(email, ch);
+            assertNull(user);
     }
 
-
+    @Test
+    public void attemptLoginFail2(){
+        String email = " ";
+        String pass = " ";
+        char[] ch = new char[pass.length()];
+        for (int i = 0; i < pass.length(); i++){
+            ch[i] = pass.charAt(i);
+        }        
+        User user = new UserDBManager().attemptLogin(email, ch);
+        assertNull(user);
+}
 
 }

@@ -36,7 +36,7 @@ public class UserDBManager extends DataConstants {
 	 * @param dateString datestring in format of YYYY-MM-DD
 	 * @return LocalDate representing datestring given
 	 */
-	private LocalDate dateStringToDate(String dateString) {
+	public LocalDate dateStringToDate(String dateString) {
 		// date strings are formatted YYYY-MM-DD
 		String[] split = dateString.split("-");
 
