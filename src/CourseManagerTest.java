@@ -62,40 +62,67 @@ public class CourseManagerTest {
 
     /* getCourseMadeByUser */
     @Test
-    public void testGetCoursesMadeByUser() {
+    public void testGetCoursesMadeByUserValid() {
+        //Valid no courses made by user
+        CourseManager courseManager = CourseManager.getInstance();
+        courseManager.loadAllCourses();
+        User user = new User(UUID.randomUUID(), "first", "last", "email", LocalDate.now(), new ArrayList<CourseProgress>());
+        ArrayList<Course> userCourse = courseManager.getCoursesMadeByUser(user);
+        assertTrue(userCourse.isEmpty());
+    }
+    @Test
+    public void testGetCoursesMadeByUserInvalid() {
+        //Invalid no UUID
+        CourseManager courseManager = CourseManager.getInstance();
+        courseManager.loadAllCourses();
+        User user = new User(null, "first", "last", "email", LocalDate.now(), new ArrayList<CourseProgress>());
+        ArrayList<Course> userCourse = courseManager.getCoursesMadeByUser(user);
+        assertTrue(userCourse.isEmpty());
         
     }
+    @Test
+    public void testGetCoursesMadeByUserNull() {
+        //Valid no user entry
+        CourseManager courseManager = CourseManager.getInstance();
+        courseManager.loadAllCourses();
+        ArrayList<Course> userCourse = courseManager.getCoursesMadeByUser(null);
+        assertTrue(userCourse.isEmpty());
+    } // Fail
 
     /* createCourse */
     @Test
     public void testCreateCourseValid() {
         CourseManager courseManager = CourseManager.getInstance();
         UserManager userManager = UserManager.getInstance();
-        char[] password = {'1', '2', '3', '4'};
-        userManager.attemptLogin("AllieAnderson@gmail.com", password);
+        char[] password = {'p', 'a', 's', 's'};
+        userManager.attemptLogin("ScoutSolace@gmail.com", password); // Valid Course Creator
         Course course = courseManager.createCourse("pyt", "learn quick", "python", "learn python today");
-        assertEquals("pyt", course.getName());
+        assertEquals(course.getName(), "pyt");
     }
     @Test
     public void testCreateCourseInvalid() {
         CourseManager courseManager = CourseManager.getInstance();
         UserManager userManager = UserManager.getInstance();
-        char[] password = {'1', '2', '3', '4'};
-        userManager.attemptLogin("AllieAnderson@gmail.com", password);
-        Course course = courseManager.createCourse("  ", "", "", "");
+        char[] password = {'p', 'a', 's', 's'};
+        userManager.attemptLogin("ScoutSolace@gmail.com", password); // Valid Course Creator
+        Course course = courseManager.createCourse("", "", "", "");
         assertNull(course);
     }
     @Test
-    public void testCreateCourse() {
+    public void testCreateCourseNotAllowed() {
         CourseManager courseManager = CourseManager.getInstance();
+        UserManager userManager = UserManager.getInstance();
+        char[] password = {'1', '2', '3', '4'};
+        userManager.attemptLogin("AllieAnderson@gmail.com", password); // Invalid Course Creator
+        Course course = courseManager.createCourse("", "", "", "");
+        assertNull(course);
     }
     @Test
     public void testCreateCourseNull() {
         CourseManager courseManager = CourseManager.getInstance();
         UserManager userManager = UserManager.getInstance();
-        char[] password = { '1', '2', '3', '4'};
-        userManager.attemptSignup("Bender@gmail.com", password, "first", "last", LocalDate.now());
-        userManager.attemptLogin("Bender@gmail.com", password);
+        char[] password = {'p', 'a', 's', 's'};
+        userManager.attemptLogin("ScoutSolace@gmail.com", password); // Valid Course Creator
         Course course = courseManager.createCourse(null, null, null, null);
         assertNull(course.getName());
     }
