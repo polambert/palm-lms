@@ -1,15 +1,8 @@
 import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.File;
-import java.net.PasswordAuthentication;
 import java.time.LocalDate;
 import java.util.UUID;
-
-import javax.security.auth.kerberos.KerberosCredMessage;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 
@@ -54,10 +47,40 @@ public class CourseManagerTest {
         assertNull(userEnrolledCourses);
     }
 
-    /* writeAllCourses */
+    /* GetCourseByID */
     @Test
-    public void testWriteAllCourses() {
-
+    public void testGetCourseByIDValid() {
+        //Valid interaction
+        CourseManager courseManager = CourseManager.getInstance();
+        courseManager.loadAllCourses();
+        UUID id = UUID.fromString("5d2e37c5-4f9c-4bfc-a0ea-4b879f7b6231");        Course course = courseManager.getCourseById(id);
+        assertNotNull(course);
+    }
+    @Test
+    public void testGetCourseByIDInvalid() {
+        //Not a courseId in database
+        CourseManager courseManager = CourseManager.getInstance();
+        courseManager.loadAllCourses();
+        UUID id = UUID.fromString("5d2e37f5-4f9c-4bfc-a0ea-4b879f7b6231");        Course course = courseManager.getCourseById(id);
+        assertNull(course);
+    }
+    @Test
+    public void testGetCourseByIDEmpty() {
+        //Id is empty
+        CourseManager courseManager = CourseManager.getInstance();
+        courseManager.loadAllCourses();
+        UUID id = UUID.fromString("");   
+        Course course = courseManager.getCourseById(id);
+        assertNull(course);
+    }
+    @Test
+    public void testGetCourseByIDNull() {
+        //ID is null
+        CourseManager courseManager = CourseManager.getInstance();
+        courseManager.loadAllCourses();
+        UUID id = UUID.fromString(null);
+        Course course = courseManager.getCourseById(id);
+        assertNull(course);
     }
 
     /* getCourseMadeByUser */
@@ -87,14 +110,14 @@ public class CourseManagerTest {
         courseManager.loadAllCourses();
         ArrayList<Course> userCourse = courseManager.getCoursesMadeByUser(null);
         assertTrue(userCourse.isEmpty());
-    } // Fail
+    }
 
     /* createCourse */
     @Test
     public void testCreateCourseValid() {
         CourseManager courseManager = CourseManager.getInstance();
         UserManager userManager = UserManager.getInstance();
-        char[] password = {'p', 'a', 's', 's'};
+        char[] password = {'P', 'a', 's', 's'};
         userManager.attemptLogin("ScoutSolace@gmail.com", password); // Valid Course Creator
         Course course = courseManager.createCourse("pyt", "learn quick", "python", "learn python today");
         assertEquals(course.getName(), "pyt");
@@ -103,7 +126,7 @@ public class CourseManagerTest {
     public void testCreateCourseInvalid() {
         CourseManager courseManager = CourseManager.getInstance();
         UserManager userManager = UserManager.getInstance();
-        char[] password = {'p', 'a', 's', 's'};
+        char[] password = {'P', 'a', 's', 's'};
         userManager.attemptLogin("ScoutSolace@gmail.com", password); // Valid Course Creator
         Course course = courseManager.createCourse("", "", "", "");
         assertNull(course);
@@ -121,9 +144,9 @@ public class CourseManagerTest {
     public void testCreateCourseNull() {
         CourseManager courseManager = CourseManager.getInstance();
         UserManager userManager = UserManager.getInstance();
-        char[] password = {'p', 'a', 's', 's'};
+        char[] password = {'P', 'a', 's', 's'};
         userManager.attemptLogin("ScoutSolace@gmail.com", password); // Valid Course Creator
         Course course = courseManager.createCourse(null, null, null, null);
-        assertNull(course.getName());
+        assertNull(course);
     }
 }
