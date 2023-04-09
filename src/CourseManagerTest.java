@@ -20,7 +20,7 @@ public class CourseManagerTest {
         User user = new User(UUID.randomUUID(), "first", "last", "email", LocalDate.now(), new ArrayList<CourseProgress>());
         user.enrollIn(courseManager.getCourses().get(0));
         ArrayList<Course> userEnrolledCourses = courseManager.getEnrolledCourses(user);
-        assertEquals(userEnrolledCourses.get(0).getName(), name);
+        assertEquals(name, userEnrolledCourses.get(0).getName());
     }
     @Test
     public void testGetEnrolledCoursesInvalidNoEnrolledCourses() {
@@ -53,7 +53,8 @@ public class CourseManagerTest {
         //Valid interaction
         CourseManager courseManager = CourseManager.getInstance();
         courseManager.loadAllCourses();
-        UUID id = UUID.fromString("5d2e37c5-4f9c-4bfc-a0ea-4b879f7b6231");        Course course = courseManager.getCourseById(id);
+        UUID id = UUID.fromString("5d2e37c5-4f9c-4bfc-a0ea-4b879f7b6231");
+        Course course = courseManager.getCourseById(id);
         assertNotNull(course);
     }
     @Test
@@ -61,7 +62,8 @@ public class CourseManagerTest {
         //Not a courseId in database
         CourseManager courseManager = CourseManager.getInstance();
         courseManager.loadAllCourses();
-        UUID id = UUID.fromString("5d2e37f5-4f9c-4bfc-a0ea-4b879f7b6231");        Course course = courseManager.getCourseById(id);
+        UUID id = UUID.fromString("5d2e37f5-4f9c-4bfc-a0ea-4b879f7b6231");
+        Course course = courseManager.getCourseById(id);
         assertNull(course);
     }
     @Test
