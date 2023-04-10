@@ -44,6 +44,13 @@ public class UserDBManagerTest
     }
 
     @Test
+    public void readUserFromDBEquals(){
+        String email = "parker@test.com";
+        User user = new UserDBManager().readUserFromDB(email);
+        assertEquals("parker@test.com", user.getEmail());;
+    }
+
+    @Test
     public void readUserFromDBFail2(){ 
         UUID uuid=UUID.randomUUID();
 
@@ -61,6 +68,16 @@ public class UserDBManagerTest
         User user = new UserDBManager().readUserFromDB(email);
         boolean test = new UserDBManager().createNewUser(user, password);
 		assertTrue(test);
+
+    }
+
+    @Test
+    public void createNewUserPassEquals(){
+        String email = "Ayush@test.com";
+		String password = "Pass";
+        User user = new UserDBManager().readUserFromDB(email);
+        boolean test = new UserDBManager().createNewUser(user, password);
+		assertEquals("Ayush@test.com", user.getEmail());
 
     }
 
@@ -99,7 +116,7 @@ public class UserDBManagerTest
     {
         UUID uuid=UUID.randomUUID();
 
-        String dateString = "1111-11-11";
+        String dateString = "1111-13-11";
 
         LocalDate date = new UserDBManager().dateStringToDate(dateString);
 
@@ -171,6 +188,22 @@ public class UserDBManagerTest
         }        
         User user = new UserDBManager().attemptLogin(email, ch);
         assertNull(user);
-}
+    }
+
+
+    @Test
+    public void attemptLoginFailNull(){
+        String email = null;
+        String pass = " 111";
+        char[] ch = new char[pass.length()];
+        for (int i = 0; i < pass.length(); i++){
+            ch[i] = pass.charAt(i);
+        }        
+        User user = new UserDBManager().attemptLogin(email, ch);
+        assertNull(user);
+    }
+
+    
 
 }
+
