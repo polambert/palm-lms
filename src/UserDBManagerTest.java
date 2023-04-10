@@ -46,6 +46,7 @@ public class UserDBManagerTest
     @Test
     public void readUserFromDBFail2(){ 
         UUID uuid=UUID.randomUUID();
+
         String dateString = "1111-11-11";
         LocalDate date = new UserDBManager().dateStringToDate(dateString);
         User user = new User(uuid, "first", "last", "AllieAnderson@gmail.com", date, null);
@@ -57,6 +58,16 @@ public class UserDBManagerTest
     public void createNewUserPass(){
         String email = "Ayush@test.com";
 		String password = "Pass";
+        User user = new UserDBManager().readUserFromDB(email);
+        boolean test = new UserDBManager().createNewUser(user, password);
+		assertTrue(test);
+
+    }
+
+    @Test
+    public void createNewUserFail(){
+        String email = "Ayush@test.com";
+		String password = "  ";
         User user = new UserDBManager().readUserFromDB(email);
         boolean test = new UserDBManager().createNewUser(user, password);
 		assertTrue(test);
@@ -120,6 +131,23 @@ public class UserDBManagerTest
 
     }
 
+    @Test
+    public void attemptLoginNotSame()
+    {
+        User user = new User(null, "first", "last", "parker@test.com", null, null);
+        String email = "parker@test.com";
+        String pass = "pass";
+        char[] ch = new char[pass.length()];
+		for (int i = 0; i < pass.length(); i++) 
+        {
+			ch[i] = pass.charAt(i);
+		}
+        User userTest = new UserDBManager().attemptLogin(email, ch);
+
+        assertNotEquals(user, userTest);
+
+
+    }
    
     @Test
     public void attemptLoginFail(){
